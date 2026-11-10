@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlertsController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
@@ -33,13 +34,12 @@ Route::get('/checkout/{slug}', fn (string $slug) => app(PlaceholderController::c
     ->render('Checkout', 'Single-column mobile checkout for '.$slug.'. Phase 4 lands the server-priced flow, pending-order creation and CCAvenue redirect.', 'Phase 4', 'noindex')
 )->name('checkout.show');
 
-Route::get('/alerts/officer', fn () => app(PlaceholderController::class)
-    ->render('Officer alerts', 'Officer subscribe / result-registration form. Phase 3 lands verification, suppression and result-registration.', 'Phase 3')
-)->name('alerts.officer');
-
-Route::get('/alerts/soldier', fn () => app(PlaceholderController::class)
-    ->render('Soldier alerts', 'Soldier subscribe / result-registration form. Phase 3 lands verification, suppression and result-registration.', 'Phase 3')
-)->name('alerts.soldier');
+Route::get('/alerts/officer', fn () => app(AlertsController::class)->form('officer'))->name('alerts.officer');
+Route::get('/alerts/soldier', fn () => app(AlertsController::class)->form('soldier'))->name('alerts.soldier');
+Route::post('/alerts/subscribe', [AlertsController::class, 'subscribe'])->name('alerts.subscribe');
+Route::get('/alerts/verify/{token}', [AlertsController::class, 'verify'])->name('alerts.verify');
+Route::post('/alerts/unsubscribe', [AlertsController::class, 'unsubscribe'])->name('alerts.unsubscribe');
+Route::post('/result/register', [AlertsController::class, 'registerResult'])->name('result.register');
 
 Route::get('/study/login', fn () => app(PlaceholderController::class)
     ->render('Study login', 'Buyer login (order ID + password). Phase 4 lands verified authentication and entitlement checks.', 'Phase 4', 'noindex')

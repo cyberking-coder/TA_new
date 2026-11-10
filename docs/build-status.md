@@ -8,7 +8,7 @@ Living log for the Territorial Army rebuild. Update at the end of each working s
 |---|---|---|---|---|
 | 1 Foundation & visual prototype | done | 2026-11-10 | 2026-11-10 | Scaffold + homepage + notice detail + book template, synthetic fixtures. |
 | 2 Publishing & public resources | done | 2026-11-10 | 2026-11-10 | Schema + Filament 5 admin w/ three groups + 9 resources; draft/withdraw/publish wired to public HTML + sitemap; public vs private PDF disks; review moderation. |
-| 3 Alerts & result registration | pending | — | — | |
+| 3 Alerts & result registration | done | 2026-11-10 | 2026-11-10 | Officer + soldier subscribers, result registration, verification + unsubscribe + suppression gate, Excel/CSV export (admin+ops), newsletter preview/test/send with send-time suppression re-check. 11 tests, 592 assertions green. |
 | 4 Checkout, payment, buyer access | pending | — | — | |
 | 5 Migration & SEO rehearsal | pending | — | — | |
 | 6 Release candidate & handover | pending | — | — | |
