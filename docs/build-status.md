@@ -11,7 +11,7 @@ Living log for the Territorial Army rebuild. Update at the end of each working s
 | 3 Alerts & result registration | done | 2026-11-10 | 2026-11-10 | Officer + soldier subscribers, result registration, verification + unsubscribe + suppression gate, Excel/CSV export (admin+ops), newsletter preview/test/send with send-time suppression re-check. 11 tests, 592 assertions green. |
 | 4 Checkout, payment, buyer access | done | 2026-11-10 | 2026-11-10 | Orders + items + payment_attempts + entitlements + buyers; CCAvenue adapter scaffold + LocalSimulatorProvider with real HMAC-signed payloads; ReconciliationService idempotent + amount/currency verified; signed-URL study downloads re-check entitlement on every request. 12 Phase-4 tests green, 23 total / 730 assertions. Merchant sandbox check still PENDING (kit not supplied). |
 | 5 Migration & SEO rehearsal | done | 2026-11-10 | 2026-11-10 | Idempotent importers w/ --dry-run; migrate:rehearse proves zero delta on rerun (₹11,988 paid total stable); seo:audit + seo:redirect-map produce CSVs; 8 Phase-5 tests green, 31 total / 751 assertions. |
-| 6 Release candidate & handover | pending | — | — | |
+| 6 Release candidate & handover | done | 2026-11-10 | 2026-11-10 | backup:db + restore:db + release:health commands; deploy/ templates (nginx, supervisor, systemd, scripts); 5 handover docs + release notes; restore-rehearse round-trips cleanly; 31 tests, 751 assertions, all green from one artisan test call. |
 
 ## Current state
 

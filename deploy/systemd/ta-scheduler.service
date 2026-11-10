@@ -1,0 +1,12 @@
+# /etc/systemd/system/ta-scheduler.service
+# Paired with ta-scheduler.timer below. Phase 6 reference.
+
+[Unit]
+Description=TA exam guide — Laravel scheduler
+After=network.target
+
+[Service]
+Type=oneshot
+User=ta
+WorkingDirectory=/var/www/ta
+ExecStart=/usr/bin/php /var/www/ta/artisan schedule:run

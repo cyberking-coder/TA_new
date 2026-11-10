@@ -1,0 +1,12 @@
+# /etc/systemd/system/ta-scheduler.timer
+# sudo systemctl enable --now ta-scheduler.timer
+
+[Unit]
+Description=Run the TA scheduler every minute
+
+[Timer]
+OnCalendar=*:0/1
+Persistent=true
+
+[Install]
+WantedBy=timers.target
