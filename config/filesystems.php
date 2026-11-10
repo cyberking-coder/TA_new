@@ -47,6 +47,17 @@ return [
             'report' => false,
         ],
 
+        // Named 'private' for clarity. Phase 2+ uploads of buyer-only files
+        // write here; Phase 4 wires Cloudflare R2 behind this disk name.
+        'private' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private'),
+            'serve' => false,
+            'throw' => false,
+            'report' => false,
+            'visibility' => 'private',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

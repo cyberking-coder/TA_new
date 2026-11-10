@@ -6,8 +6,8 @@ Living log for the Territorial Army rebuild. Update at the end of each working s
 
 | Phase | Status | Started | Finished | Notes |
 |---|---|---|---|---|
-| 1 Foundation & visual prototype | in progress | 2026-11-10 | — | Scaffold + homepage + notice detail + book template, synthetic fixtures. |
-| 2 Publishing & public resources | pending | — | — | |
+| 1 Foundation & visual prototype | done | 2026-11-10 | 2026-11-10 | Scaffold + homepage + notice detail + book template, synthetic fixtures. |
+| 2 Publishing & public resources | done | 2026-11-10 | 2026-11-10 | Schema + Filament 5 admin w/ three groups + 9 resources; draft/withdraw/publish wired to public HTML + sitemap; public vs private PDF disks; review moderation. |
 | 3 Alerts & result registration | pending | — | — | |
 | 4 Checkout, payment, buyer access | pending | — | — | |
 | 5 Migration & SEO rehearsal | pending | — | — | |

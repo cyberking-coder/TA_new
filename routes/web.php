@@ -3,7 +3,9 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\PdfDownloadController;
 use App\Http\Controllers\PlaceholderController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +48,13 @@ Route::get('/study/login', fn () => app(PlaceholderController::class)
 Route::get('/policies/{slug}', fn (string $slug) => app(PlaceholderController::class)
     ->render(ucfirst(str_replace('-', ' ', $slug)), 'Policy content lands in Phase 2 once legacy policy copy is migrated.', 'Phase 2')
 )->name('policies.show');
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+
+// Public PDF link. Private PDFs refuse to serve from this route.
+Route::get('/pdfs/{id}', [PdfDownloadController::class, 'publicDownload'])
+    ->whereNumber('id')
+    ->name('pdfs.public');
 
 Route::get('/robots.txt', function () {
     $env = config('app.env');
