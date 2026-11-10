@@ -6,6 +6,7 @@
         <nav aria-label="Primary">
             <ul class="flex flex-wrap gap-4 md:gap-6 list-none m-0 p-0 text-[0.95rem]">
                 <li><a href="{{ route('notices.index') }}">Notices</a></li>
+                <li><a href="{{ route('downloads.index') }}">Downloads</a></li>
                 <li><a href="{{ route('prep.previous') }}">Prepare</a></li>
                 <li><a href="{{ route('books.show', 'tac-examination-book') }}">Books</a></li>
                 <li><a href="{{ route('study.login') }}">Study login</a></li>

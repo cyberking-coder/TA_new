@@ -29,7 +29,7 @@
             <h2 class="sr-only">Choose a task</h2>
             <ul class="grid gap-3 md:grid-cols-4 list-none p-0 m-0">
                 <li><a href="{{ route('notices.index') }}" class="tile"><strong>Notices &amp; results</strong><span>Dated recruitment notices and result updates.</span></a></li>
-                <li><a href="{{ route('alerts.officer') }}" class="tile"><strong>Officer / soldier alerts</strong><span>Subscribe to exam alerts by audience.</span></a></li>
+                <li><a href="{{ route('downloads.index') }}" class="tile"><strong>Important downloads</strong><span>Public PDFs — notifications, syllabi, docs.</span></a></li>
                 <li><a href="{{ route('books.show', 'tac-examination-book') }}" class="tile"><strong>Buy the book</strong><span>Edition, price and delivery in INR.</span></a></li>
                 <li><a href="{{ route('study.login') }}" class="tile"><strong>Study login</strong><span>Buyer-only study material access.</span></a></li>
             </ul>

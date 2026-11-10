@@ -17,6 +17,7 @@ class SitemapController extends Controller
 
         $urls->push(['loc' => url('/'), 'lastmod' => now()]);
         $urls->push(['loc' => url('/notices-and-downloads'), 'lastmod' => now()]);
+        $urls->push(['loc' => url('/important-downloads'), 'lastmod' => now()]);
         $urls->push(['loc' => url('/preparation/previous-papers'), 'lastmod' => now()]);
         $urls->push(['loc' => url('/preparation/practice-papers'), 'lastmod' => now()]);
 

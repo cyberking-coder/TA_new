@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlertsController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\DownloadsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PaymentCallbackController;
@@ -17,6 +18,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/notices-and-downloads', [NoticeController::class, 'index'])->name('notices.index');
 Route::get('/notices/{slug}', [NoticeController::class, 'show'])->name('notices.show');
+
+Route::get('/important-downloads', [DownloadsController::class, 'index'])->name('downloads.index');
 
 Route::get('/preparation/previous-papers', fn () => app(PlaceholderController::class)
     ->render('Previous papers', 'Solved previous-paper landing page. Phase 2 lands subject/year groupings and detail pages.', 'Phase 2')
@@ -79,7 +82,7 @@ Route::get('/robots.txt', function () {
 // Legacy redirects (P0)
 Route::redirect('/home', '/', 301);
 Route::redirect('/book/5', '/books/tac-examination-book', 301);
-Route::redirect('/imp_downloads', '/notices-and-downloads', 301);
+Route::redirect('/imp_downloads', '/important-downloads', 301);
 Route::redirect('/pib_question_papers', '/preparation/previous-papers', 301);
 Route::redirect('/practice_test_papers', '/preparation/practice-papers', 301);
 Route::redirect('/login', '/study/login', 301);
