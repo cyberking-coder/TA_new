@@ -27,18 +27,23 @@ class PdfForm
                     Pdf::DISK_PUBLIC => 'Public — anyone can download',
                     Pdf::DISK_PRIVATE => 'Private — buyer-only (study material)',
                 ])
-                ->live()
                 ->helperText('Private PDFs are served only via signed short-lived links to verified buyers.'),
+            // Upload always lands on the "public" filesystem disk. The `disk` column
+            // above is a POLICY marker, not a storage selector: PdfDownloadController
+            // refuses a public link to a row with disk=private, and StudyController
+            // enforces buyer entitlement + signed URL before streaming the bytes.
+            // This keeps the upload surface simple and avoids the "Path must not be
+            // empty" error that comes from evaluating closures during form boot.
             FileUpload::make('path')
                 ->label('File')
                 ->required()
-                ->disk(fn ($get) => $get('disk') === Pdf::DISK_PRIVATE ? 'private' : 'public')
-                ->directory(fn ($get) => $get('disk') === Pdf::DISK_PRIVATE ? 'study' : 'public-pdfs')
-                ->visibility(fn ($get) => $get('disk') === Pdf::DISK_PRIVATE ? 'private' : 'public')
+                ->disk('public')
+                ->directory('pdfs')
                 ->acceptedFileTypes(['application/pdf'])
                 ->maxSize(25 * 1024)
-                ->afterStateUpdated(function ($state, $set, $get) {
-                    // Record size for the public size label
+                ->downloadable()
+                ->previewable(false)
+                ->afterStateUpdated(function ($state, $set) {
                     if ($state && method_exists($state, 'getSize')) {
                         $set('size_bytes', $state->getSize());
                     }
