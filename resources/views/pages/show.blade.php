@@ -1,15 +1,19 @@
 @extends('layouts.public')
 
 @section('content')
-    <section class="section-pad">
-        <div class="container-prose max-w-3xl">
-            <nav aria-label="Breadcrumb" class="text-sm text-[color:var(--color-charcoal-600)] mb-2">
-                <a href="{{ route('home') }}">Home</a> / <span aria-current="page">{{ $page->title }}</span>
-            </nav>
+    <div class="pagehead">
+        <div class="wrap">
+            <div class="crumb"><a href="{{ route('home') }}">Home</a> / {{ $page->title }}</div>
             <h1>{{ $page->title }}</h1>
-            <div class="mt-5 prose-sm max-w-none text-[17px] leading-[1.6]">
-                {!! $page->body !!}
-            </div>
+            @if ($page->seo_description)
+                <p>{{ $page->seo_description }}</p>
+            @endif
         </div>
+    </div>
+
+    <section class="wrap panel">
+        <article class="reading">
+            {!! $page->body !!}
+        </article>
     </section>
 @endsection

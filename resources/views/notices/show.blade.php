@@ -1,46 +1,38 @@
-@extends('layouts.public')
+@extends('layouts.public', ['nav' => 'notices'])
 
 @section('content')
-    <article class="section-pad">
-        <div class="container-prose max-w-3xl">
-            <nav aria-label="Breadcrumb" class="text-sm text-[color:var(--color-charcoal-600)] mb-2">
-                <a href="{{ route('home') }}">Home</a> /
-                <a href="{{ route('notices.index') }}">Notices &amp; downloads</a> /
-                <span aria-current="page">{{ $notice['title'] }}</span>
-            </nav>
-
-            <p class="badge">{{ ucfirst($notice['type']) }}</p>
-            <h1 class="mt-3">{{ $notice['title'] }}</h1>
-            <p class="text-sm text-[color:var(--color-charcoal-600)] mt-2">
-                Published <time datetime="{{ $notice['date'] }}">{{ \Carbon\Carbon::parse($notice['date'])->format('d F Y') }}</time>
-                &middot; Exam: {{ $notice['exam_name'] }}
-            </p>
-
-            <div class="mt-5 text-lg">
-                <p>{{ $notice['summary'] }}</p>
-                <p>{{ $notice['body'] }}</p>
-            </div>
-
-            <div class="card mt-6">
-                <p class="font-semibold m-0 text-[color:var(--color-forest-700)]">Official source</p>
-                <p class="m-0 mt-1 text-sm text-[color:var(--color-charcoal-600)]">
-                    This notice is attributed to <strong>{{ $notice['source_label'] }}</strong>. Open the source document below.
-                </p>
-                <p class="mt-3">
-                    <a href="{{ $notice['source_url'] }}" rel="noopener external" target="_blank" class="btn-ghost">
-                        Open source document (PDF, {{ $notice['source_size'] }})
-                    </a>
-                </p>
-            </div>
-
-            <div class="mt-6 card">
-                <p class="font-semibold m-0 text-[color:var(--color-forest-700)]">Related</p>
-                <ul class="list-disc pl-5 mt-2 m-0 text-sm">
-                    <li><a href="{{ route('prep.previous') }}">Previous papers for {{ $notice['exam_name'] }}</a></li>
-                    <li><a href="{{ route('alerts.officer') }}">Subscribe to officer-exam alerts</a></li>
-                    <li><a href="{{ route('alerts.soldier') }}">Subscribe to soldier-exam alerts</a></li>
-                </ul>
-            </div>
+    <div class="pagehead">
+        <div class="wrap">
+            <div class="crumb"><a href="{{ route('home') }}">Home</a> / <a href="{{ route('notices.index') }}">Notices</a> / {{ $notice['title'] }}</div>
+            <h1>{{ $notice['title'] }}</h1>
+            <p>Published {{ \Carbon\Carbon::parse($notice['date'])->format('d F Y') }} · {{ $notice['exam_name'] ?? '' }}</p>
         </div>
-    </article>
+    </div>
+
+    <section class="wrap panel">
+        <article class="reading">
+            <p>{{ $notice['summary'] }}</p>
+            @if (!empty($notice['body']))
+                <p>{{ $notice['body'] }}</p>
+            @endif
+
+            <div style="margin-top:24px;padding:20px;background:#efeee3;border:1px solid var(--line);border-radius:7px;">
+                <div class="kicker"><i></i>OFFICIAL SOURCE</div>
+                <p style="margin-top:8px">This notice is attributed to <strong>{{ $notice['source_label'] }}</strong>. Open the source document below.</p>
+                @if (!empty($notice['source_url']) && $notice['source_url'] !== '#')
+                    <a class="btn" href="{{ $notice['source_url'] }}" rel="noopener external" target="_blank">
+                        Open source document (PDF{{ !empty($notice['source_size']) ? ', '.$notice['source_size'] : '' }})
+                        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg>
+                    </a>
+                @endif
+            </div>
+
+            <h2 style="font:700 24px var(--display);margin:28px 0 10px">Related</h2>
+            <ul>
+                <li><a href="{{ route('prep.previous') }}">Previous papers for {{ $notice['exam_name'] ?? 'this exam' }}</a></li>
+                <li><a href="{{ route('alerts.officer') }}">Subscribe to officer exam alerts</a></li>
+                <li><a href="{{ route('alerts.soldier') }}">Subscribe to soldier exam alerts</a></li>
+            </ul>
+        </article>
+    </section>
 @endsection
