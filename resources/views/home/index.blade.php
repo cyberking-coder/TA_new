@@ -1,6 +1,8 @@
 @extends('layouts.public')
 
 @section('content')
+    @include('partials.newsline-ticker', ['items' => $tickerItems ?? []])
+
     <section class="section-pad">
         <div class="container-prose grid gap-6 md:grid-cols-5 md:gap-10 items-center">
             <div class="md:col-span-3 order-1 md:order-1">

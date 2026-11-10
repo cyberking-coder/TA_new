@@ -6,6 +6,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DownloadsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PaymentCallbackController;
 use App\Http\Controllers\PaymentSimulatorController;
 use App\Http\Controllers\PdfDownloadController;
@@ -64,9 +65,11 @@ Route::get('/study/download/{material}', [StudyController::class, 'download'])
 Route::get('/study/reset/{token}', [StudyController::class, 'resetForm'])->name('study.reset.form');
 Route::post('/study/reset/{token}', [StudyController::class, 'resetSubmit'])->name('study.reset.submit');
 
-Route::get('/policies/{slug}', fn (string $slug) => app(PlaceholderController::class)
-    ->render(ucfirst(str_replace('-', ' ', $slug)), 'Policy content lands in Phase 2 once legacy policy copy is migrated.', 'Phase 2')
-)->name('policies.show');
+// Static legacy content pages, served from the Pages model.
+Route::get('/pages/{slug}', [PagesController::class, 'show'])->name('pages.show');
+
+// Preserve older /policies/{slug} links — redirect into the new /pages/{slug} space.
+Route::get('/policies/{slug}', fn (string $slug) => redirect('/pages/'.$slug, 301))->name('policies.show');
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/pdfs/{id}', [PdfDownloadController::class, 'publicDownload'])->whereNumber('id')->name('pdfs.public');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\NewslineItem;
 use App\Models\Notice;
 use App\Support\SyntheticFixtures;
 use Illuminate\Support\Facades\Cache;
@@ -35,12 +36,19 @@ class HomeController extends Controller
         $featuredBook = Book::query()->published()->with('editions')->first()
             ?? null;
 
+        $ticker = NewslineItem::query()->published()
+            ->orderBy('display_order')->orderByDesc('published_on')
+            ->limit(8)->get(['title', 'destination_url'])
+            ->map(fn ($n) => ['title' => $n->title, 'url' => $n->destination_url])
+            ->all();
+
         return view('home.index', [
             'title' => 'Territorial Army exam guide — notices, preparation and the book',
             'description' => 'Dated recruitment notices, preparation resources, and the Territorial Army Commission examination book. Independent publisher, source-attributed notices, buyer-only study access.',
             'canonical' => url('/'),
             'latestNotices' => $latest,
             'featuredBook' => $featuredBook,
+            'tickerItems' => $ticker,
             'jsonLd' => [
                 '@context' => 'https://schema.org',
                 '@type' => 'WebSite',

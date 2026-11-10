@@ -1,5 +1,5 @@
 <footer class="mt-12 border-t border-[color:var(--color-ivory-100)] bg-white">
-    <div class="container-prose py-8 grid gap-6 md:grid-cols-3 text-sm">
+    <div class="container-prose py-8 grid gap-6 md:grid-cols-4 text-sm">
         <div>
             <p class="font-display font-semibold text-[color:var(--color-forest-700)] m-0">Territorial Army exam guide</p>
             <p class="text-[color:var(--color-charcoal-600)] mt-1 mb-0">
@@ -7,7 +7,7 @@
             </p>
         </div>
         <div>
-            <p class="font-semibold text-[color:var(--color-forest-700)] m-0">Site</p>
+            <p class="font-semibold text-[color:var(--color-forest-700)] m-0">Explore</p>
             <ul class="list-none p-0 mt-2 space-y-1">
                 <li><a href="{{ route('notices.index') }}">Notices &amp; results</a></li>
                 <li><a href="{{ route('downloads.index') }}">Important downloads</a></li>
@@ -16,11 +16,20 @@
             </ul>
         </div>
         <div>
+            <p class="font-semibold text-[color:var(--color-forest-700)] m-0">About</p>
+            <ul class="list-none p-0 mt-2 space-y-1">
+                <li><a href="{{ url('/pages/about-us') }}">About us</a></li>
+                <li><a href="{{ url('/pages/contact-us') }}">Contact us</a></li>
+                <li><a href="{{ url('/pages/disclaimer') }}">Disclaimer</a></li>
+            </ul>
+        </div>
+        <div>
             <p class="font-semibold text-[color:var(--color-forest-700)] m-0">Policies</p>
             <ul class="list-none p-0 mt-2 space-y-1">
-                <li><a href="{{ url('/policies/privacy') }}">Privacy</a></li>
-                <li><a href="{{ url('/policies/terms') }}">Terms</a></li>
-                <li><a href="{{ url('/policies/refund') }}">Refund &amp; delivery</a></li>
+                <li><a href="{{ url('/pages/privacy') }}">Privacy</a></li>
+                <li><a href="{{ url('/pages/terms') }}">Terms &amp; conditions</a></li>
+                <li><a href="{{ url('/pages/shipping-delivery') }}">Shipping &amp; delivery</a></li>
+                <li><a href="{{ url('/pages/refund-cancellation') }}">Refund &amp; cancellation</a></li>
             </ul>
         </div>
     </div>
