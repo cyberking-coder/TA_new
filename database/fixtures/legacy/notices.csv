@@ -1,0 +1,5 @@
+legacy_id,slug,title,summary,body,exam_slug,published_on,type,source_label,source_url,status
+L-N-100,legacy-tac-2024-result,[Legacy] TAC 2024 result,Result from 2024,Legacy body for 2024 result,tac,2024-07-04,result,Legacy issuing office,https://example.gov.in/legacy/tac-2024,published
+L-N-101,legacy-soldier-2025-notification,[Legacy] Soldier 2025 notification,Legacy soldier notification,Legacy body,soldier,2025-03-12,notification,Legacy issuing office,https://example.gov.in/legacy/soldier-2025,published
+L-N-102,legacy-officer-2023-admit,[Legacy] Officer 2023 admit card,Legacy admit entry,Legacy body,officer,0000-00-00,admit-card,Legacy issuing office,https://example.gov.in/legacy/officer-admit,published
+L-N-103,legacy-draft-never-published,[Legacy] Draft never published,Draft only,Legacy draft body,tac,2024-10-01,notification,,,draft

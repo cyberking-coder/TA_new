@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Pdf extends Model
 {
-    protected $fillable = ['title', 'disk', 'path', 'size_bytes', 'mime', 'download_label', 'uploaded_by'];
+    protected $fillable = ['legacy_id', 'title', 'disk', 'path', 'size_bytes', 'mime', 'download_label', 'uploaded_by'];
 
     public const DISK_PUBLIC  = 'public';
     public const DISK_PRIVATE = 'private';

@@ -1,0 +1,10 @@
+legacy_path,new_path,status,notes
+/home,/,301,301
+/book/5,/books/tac-examination-book,301,301
+/imp_downloads,/notices-and-downloads,301,301
+/pib_question_papers,/preparation/previous-papers,301,301
+/practice_test_papers,/preparation/practice-papers,301,301
+/login,/study/login,301,301
+/buy_now/5,/checkout/tac-examination-book,301,301
+/ta_poilicies,/policies/privacy,301,"MISSING in routes! 301 (per-slug; build individuals only once confirmed)"
+/page/{id},/policies/{slug},301,"MISSING in routes! 301 (individual; no blanket homepage redirect)"

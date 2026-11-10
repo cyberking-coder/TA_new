@@ -1,0 +1,6 @@
+legacy_id,name,mobile,email,exam_slug,roll_number,legacy_zone
+L-RR-1,Ravi Legacy,5551101,ravi@example.test,tac,2024TAC001,North
+L-RR-2,Sita Legacy,5551102,sita@example.test,tac,2024TAC002,South
+L-RR-3,Amit Legacy,5551103,amit@example.test,officer,2024OFF001,
+L-RR-4,Nita Legacy,5551104,nita@example.test,soldier,2024SOL001,East
+L-RR-5,Dup Legacy,5551105,dup@example.test,tac,2024TAC001,

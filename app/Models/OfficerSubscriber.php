@@ -10,7 +10,7 @@ class OfficerSubscriber extends Model
     public const AUDIENCE = 'officer';
 
     protected $fillable = [
-        'email', 'name', 'mobile', 'consent_at', 'verified_at', 'unsubscribed_at',
+        'legacy_id', 'email', 'name', 'mobile', 'consent_at', 'verified_at', 'unsubscribed_at',
         'suppressed_at', 'suppression_reason',
     ];
 

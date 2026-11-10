@@ -1,0 +1,6 @@
+legacy_id,email,name,mobile,verified_at,unsubscribed_at
+L-OS-1,alice.legacy@example.test,Alice Legacy,5550101,2024-05-10,
+L-OS-2,bob.legacy@example.test,Bob Legacy,5550102,2024-06-02,
+L-OS-3,UNSUB.LEGACY@example.test,Unsub Legacy,5550103,2024-01-01,2024-02-01
+L-OS-4,duplicate.legacy@example.test,Dup Legacy,5550104,2024-03-14,
+L-OS-5,duplicate.legacy@example.test,Dup Legacy second,5550105,2024-04-20,

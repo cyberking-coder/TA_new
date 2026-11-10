@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Order extends Model
 {
     protected $fillable = [
-        'order_ref', 'buyer_name', 'buyer_email', 'buyer_mobile', 'shipping_json',
+        'legacy_id', 'order_ref', 'buyer_name', 'buyer_email', 'buyer_mobile', 'shipping_json',
         'payment_status', 'dispatch_status',
         'subtotal_paise', 'discount_paise', 'shipping_paise', 'total_paise', 'currency',
-        'placed_at', 'paid_at', 'buyer_id',
+        'placed_at', 'paid_at', 'buyer_id', 'import_date_unknown',
     ];
 
     protected $casts = [

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Page extends Model
 {
     protected $fillable = [
-        'slug', 'parent_id', 'menu_label', 'title', 'body',
+        'legacy_id', 'slug', 'parent_id', 'menu_label', 'title', 'body',
         'seo_title', 'seo_description', 'status', 'published_at', 'author_id',
     ];
 

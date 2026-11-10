@@ -1,0 +1,4 @@
+legacy_id,email,name,mobile,verified_at,unsubscribed_at
+L-SS-1,charlie.legacy@example.test,Charlie Legacy,5550201,2024-07-10,
+L-SS-2,dave.legacy@example.test,Dave Legacy,5550202,2024-08-02,
+L-SS-3,soldier.unsub@example.test,Soldier Unsub,5550203,2024-01-01,2024-03-01

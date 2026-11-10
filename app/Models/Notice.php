@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Notice extends Model
 {
     protected $fillable = [
-        'slug', 'title', 'summary', 'body', 'exam_id', 'published_on', 'type',
+        'legacy_id', 'slug', 'title', 'summary', 'body', 'exam_id', 'published_on', 'type',
         'source_label', 'source_url', 'pdf_id', 'status', 'published_at', 'author_id',
+        'import_date_unknown',
     ];
 
     protected $casts = [

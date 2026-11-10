@@ -1,0 +1,6 @@
+legacy_id,order_ref,buyer_name,buyer_email,buyer_mobile,total_paise,currency,payment_status,placed_at,paid_at
+L-O-1,LEG-0000123,Rahul Legacy,rahul.legacy@example.test,5552001,199800,INR,paid,2024-05-14 11:00:00,2024-05-14 11:05:00
+L-O-2,LEG-0000124,Priya Legacy,priya.legacy@example.test,5552002,399600,INR,paid,2024-06-20 14:10:00,2024-06-20 14:12:00
+L-O-3,LEG-0000125,Failed Legacy,failed@example.test,5552003,199800,INR,failed,2024-07-01 09:00:00,
+L-O-4,LEG-0000126,Pending Legacy,pending@example.test,5552004,199800,INR,pending,0000-00-00 00:00:00,
+L-O-5,LEG-9999999,Big Legacy,big@example.test,5552005,599400,INR,paid,2024-08-30 18:00:00,2024-08-30 18:03:00
