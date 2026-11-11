@@ -25,7 +25,11 @@ class HomeController extends Controller
                     'summary' => $n->summary,
                     'date' => $n->published_on->toDateString(),
                     'type' => $n->type,
-                    'new_until' => $n->new_until,
+                    // Store as ISO string, never a Carbon instance. Carbon objects
+                    // serialise into the cache fine but deserialise as __PHP_Incomplete_Class
+                    // after any Carbon upgrade / autoloader change, which blows up the
+                    // view layer the next time the cache is read.
+                    'new_until' => optional($n->new_until)->toIso8601String(),
                 ])
                 ->all();
         });
@@ -42,7 +46,11 @@ class HomeController extends Controller
         $ticker = NewslineItem::query()->published()
             ->orderBy('display_order')->orderByDesc('published_on')
             ->limit(8)->get(['title', 'destination_url', 'new_until'])
-            ->map(fn ($n) => ['title' => $n->title, 'url' => $n->destination_url, 'new_until' => $n->new_until])
+            ->map(fn ($n) => [
+                'title' => $n->title,
+                'url' => $n->destination_url,
+                'new_until' => optional($n->new_until)->toIso8601String(),
+            ])
             ->all();
 
         $slides = HeroMedia::activeSlides()
