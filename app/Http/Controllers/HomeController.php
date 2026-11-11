@@ -17,12 +17,14 @@ class HomeController extends Controller
             return Notice::query()->published()
                 ->orderByDesc('published_on')
                 ->limit(3)
-                ->get(['slug', 'title', 'summary', 'published_on'])
+                ->get(['slug', 'title', 'summary', 'published_on', 'type', 'new_until'])
                 ->map(fn ($n) => [
                     'slug' => $n->slug,
                     'title' => $n->title,
                     'summary' => $n->summary,
                     'date' => $n->published_on->toDateString(),
+                    'type' => $n->type,
+                    'new_until' => $n->new_until,
                 ])
                 ->all();
         });
@@ -38,8 +40,8 @@ class HomeController extends Controller
 
         $ticker = NewslineItem::query()->published()
             ->orderBy('display_order')->orderByDesc('published_on')
-            ->limit(8)->get(['title', 'destination_url'])
-            ->map(fn ($n) => ['title' => $n->title, 'url' => $n->destination_url])
+            ->limit(8)->get(['title', 'destination_url', 'new_until'])
+            ->map(fn ($n) => ['title' => $n->title, 'url' => $n->destination_url, 'new_until' => $n->new_until])
             ->all();
 
         return view('home.index', [

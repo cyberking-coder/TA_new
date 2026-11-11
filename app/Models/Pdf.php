@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasNewBadge;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Pdf extends Model
 {
-    protected $fillable = ['legacy_id', 'title', 'disk', 'path', 'size_bytes', 'mime', 'download_label', 'uploaded_by'];
+    use HasNewBadge;
+
+    protected $fillable = ['legacy_id', 'title', 'disk', 'path', 'size_bytes', 'mime', 'download_label', 'uploaded_by', 'new_until'];
+
+    protected $casts = ['new_until' => 'datetime'];
 
     public const DISK_PUBLIC  = 'public';
     public const DISK_PRIVATE = 'private';

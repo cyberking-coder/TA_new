@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\NewslineItems\Tables;
 
+use App\Filament\Support\NewBadgeActions;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -40,6 +41,8 @@ class NewslineItemsTable
             ])
             ->recordActions([
                 EditAction::make(),
+                NewBadgeActions::mark(),
+                NewBadgeActions::unmark(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

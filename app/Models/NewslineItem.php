@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasNewBadge;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class NewslineItem extends Model
 {
-    protected $fillable = ['title', 'destination_url', 'published_on', 'display_order', 'status'];
+    use HasNewBadge;
 
-    protected $casts = ['published_on' => 'date'];
+    protected $fillable = ['title', 'destination_url', 'published_on', 'display_order', 'status', 'new_until'];
+
+    protected $casts = ['published_on' => 'date', 'new_until' => 'datetime'];
 
     public const STATUS_DRAFT     = 'draft';
     public const STATUS_PUBLISHED = 'published';

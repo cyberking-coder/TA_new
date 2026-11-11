@@ -8,3 +8,8 @@
 @media(max-width:600px){.hero-inner{padding:34px 0 29px}.hero h1{font-size:clamp(60px,14.5vw,84px);margin:16px 0}.hero picture img{object-position:center 35%}.hero:after{background:linear-gradient(90deg,#0c2117e6,#14281bb0 46%,#14271c30),linear-gradient(0deg,#102118a8,transparent 65%)}.hero p{max-width:82%;font-size:17px}.desktop{display:none}.hero .kicker{font-size:9px}.actions{gap:15px;flex-wrap:wrap;margin-top:17px}.actions .btn{font-size:14px;padding:0 13px;min-height:44px}.herolink{font-size:13px;gap:3px}.quicks .quick{padding:14px}.quick strong{font-size:19px}.quick>span:not(.qicon){font-size:14px}.qicon{width:34px;height:34px;margin-bottom:5px}.quick>.ico{right:12px;top:13px}.foot>small{width:100%}.notice-row{gap:12px}.notice-text strong{font-size:17px}.section-head h2{font-size:36px}.foot div{gap:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 [hidden]{display:none!important}
+
+/* New-content badge. Shows next to recently approved titles. */
+.new-flag{display:inline-flex;align-items:center;justify-content:center;background:var(--gold);color:#1f2c23;font:700 10px/1 var(--heading);letter-spacing:.14em;padding:4px 8px;border-radius:3px;margin-left:8px;vertical-align:middle;text-transform:uppercase;animation:new-pulse 1.6s ease-in-out infinite;box-shadow:0 0 0 0 rgba(235,188,100,.55)}
+@keyframes new-pulse{0%,100%{opacity:.78;box-shadow:0 0 0 0 rgba(235,188,100,.55)}50%{opacity:1;box-shadow:0 0 0 7px rgba(235,188,100,0)}}
+@media(prefers-reduced-motion:reduce){.new-flag{animation:none}}

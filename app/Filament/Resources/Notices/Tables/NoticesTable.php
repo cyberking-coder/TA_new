@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Notices\Tables;
 
+use App\Filament\Support\NewBadgeActions;
 use App\Models\Notice;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
@@ -49,6 +50,7 @@ class NoticesTable
                     ->label('Source')
                     ->toggleable()
                     ->limit(30),
+                NewBadgeActions::column(),
                 TextColumn::make('author.name')
                     ->label('Author')
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -72,6 +74,8 @@ class NoticesTable
             ])
             ->recordActions([
                 EditAction::make(),
+                NewBadgeActions::mark(),
+                NewBadgeActions::unmark(),
                 Action::make('publish')
                     ->label('Publish')
                     ->icon('heroicon-o-check-circle')

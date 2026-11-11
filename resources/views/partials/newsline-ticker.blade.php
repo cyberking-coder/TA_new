@@ -7,6 +7,7 @@
                 <li>
                     <a href="{{ $item['url'] }}" class="text-white hover:text-[color:var(--color-ochre-500)] underline-offset-2">
                         {{ $item['title'] }}
+                        <x-new-badge :until="$item['new_until'] ?? null" />
                     </a>
                 </li>
             @endforeach

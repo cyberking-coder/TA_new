@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Pages\Tables;
 
+use App\Filament\Support\NewBadgeActions;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -47,6 +48,8 @@ class PagesTable
             ])
             ->recordActions([
                 EditAction::make(),
+                NewBadgeActions::mark(),
+                NewBadgeActions::unmark(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

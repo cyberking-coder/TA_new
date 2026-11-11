@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasNewBadge;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Page extends Model
 {
+    use HasNewBadge;
+
     protected $fillable = [
         'legacy_id', 'slug', 'parent_id', 'menu_label', 'title', 'body',
-        'seo_title', 'seo_description', 'status', 'published_at', 'author_id',
+        'seo_title', 'seo_description', 'status', 'published_at', 'author_id', 'new_until',
     ];
 
-    protected $casts = ['published_at' => 'datetime'];
+    protected $casts = ['published_at' => 'datetime', 'new_until' => 'datetime'];
 
     public const STATUS_DRAFT     = 'draft';
     public const STATUS_PUBLISHED = 'published';

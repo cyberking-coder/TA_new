@@ -35,6 +35,7 @@ class NoticeController extends Controller
             'summary' => $n->summary,
             'type' => $n->type,
             'date' => $n->published_on->toDateString(),
+            'new_until' => $n->new_until,
         ])->all();
 
         // Fallback to synthetic fixtures until Phase 2 seeded content lands in the DB

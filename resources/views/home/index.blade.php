@@ -70,7 +70,7 @@
                     <span class="date"><b>{{ $date->format('d') }}</b><small>{{ strtoupper($date->format('M')) }}</small></span>
                     <span class="notice-text">
                         <span class="meta">{{ ucfirst($n['type'] ?? 'Notice') }} <i></i> {{ $date->format('Y') }}</span>
-                        <strong>{{ $n['title'] }}</strong>
+                        <strong>{{ $n['title'] }} <x-new-badge :until="$n['new_until'] ?? null" /></strong>
                     </span>
                     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg>
                 </a>
