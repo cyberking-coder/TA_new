@@ -1,6 +1,8 @@
 @extends('layouts.public', ['nav' => 'home'])
 
 @section('content')
+    @include('partials.newsline-ticker', ['items' => $tickerItems ?? []])
+
     <section class="hero">
         @if (count($heroSlides ?? []) > 0)
             <div class="hero-slider" aria-roledescription="carousel" aria-label="Homepage hero">
