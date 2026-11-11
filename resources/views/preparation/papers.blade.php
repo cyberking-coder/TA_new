@@ -18,7 +18,7 @@
         @else
             <div class="resource-grid">
                 @foreach ($pdfs as $p)
-                    <a class="quick" href="{{ route('pdfs.public', $p->id) }}">
+                    <a class="quick" href="{{ route('pdfs.public', $p->id) }}" target="_blank" rel="noopener">
                         <span class="qicon">
                             <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>

@@ -7,7 +7,7 @@
             <ul class="newsline-row">
                 @foreach ($items as $item)
                     <li>
-                        <a href="{{ $item['url'] }}" rel="noopener">
+                        <a href="{{ $item['url'] }}" target="_blank" rel="noopener noreferrer">
                             {{ $item['title'] }}
                             <x-new-badge :until="$item['new_until'] ?? null" />
                         </a>
@@ -17,7 +17,7 @@
             <ul class="newsline-row" aria-hidden="true">
                 @foreach ($items as $item)
                     <li>
-                        <a href="{{ $item['url'] }}" rel="noopener" tabindex="-1">
+                        <a href="{{ $item['url'] }}" target="_blank" rel="noopener noreferrer" tabindex="-1">
                             {{ $item['title'] }}
                         </a>
                     </li>
