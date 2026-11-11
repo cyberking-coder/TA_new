@@ -28,21 +28,34 @@ if(query) {
 const form=document.querySelector('#demoform');
 if(form) form.addEventListener('submit',e=>{e.preventDefault();form.reset();document.querySelector('#feedback').hidden=false;});
 
-// Hero slider: cycles .hero-slide elements using each slide's own data-duration.
+// Hero slider: smooth cross-fade + Ken-Burns zoom between .hero-slide images.
+// Each slide displays for its own data-duration (ms); the fade itself is 1600ms
+// (CSS-driven), and the outgoing slide keeps is-active during the fade so both
+// are rendered mid-transition (true crossfade, no flash of background).
 (function initHeroSlider(){
     const slides = Array.from(document.querySelectorAll('.hero-slider .hero-slide'));
     if (slides.length < 2) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const FADE_MS = 1600;
     let i = 0;
-    function next(){
+
+    // Pre-decode the next image so the fade never catches a half-loaded bitmap.
+    function prefetch(img){ if (img && 'decode' in img) img.decode().catch(() => {}); }
+
+    function step(){
         const prev = slides[i];
         i = (i + 1) % slides.length;
         const cur = slides[i];
-        prev.classList.remove('is-active');
+        prefetch(cur);
         cur.classList.add('is-active');
+        // Let the incoming slide reach full opacity before we drop the previous one.
+        setTimeout(() => prev.classList.remove('is-active'), FADE_MS);
         const d = Number(cur.dataset.duration) || 5000;
-        setTimeout(next, d);
+        setTimeout(step, Math.max(FADE_MS + 200, d));
     }
-    const first = slides[0];
-    const d = Number(first.dataset.duration) || 5000;
-    setTimeout(next, d);
+
+    prefetch(slides[1]);
+    const firstDuration = Number(slides[0].dataset.duration) || 5000;
+    setTimeout(step, Math.max(FADE_MS + 200, firstDuration));
 })();
