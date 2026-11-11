@@ -112,3 +112,15 @@
 .sim-opt.sim-fail:has(input:checked) input[type=radio]{border-color:#b04a4a;box-shadow:inset 0 0 0 4px #b04a4a}
 .sim-opt.sim-cancel:has(input:checked){border-color:#8a6420;background:#fff4df;box-shadow:0 1px 0 #ead1a0}
 .sim-opt.sim-cancel:has(input:checked) input[type=radio]{border-color:#8a6420;box-shadow:inset 0 0 0 4px #8a6420}
+
+/* Newsline ticker across the top of the homepage */
+.newsline{background:var(--green);color:#f8f7f2;border-bottom:1px solid #152821;font-size:14px}
+.newsline-wrap{display:flex;align-items:center;gap:14px;padding:9px 0;flex-wrap:wrap}
+.newsline-label{display:inline-flex;align-items:center;background:var(--gold);color:#1f2c23;font:700 10px var(--heading);letter-spacing:.14em;padding:4px 9px;border-radius:3px;text-transform:uppercase;flex:none}
+.newsline ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 20px;min-width:0}
+.newsline li{position:relative;padding:0}
+.newsline li+li::before{content:"·";position:absolute;left:-12px;top:0;opacity:.55;color:#d8aa55}
+.newsline a{color:#f3f0e4;text-decoration:none;transition:color .15s}
+.newsline a:hover{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.newsline a:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+@media(max-width:600px){.newsline-wrap{padding:8px 0;gap:10px}.newsline ul{gap:4px 14px;font-size:13.5px}}
