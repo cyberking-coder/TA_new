@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Cache;
 /**
  * Shared "Mark NEW / Unmark NEW" actions + column for any resource
  * whose model uses HasNewBadge.
- *
- * Usage inside a Table config:
- *   ->columns([..., NewBadgeActions::column(), ...])
- *   ->recordActions([NewBadgeActions::mark(), NewBadgeActions::unmark(), ...])
  */
 class NewBadgeActions
 {
+    // Keep the window local to this helper too, so it works even when the
+    // trait's constant is unreachable through the record instance.
+    public const DEFAULT_DAYS = 7;
+
     public static function column(): TextColumn
     {
         return TextColumn::make('new_until')
@@ -38,13 +38,13 @@ class NewBadgeActions
             ->label('Mark NEW')
             ->icon('heroicon-o-sparkles')
             ->color('warning')
-            ->visible(fn ($record) => !$record->isNew())
+            ->visible(fn ($record) => $record && method_exists($record, 'isNew') && !$record->isNew())
             ->requiresConfirmation()
             ->modalDescription('Show a pulsing "NEW" badge next to this item on the public site for the next 7 days.')
             ->action(function ($record) {
-                /** @var HasNewBadge $record */
-                $record->markAsNew(HasNewBadge::NEW_DEFAULT_DAYS);
-                Cache::forget('home.latest_notices');
+                if (!$record || !method_exists($record, 'markAsNew')) return;
+                $record->markAsNew(self::DEFAULT_DAYS);
+                try { Cache::forget('home.latest_notices'); } catch (\Throwable $e) { /* best-effort */ }
             });
     }
 
@@ -54,12 +54,12 @@ class NewBadgeActions
             ->label('Clear NEW')
             ->icon('heroicon-o-x-mark')
             ->color('gray')
-            ->visible(fn ($record) => $record->isNew())
+            ->visible(fn ($record) => $record && method_exists($record, 'isNew') && $record->isNew())
             ->requiresConfirmation()
             ->action(function ($record) {
-                /** @var HasNewBadge $record */
+                if (!$record || !method_exists($record, 'unmarkAsNew')) return;
                 $record->unmarkAsNew();
-                Cache::forget('home.latest_notices');
+                try { Cache::forget('home.latest_notices'); } catch (\Throwable $e) { /* best-effort */ }
             });
     }
 }

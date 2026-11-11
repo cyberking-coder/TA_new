@@ -22,13 +22,13 @@ trait HasNewBadge
         return $this->new_until && $this->new_until->isFuture();
     }
 
-    public function markAsNew(int $days = self::NEW_DEFAULT_DAYS): void
+    public function markAsNew(int $days = 7): void
     {
-        $this->update(['new_until' => now()->addDays($days)]);
+        $this->forceFill(['new_until' => now()->addDays($days)])->save();
     }
 
     public function unmarkAsNew(): void
     {
-        $this->update(['new_until' => null]);
+        $this->forceFill(['new_until' => null])->save();
     }
 }
