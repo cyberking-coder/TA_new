@@ -93,3 +93,22 @@
 .return-pending span:nth-child(3){animation-delay:.4s}
 @keyframes dots{0%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
 @media(prefers-reduced-motion:reduce){.redirect-spinner,.return-pending span{animation:none}}
+
+/* Payment simulator */
+.sim-meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:14px 16px;background:#fbfaf3;border:1px solid var(--line);border-radius:7px;margin:8px 0 18px}
+.sim-meta div{display:flex;flex-direction:column;gap:3px}
+.sim-meta span{font-size:12px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.sim-meta strong{font:600 16px var(--heading);color:var(--ink)}
+.sim-outcomes{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.sim-opt{display:grid!important;grid-template-columns:22px minmax(0,1fr)!important;align-items:start;gap:14px!important;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:7px;cursor:pointer;transition:border-color .15s,background .15s,box-shadow .15s}
+.sim-opt input[type=radio]{appearance:none;-webkit-appearance:none;width:20px;height:20px;border:2px solid #b4bdae;border-radius:50%;margin:1px 0 0;flex:none;background:#fff;cursor:pointer;position:relative}
+.sim-opt input[type=radio]:checked{border-color:var(--green);box-shadow:inset 0 0 0 4px var(--green)}
+.sim-opt-body{display:flex;flex-direction:column;gap:3px}
+.sim-opt-body strong{font:600 16px var(--heading);color:var(--ink)}
+.sim-opt-body span{font-size:13px;color:var(--mute);line-height:1.4}
+.sim-opt:has(input:checked){border-color:var(--green);background:#f4f7ec;box-shadow:0 1px 0 #d8c599}
+.sim-opt.sim-ok:has(input:checked){border-color:var(--green)}
+.sim-opt.sim-fail:has(input:checked){border-color:#b04a4a;background:#fcebe9;box-shadow:0 1px 0 #d9a79f}
+.sim-opt.sim-fail:has(input:checked) input[type=radio]{border-color:#b04a4a;box-shadow:inset 0 0 0 4px #b04a4a}
+.sim-opt.sim-cancel:has(input:checked){border-color:#8a6420;background:#fff4df;box-shadow:0 1px 0 #ead1a0}
+.sim-opt.sim-cancel:has(input:checked) input[type=radio]{border-color:#8a6420;box-shadow:inset 0 0 0 4px #8a6420}
