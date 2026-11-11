@@ -43,8 +43,12 @@ Route::post('/payment/callback', [PaymentCallbackController::class, 'callback'])
     ->name('payment.callback');
 
 // Local simulator — only when payments.provider === 'simulator'.
-Route::get('/payment/simulator', [PaymentSimulatorController::class, 'form'])->name('payment.simulator.form');
-Route::post('/payment/simulator', [PaymentSimulatorController::class, 'decide'])->name('payment.simulator.decide');
+// The checkout flow POSTs to the simulator with just order_ref/amount/currency
+// to mimic a merchant-hosted gateway redirect, so the picker URL MUST accept
+// POST as well as GET. The user then posts the picked outcome to the confirm
+// URL, which is what actually drives the reconciliation callback.
+Route::match(['get', 'post'], '/payment/simulator', [PaymentSimulatorController::class, 'form'])->name('payment.simulator.form');
+Route::post('/payment/simulator/confirm', [PaymentSimulatorController::class, 'decide'])->name('payment.simulator.decide');
 
 // Alerts & result registration (Phase 3)
 Route::get('/alerts/officer', fn () => app(AlertsController::class)->form('officer'))->name('alerts.officer');
