@@ -49,8 +49,18 @@ class HeroMedia extends Model
     public function publicUrl(): ?string
     {
         if (!$this->image_path) return null;
+        $disk = \Illuminate\Support\Facades\Storage::disk('public');
+        // Prefer a signed URL on S3/R2 so the browser can actually GET the
+        // bytes even when the bucket is private (no public-access toggle on
+        // Cloudflare). 24h TTL is fine for a hero image. For a plain local
+        // disk, temporaryUrl isn't supported so we fall back to url().
         try {
-            return \Illuminate\Support\Facades\Storage::disk('public')->url($this->image_path);
+            if (method_exists($disk, 'temporaryUrl')) {
+                try {
+                    return $disk->temporaryUrl($this->image_path, now()->addHours(24));
+                } catch (\Throwable) { /* fall through to url() */ }
+            }
+            return $disk->url($this->image_path);
         } catch (\Throwable) {
             return null;
         }
