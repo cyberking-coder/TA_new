@@ -57,9 +57,11 @@ CACHE_STORE=file
 SESSION_DRIVER=database
 SESSION_LIFETIME=120
 
-MAIL_MAILER=ses               # or resend
-MAIL_FROM_ADDRESS=hello@<domain>
+MAIL_MAILER=resend            # or ses
+MAIL_FROM_ADDRESS=alerts@<domain>
 MAIL_FROM_NAME="Territorial Army exam guide"
+RESEND_KEY=re_XXXXXXXXXXXXX   # see docs/handover/07-resend-setup.md
+# Alternative: SES via the AWS SDK (still supported)
 AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
 AWS_DEFAULT_REGION=ap-south-1

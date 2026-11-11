@@ -28,7 +28,7 @@ Carried from PRD; none of these block Phase 1 but each must be resolved before l
 - Domain + hosting access (Hostinger VPS target).
 - Brand assets: licensed hero photo, book cover artwork, four task pictograms, licence records.
 - Authorised offline legacy data extract (content, subscribers, orders, entitlements).
-- Transactional-mail sender decision (SES vs Resend) + domain verification.
+- Transactional-mail sender decision: **Resend chosen**, package installed + smoke command shipped. Owner to verify domain + add RESEND_KEY per `docs/handover/07-resend-setup.md`.
 - CCAvenue merchant test credentials + integration kit.
 - Confirmation on buyer-access policy, quantity-pricing rounding rule, manual shipment tracking.
 - SMS provider decision (only if SMS delivery is required).
