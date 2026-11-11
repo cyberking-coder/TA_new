@@ -62,6 +62,10 @@ Route::get('/study', [StudyController::class, 'index'])->name('study.index');
 Route::get('/study/download/{material}', [StudyController::class, 'download'])
     ->whereNumber('material')
     ->name('study.download');
+Route::get('/study/forgot', [StudyController::class, 'forgotForm'])->name('study.forgot');
+Route::post('/study/forgot', [StudyController::class, 'forgotSubmit'])
+    ->middleware('throttle:5,10')
+    ->name('study.forgot.submit');
 Route::get('/study/reset/{token}', [StudyController::class, 'resetForm'])->name('study.reset.form');
 Route::post('/study/reset/{token}', [StudyController::class, 'resetSubmit'])->name('study.reset.submit');
 

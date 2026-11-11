@@ -110,6 +110,67 @@ class StudyController extends Controller
 
     // --- Password reset / setup ---
 
+    public function forgotForm()
+    {
+        return view('study.forgot', [
+            'title' => 'Request a new setup link',
+            'description' => 'Request a fresh password-setup link for your buyer account.',
+            'canonical' => url()->current(),
+            'robots' => 'noindex',
+        ]);
+    }
+
+    public function forgotSubmit(Request $request)
+    {
+        $data = $request->validate([
+            'order_ref' => 'required|string|max:64',
+            'email'     => 'required|email:rfc|max:191',
+        ]);
+
+        $buyer = Buyer::query()
+            ->where('order_ref', $data['order_ref'])
+            ->whereRaw('LOWER(email) = ?', [strtolower(trim($data['email']))])
+            ->first();
+
+        // Always render the same confirmation view regardless of whether the
+        // buyer existed, so this endpoint can't be used to enumerate order
+        // references or emails. If the match was real, we send a fresh link.
+        if ($buyer) {
+            // Expire any previous unused tokens for this buyer.
+            BuyerPasswordReset::query()
+                ->where('buyer_id', $buyer->id)
+                ->whereNull('used_at')
+                ->update(['expires_at' => now()->subMinute()]);
+
+            $raw = \Illuminate\Support\Str::random(48);
+            BuyerPasswordReset::create([
+                'buyer_id' => $buyer->id,
+                'token_hash' => hash('sha256', $raw),
+                'expires_at' => now()->addHours(48),
+            ]);
+
+            try {
+                \Illuminate\Support\Facades\Mail::to($buyer->email)
+                    ->queue(new \App\Mail\OrderReceiptMail($buyer->order_ref
+                        ? \App\Models\Order::firstWhere('order_ref', $buyer->order_ref)
+                            ?? new \App\Models\Order(['order_ref' => $buyer->order_ref, 'total_paise' => 0, 'paid_at' => $buyer->last_login_at ?? now()])
+                        : new \App\Models\Order(['order_ref' => $buyer->order_ref ?? '', 'total_paise' => 0, 'paid_at' => now()]),
+                        url('/study/reset/'.$raw)));
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+
+        return view('study.reset-outcome', [
+            'title' => 'Setup link sent',
+            'description' => 'If your details match a buyer account, a password-setup link is on its way.',
+            'canonical' => url()->current(),
+            'robots' => 'noindex',
+            'heading' => 'Check your inbox',
+            'blurb' => 'If your order reference and email match an account on record, we have just sent a fresh password-setup link to that email. The link expires in 48 hours and works once.',
+        ]);
+    }
+
     public function resetForm(string $token)
     {
         return view('study.reset', [

@@ -21,6 +21,7 @@
             <div class="kicker"><i></i>BUYER LOGIN</div>
             <h2>Sign in</h2>
             <p class="fine">Use your order reference (e.g. <code>TA-ABCD1234</code>) and the password you set after your purchase.</p>
+            <p class="fine" style="margin:0 0 6px"><a href="{{ route('study.forgot') }}">Never set a password or lost your setup link? Request a new one.</a></p>
             <label><span>Order reference</span>
                 <input required type="text" name="order_ref" value="{{ old('order_ref') }}" maxlength="64">
             </label>
@@ -28,7 +29,7 @@
                 <input required type="password" name="password" maxlength="72">
             </label>
             <button type="submit" class="btn">Sign in</button>
-            <p class="fine">First time? Use the password-setup link emailed with your receipt. If it expired, contact support — a new link can be issued.</p>
+            <p class="fine">First time, or setup link expired? <a href="{{ route('study.forgot') }}">Get a new link</a> — arrives at your order email within a minute.</p>
         </form>
     </section>
 @endsection
