@@ -20,6 +20,16 @@ class HeroMedia extends Model
         'display_order' => 'integer',
     ];
 
+    // The legacy Phase 2 schema still has these columns as NOT NULL; keep
+    // empty-string defaults so new overlay-less slides save cleanly on any
+    // host regardless of whether the relax-columns migration could run.
+    protected $attributes = [
+        'headline' => '',
+        'subhead' => '',
+        'action_label' => '',
+        'action_url' => '',
+    ];
+
     public static function featured(): ?self
     {
         return self::query()->where('is_featured', true)->latest('updated_at')->first();
