@@ -35,12 +35,11 @@ if(form) form.addEventListener('submit',e=>{e.preventDefault();form.reset();docu
 (function initHeroSlider(){
     const slides = Array.from(document.querySelectorAll('.hero-slider .hero-slide'));
     if (slides.length < 2) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const FADE_MS = 1600;
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const FADE_MS = reduced ? 400 : 1600;
     let i = 0;
 
-    // Pre-decode the next image so the fade never catches a half-loaded bitmap.
     function prefetch(img){ if (img && 'decode' in img) img.decode().catch(() => {}); }
 
     function step(){
@@ -49,7 +48,6 @@ if(form) form.addEventListener('submit',e=>{e.preventDefault();form.reset();docu
         const cur = slides[i];
         prefetch(cur);
         cur.classList.add('is-active');
-        // Let the incoming slide reach full opacity before we drop the previous one.
         setTimeout(() => prev.classList.remove('is-active'), FADE_MS);
         const d = Number(cur.dataset.duration) || 5000;
         setTimeout(step, Math.max(FADE_MS + 200, d));
