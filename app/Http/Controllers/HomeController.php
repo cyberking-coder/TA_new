@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\HeroMedia;
 use App\Models\NewslineItem;
 use App\Models\Notice;
 use App\Support\SyntheticFixtures;
@@ -44,6 +45,16 @@ class HomeController extends Controller
             ->map(fn ($n) => ['title' => $n->title, 'url' => $n->destination_url, 'new_until' => $n->new_until])
             ->all();
 
+        $slides = HeroMedia::activeSlides()
+            ->map(fn (HeroMedia $h) => [
+                'url' => $h->publicUrl(),
+                'alt' => $h->alt_text ?? '',
+                'duration' => max(2, $h->duration_seconds ?? 5),
+            ])
+            ->filter(fn ($s) => !empty($s['url']))
+            ->values()
+            ->all();
+
         return view('home.index', [
             'title' => 'Territorial Army exam guide — notices, preparation and the book',
             'description' => 'Dated recruitment notices, preparation resources, and the Territorial Army Commission examination book. Independent publisher, source-attributed notices, buyer-only study access.',
@@ -51,6 +62,7 @@ class HomeController extends Controller
             'latestNotices' => $latest,
             'featuredBook' => $featuredBook,
             'tickerItems' => $ticker,
+            'heroSlides' => $slides,
             'jsonLd' => [
                 '@context' => 'https://schema.org',
                 '@type' => 'WebSite',

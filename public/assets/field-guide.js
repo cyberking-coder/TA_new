@@ -27,3 +27,22 @@ if(query) {
 }
 const form=document.querySelector('#demoform');
 if(form) form.addEventListener('submit',e=>{e.preventDefault();form.reset();document.querySelector('#feedback').hidden=false;});
+
+// Hero slider: cycles .hero-slide elements using each slide's own data-duration.
+(function initHeroSlider(){
+    const slides = Array.from(document.querySelectorAll('.hero-slider .hero-slide'));
+    if (slides.length < 2) return;
+    let i = 0;
+    function next(){
+        const prev = slides[i];
+        i = (i + 1) % slides.length;
+        const cur = slides[i];
+        prev.classList.remove('is-active');
+        cur.classList.add('is-active');
+        const d = Number(cur.dataset.duration) || 5000;
+        setTimeout(next, d);
+    }
+    const first = slides[0];
+    const d = Number(first.dataset.duration) || 5000;
+    setTimeout(next, d);
+})();
