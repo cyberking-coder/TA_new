@@ -28,6 +28,12 @@ class PdfForm
                     Pdf::DISK_PRIVATE => 'Private — buyer-only (study material)',
                 ])
                 ->helperText('Private PDFs are served only via signed short-lived links to verified buyers.'),
+            Select::make('category')
+                ->label('Where to list')
+                ->required()
+                ->default(Pdf::CATEGORY_GENERAL)
+                ->options(Pdf::categoryOptions())
+                ->helperText('Controls which public page this PDF appears on. "Previous solved" and "Practice papers" have their own nav links.'),
             // Upload always lands on the "public" filesystem disk. The `disk` column
             // above is a POLICY marker, not a storage selector: PdfDownloadController
             // refuses a public link to a row with disk=private, and StudyController

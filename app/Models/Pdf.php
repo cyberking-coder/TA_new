@@ -10,9 +10,24 @@ class Pdf extends Model
 {
     use HasNewBadge;
 
-    protected $fillable = ['legacy_id', 'title', 'disk', 'path', 'size_bytes', 'mime', 'download_label', 'uploaded_by', 'new_until'];
+    protected $fillable = ['legacy_id', 'title', 'disk', 'path', 'size_bytes', 'mime', 'download_label', 'uploaded_by', 'new_until', 'category'];
 
     protected $casts = ['new_until' => 'datetime'];
+
+    public const CATEGORY_GENERAL         = 'general';
+    public const CATEGORY_PREVIOUS_PAPERS = 'previous_papers';
+    public const CATEGORY_PRACTICE_PAPERS = 'practice_papers';
+    public const CATEGORY_STUDY_MATERIAL  = 'study_material';
+
+    public static function categoryOptions(): array
+    {
+        return [
+            self::CATEGORY_GENERAL         => 'General (notices, forms, documents)',
+            self::CATEGORY_PREVIOUS_PAPERS => 'Previous solved question papers',
+            self::CATEGORY_PRACTICE_PAPERS => 'Practice papers',
+            self::CATEGORY_STUDY_MATERIAL  => 'Study material (buyer-only)',
+        ];
+    }
 
     public const DISK_PUBLIC  = 'public';
     public const DISK_PRIVATE = 'private';

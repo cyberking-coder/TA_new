@@ -12,7 +12,8 @@
             <a href="{{ route('home') }}"{!! $cur('home') !!}>Home</a>
             <a href="{{ route('notices.index') }}"{!! $cur('notices') !!}>Notices</a>
             <a href="{{ route('downloads.index') }}"{!! $cur('downloads') !!}>Downloads</a>
-            <a href="{{ route('prep.previous') }}"{!! $cur('preparation') !!}>Preparation</a>
+            <a href="{{ route('prep.previous') }}"{!! $cur('previous') !!}>Previous Papers</a>
+            <a href="{{ route('prep.practice') }}"{!! $cur('practice') !!}>Practice Papers</a>
             <a href="{{ route('alerts.officer') }}"{!! $cur('alerts') !!}>Alerts</a>
             <a href="{{ route('books.show', 'tac-examination-book') }}"{!! $cur('bookshop') !!}>Bookshop</a>
         </nav>

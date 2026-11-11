@@ -11,6 +11,7 @@ use App\Http\Controllers\PaymentCallbackController;
 use App\Http\Controllers\PaymentSimulatorController;
 use App\Http\Controllers\PdfDownloadController;
 use App\Http\Controllers\PlaceholderController;
+use App\Http\Controllers\PreparationController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\StudyController;
 use Illuminate\Support\Facades\Route;
@@ -22,13 +23,8 @@ Route::get('/notices/{slug}', [NoticeController::class, 'show'])->name('notices.
 
 Route::get('/important-downloads', [DownloadsController::class, 'index'])->name('downloads.index');
 
-Route::get('/preparation/previous-papers', fn () => app(PlaceholderController::class)
-    ->render('Previous papers', 'Solved previous-paper landing page. Phase 2 lands subject/year groupings and detail pages.', 'Phase 2')
-)->name('prep.previous');
-
-Route::get('/preparation/practice-papers', fn () => app(PlaceholderController::class)
-    ->render('Practice papers', 'Practice-set landing page kept distinct from solved previous papers. Phase 2 lands the sets.', 'Phase 2')
-)->name('prep.practice');
+Route::get('/preparation/previous-papers', [PreparationController::class, 'previousPapers'])->name('prep.previous');
+Route::get('/preparation/practice-papers', [PreparationController::class, 'practicePapers'])->name('prep.practice');
 
 Route::get('/books/{slug}', [BookController::class, 'show'])->name('books.show');
 
