@@ -67,9 +67,29 @@
                 <span class="fine" style="margin-top:4px">{{ $challenge['question'] }}</span>
             </label>
 
-            @if ($turnstileSiteKey)
-                <div class="cf-turnstile" data-sitekey="{{ $turnstileSiteKey }}" data-theme="light" style="margin:10px 0"></div>
-                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+            @if ($recaptchaSiteKey)
+                @if ($recaptchaVersion === 'v3')
+                    {{-- reCAPTCHA v3: invisible, injects a hidden g-recaptcha-response on submit. --}}
+                    <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+                    <script src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaSiteKey }}" async defer></script>
+                    <script>
+                        document.addEventListener('submit', function (e) {
+                            if (e.target.matches('form[action*="/review"]')) {
+                                e.preventDefault();
+                                grecaptcha.ready(function () {
+                                    grecaptcha.execute('{{ $recaptchaSiteKey }}', { action: 'review' }).then(function (token) {
+                                        document.getElementById('g-recaptcha-response').value = token;
+                                        e.target.submit();
+                                    });
+                                });
+                            }
+                        });
+                    </script>
+                @else
+                    {{-- reCAPTCHA v2: "I'm not a robot" checkbox. --}}
+                    <div class="g-recaptcha" data-sitekey="{{ $recaptchaSiteKey }}" style="margin:14px 0"></div>
+                    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                @endif
             @endif
 
             <button type="submit" class="btn" style="margin-top:14px">

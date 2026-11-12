@@ -35,16 +35,20 @@ return [
         ],
     ],
 
-    // Cloudflare Turnstile -- optional second bot shield on the public
-    // review form. Leaving these blank keeps the review form protected
-    // by the built-in honeypot + math challenge only. To enable:
-    //   1. sign up at https://dash.cloudflare.com/?to=/:account/turnstile
-    //   2. add a site (pick "Managed" type, domain = your site)
-    //   3. copy the Site key + Secret key into .env
-    //   4. php artisan config:clear
-    'turnstile' => [
-        'site_key'   => env('TURNSTILE_SITE_KEY'),
-        'secret_key' => env('TURNSTILE_SECRET_KEY'),
+    // Google reCAPTCHA -- optional bot shield on the public review form.
+    // Leaving these blank keeps the form protected by the built-in
+    // honeypot + math challenge only. To enable:
+    //   1. go to https://www.google.com/recaptcha/admin/create
+    //   2. pick "reCAPTCHA v2" + "I'm not a robot" checkbox
+    //      (or "reCAPTCHA v3" if you prefer invisible scoring)
+    //   3. add your domain(s): localhost, your.domain, etc.
+    //   4. copy the Site key + Secret key into .env
+    //   5. php artisan config:clear
+    'recaptcha' => [
+        'site_key'   => env('RECAPTCHA_SITE_KEY'),
+        'secret_key' => env('RECAPTCHA_SECRET_KEY'),
+        'version'    => env('RECAPTCHA_VERSION', 'v2'),       // v2 | v3
+        'min_score'  => (float) env('RECAPTCHA_MIN_SCORE', 0.5), // v3 only
     ],
 
 ];

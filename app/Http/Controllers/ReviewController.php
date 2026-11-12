@@ -23,7 +23,8 @@ class ReviewController extends Controller
             'canonical' => url()->current(),
             'book' => $book,
             'challenge' => ['a' => $a, 'b' => $b, 'question' => "What is $a + $b?"],
-            'turnstileSiteKey' => config('services.turnstile.site_key'),
+            'recaptchaSiteKey' => config('services.recaptcha.site_key'),
+            'recaptchaVersion' => config('services.recaptcha.version', 'v2'),
         ]);
     }
 
@@ -61,18 +62,34 @@ class ReviewController extends Controller
             ]);
         }
 
-        // Optional Cloudflare Turnstile — only enforced when configured.
-        if (config('services.turnstile.secret_key')) {
-            $token = $request->input('cf-turnstile-response');
+        // Optional Google reCAPTCHA — only enforced when configured.
+        if (config('services.recaptcha.secret_key')) {
+            $version = config('services.recaptcha.version', 'v2');
+            $token = $request->input('g-recaptcha-response');
+            if (!$token) {
+                return back()->withInput()->withErrors([
+                    'captcha' => 'reCAPTCHA response missing. Please complete the check and try again.',
+                ]);
+            }
             try {
-                $resp = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
-                    'secret' => config('services.turnstile.secret_key'),
+                $resp = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                    'secret'   => config('services.recaptcha.secret_key'),
                     'response' => $token,
                     'remoteip' => $request->ip(),
                 ])->json();
-                if (empty($resp['success'])) {
+
+                $success = (bool) ($resp['success'] ?? false);
+
+                if ($version === 'v3') {
+                    // v3 returns a score 0.0 (bot) -> 1.0 (human). Threshold is configurable.
+                    $score = (float) ($resp['score'] ?? 0);
+                    $threshold = (float) config('services.recaptcha.min_score', 0.5);
+                    $success = $success && $score >= $threshold;
+                }
+
+                if (!$success) {
                     return back()->withInput()->withErrors([
-                        'challenge_answer' => 'Bot check failed. Please try again.',
+                        'captcha' => 'reCAPTCHA verification failed. Please try again.',
                     ]);
                 }
             } catch (\Throwable $e) {
