@@ -57,3 +57,40 @@ if(form) form.addEventListener('submit',e=>{e.preventDefault();form.reset();docu
     const firstDuration = Number(slides[0].dataset.duration) || 5000;
     setTimeout(step, Math.max(FADE_MS + 200, firstDuration));
 })();
+
+// Dropdowns on the primary nav. Click to toggle, outside-click to close, Esc to close.
+(function initPrimaryDropdowns() {
+    const triggers = document.querySelectorAll('.has-dropdown .nav-trigger');
+    if (!triggers.length) return;
+    triggers.forEach(t => {
+        t.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const parent = t.closest('.has-dropdown');
+            const wasOpen = parent.classList.contains('is-open');
+            document.querySelectorAll('.has-dropdown.is-open').forEach(el => {
+                el.classList.remove('is-open');
+                el.querySelector('.nav-trigger')?.setAttribute('aria-expanded', 'false');
+            });
+            if (!wasOpen) {
+                parent.classList.add('is-open');
+                t.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.has-dropdown')) {
+            document.querySelectorAll('.has-dropdown.is-open').forEach(el => {
+                el.classList.remove('is-open');
+                el.querySelector('.nav-trigger')?.setAttribute('aria-expanded', 'false');
+            });
+        }
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.has-dropdown.is-open').forEach(el => {
+                el.classList.remove('is-open');
+                el.querySelector('.nav-trigger')?.setAttribute('aria-expanded', 'false');
+            });
+        }
+    });
+})();
