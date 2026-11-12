@@ -15,15 +15,23 @@ class ReviewController extends Controller
     public function form(string $slug)
     {
         $book = Book::query()->published()->where('slug', $slug)->firstOrFail();
-        [$a, $b] = $this->freshChallenge();
+        $recaptchaKey = config('services.recaptcha.site_key');
+
+        // Math challenge is the no-dependency fallback. Skip it when reCAPTCHA
+        // is wired, so visitors don't have to pass two bot checks.
+        $challenge = null;
+        if (!$recaptchaKey) {
+            [$a, $b] = $this->freshChallenge();
+            $challenge = ['a' => $a, 'b' => $b, 'question' => "What is $a + $b?"];
+        }
 
         return view('reviews.create', [
             'title' => 'Write a review — '.$book->title,
             'description' => 'Share your experience with '.$book->title.'. Reviews appear after staff moderation.',
             'canonical' => url()->current(),
             'book' => $book,
-            'challenge' => ['a' => $a, 'b' => $b, 'question' => "What is $a + $b?"],
-            'recaptchaSiteKey' => config('services.recaptcha.site_key'),
+            'challenge' => $challenge,
+            'recaptchaSiteKey' => $recaptchaKey,
             'recaptchaVersion' => config('services.recaptcha.version', 'v2'),
         ]);
     }
@@ -41,25 +49,33 @@ class ReviewController extends Controller
         }
         RateLimiter::hit($rlKey, 3600);
 
-        $data = $request->validate([
+        $recaptchaOn = (bool) config('services.recaptcha.secret_key');
+
+        $rules = [
             'author_name' => 'required|string|min:2|max:120',
             'rating'      => 'required|integer|min:1|max:5',
             'body'        => 'required|string|min:20|max:2000',
-            'challenge_answer' => 'required|integer',
             // honeypot -- real browsers leave it empty; bots fill every field
             'website'     => 'nullable|string|max:0',
-        ], [
+        ];
+        // Only require the math answer when reCAPTCHA isn't wired.
+        if (!$recaptchaOn) {
+            $rules['challenge_answer'] = 'required|integer';
+        }
+        $data = $request->validate($rules, [
             'website.max' => 'Submission flagged as automated.',
             'body.min'    => 'Please write at least 20 characters so the review is useful.',
             'challenge_answer.required' => 'Please answer the human-check question.',
         ]);
 
-        // Human-check — stored on session when the form was rendered.
-        $expected = Session::pull('review_challenge_answer');
-        if (!$expected || (int) $data['challenge_answer'] !== (int) $expected) {
-            return back()->withInput()->withErrors([
-                'challenge_answer' => 'Human check failed. Please try the sum again.',
-            ]);
+        // Math challenge only runs when reCAPTCHA isn't configured.
+        if (!$recaptchaOn) {
+            $expected = Session::pull('review_challenge_answer');
+            if (!$expected || (int) $data['challenge_answer'] !== (int) $expected) {
+                return back()->withInput()->withErrors([
+                    'challenge_answer' => 'Human check failed. Please try the sum again.',
+                ]);
+            }
         }
 
         // Optional Google reCAPTCHA — only enforced when configured.
