@@ -1,0 +1,6 @@
+<svg class="crest" viewBox="0 0 44 52" aria-hidden="true">
+    <path d="M2 3h40v27c0 9-12 16-20 20C14 46 2 39 2 30z" fill="#263e31"/>
+    <path d="M6 7h32v22c0 7-9 13-16 17-7-4-16-10-16-17z" fill="none" stroke="#d7b778" stroke-width="1.3"/>
+    <path d="m10 29 12-11 12 11v4L22 22 10 33zm3 6 9-8 9 8-3 2-6-6-6 6z" fill="#e2c489"/>
+    <path d="m22 8 1.3 3 3.2.3-2.4 2.1.7 3.1-2.8-1.6-2.8 1.6.7-3.1-2.4-2.1 3.2-.3z" fill="#e2c489"/>
+</svg>

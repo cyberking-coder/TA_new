@@ -1,0 +1,8 @@
+tab1: a:Skip to main content
+tab2: a:Territorial Army exam guide
+tab3: a:Notices
+tab4: a:Prepare
+tab5: a:Books
+tab6: a:Study login
+tab7: a:View latest notices
+tab8: a:About the book
