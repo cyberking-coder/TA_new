@@ -49,7 +49,13 @@
 
         @if (!empty($book['sample_reviews']))
             <section style="margin-top:48px">
-                <div class="section-head"><div><div class="kicker"><i></i>MODERATED</div><h2>Verified reviews</h2></div></div>
+                <div class="section-head">
+                    <div><div class="kicker"><i></i>MODERATED</div><h2>Verified reviews</h2></div>
+                    <a class="textlink" href="{{ route('reviews.form', $book['slug']) }}">
+                        Write a review
+                        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>
+                    </a>
+                </div>
                 <div class="resource-grid" style="margin-top:20px">
                     @foreach ($book['sample_reviews'] as $r)
                         <div class="quick" style="cursor:default;align-items:flex-start">

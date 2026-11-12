@@ -129,3 +129,11 @@
 @keyframes newsline-scroll{from{transform:translateX(0)}to{transform:translateX(calc(-100% - 40px))}}
 @media(max-width:600px){.newsline-wrap{padding:8px 0;gap:10px}.newsline-row{font-size:13.5px;animation-duration:12s;gap:0 28px}.newsline-row li+li::before{left:-16px}}
 @media(prefers-reduced-motion:reduce){.newsline-row{animation:none}.newsline-row:nth-of-type(2){display:none}.newsline-row{flex-wrap:wrap}}
+
+/* Review rating picker */
+.rating-row{display:flex;flex-direction:row-reverse;gap:6px;justify-content:flex-end;max-width:360px}
+.rating-chip{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;background:#fbfaf3;border:1.5px solid var(--line);border-radius:6px;cursor:pointer;font:600 15px var(--heading);color:var(--ink);transition:all .15s;user-select:none}
+.rating-chip input{position:absolute;left:-10000px;opacity:0}
+.rating-chip:has(input:checked){background:var(--gold);border-color:#d8aa55;color:#1f2c23;box-shadow:0 1px 0 #b78a3c}
+.rating-chip:hover{background:#fff4df;border-color:#ead1a0}
+.rating-chip:focus-within{outline:3px solid #ba7619;outline-offset:3px}

@@ -12,6 +12,7 @@ use App\Http\Controllers\PaymentSimulatorController;
 use App\Http\Controllers\PdfDownloadController;
 use App\Http\Controllers\PlaceholderController;
 use App\Http\Controllers\PreparationController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\StudyController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,13 @@ Route::get('/preparation/previous-papers', [PreparationController::class, 'previ
 Route::get('/preparation/practice-papers', [PreparationController::class, 'practicePapers'])->name('prep.practice');
 
 Route::get('/books/{slug}', [BookController::class, 'show'])->name('books.show');
+
+// Public review submission + moderation thanks page.
+Route::get('/books/{slug}/review', [ReviewController::class, 'form'])->name('reviews.form');
+Route::post('/books/{slug}/review', [ReviewController::class, 'submit'])
+    ->middleware('throttle:10,60')
+    ->name('reviews.submit');
+Route::get('/books/{slug}/review/thanks', [ReviewController::class, 'thanks'])->name('reviews.thanks');
 
 // Checkout + payment (Phase 4)
 Route::get('/checkout/{slug}', [CheckoutController::class, 'show'])->name('checkout.show');

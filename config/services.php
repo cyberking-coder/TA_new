@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    // Cloudflare Turnstile -- optional second bot shield on the public
+    // review form. Leaving these blank keeps the review form protected
+    // by the built-in honeypot + math challenge only. To enable:
+    //   1. sign up at https://dash.cloudflare.com/?to=/:account/turnstile
+    //   2. add a site (pick "Managed" type, domain = your site)
+    //   3. copy the Site key + Secret key into .env
+    //   4. php artisan config:clear
+    'turnstile' => [
+        'site_key'   => env('TURNSTILE_SITE_KEY'),
+        'secret_key' => env('TURNSTILE_SECRET_KEY'),
+    ],
+
 ];
