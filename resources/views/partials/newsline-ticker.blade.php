@@ -9,7 +9,6 @@
                     <li>
                         <a href="{{ $item['url'] }}" target="_blank" rel="noopener noreferrer">
                             {{ $item['title'] }}
-                            <x-new-badge :until="$item['new_until'] ?? null" />
                         </a>
                     </li>
                 @endforeach
