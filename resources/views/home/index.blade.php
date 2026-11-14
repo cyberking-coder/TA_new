@@ -2,6 +2,10 @@
 
 @section('content')
     <section class="hero hero-fullbleed">
+        <picture>
+            <source media="(max-width:600px)" srcset="/assets/hero-mobile.webp">
+            <img fetchpriority="high" src="/assets/hero.webp" width="1536" height="820" alt="Soldiers on a Himalayan ridge at dawn">
+        </picture>
         @if (count($heroSlides ?? []) > 0)
             <div class="hero-slider" aria-roledescription="carousel" aria-label="Homepage hero">
                 @foreach ($heroSlides as $i => $s)
@@ -11,14 +15,10 @@
                         class="hero-slide {{ $i === 0 ? 'is-active' : '' }}"
                         data-duration="{{ (int) ($s['duration'] * 1000) }}"
                         @if ($i === 0) fetchpriority="high" @else loading="lazy" @endif
+                        onerror="this.style.display='none'"
                         width="1536" height="820">
                 @endforeach
             </div>
-        @else
-            <picture>
-                <source media="(max-width:600px)" srcset="/assets/hero-mobile.webp">
-                <img fetchpriority="high" src="/assets/hero.webp" width="1536" height="820" alt="Illustration of soldiers on a Himalayan ridge at dawn">
-            </picture>
         @endif
         <div class="wrap hero-inner">
             <div class="kicker"><i></i>INDEPENDENT EXAM RESOURCE</div>
@@ -36,6 +36,17 @@
             </div>
         </div>
     </section>
+
+    <div class="update-strip" role="region" aria-label="Latest updates">
+        <div class="wrap">
+            <span class="update-strip-label">Latest updates</span>
+            <ul class="update-strip-items">
+                <li><a href="{{ route('notices.index', ['type' => 'notice']) }}">Recruitment notices</a></li>
+                <li><a href="{{ route('notices.index', ['type' => 'result']) }}">Exam results</a></li>
+                <li><a href="{{ route('downloads.index') }}">Download forms</a></li>
+            </ul>
+        </div>
+    </div>
 
     @include('partials.newsline-ticker', ['items' => $tickerItems ?? []])
 

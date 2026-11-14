@@ -211,3 +211,18 @@
 /* Nav separators between bottom-row items */
 .nav-sep{width:1px;align-self:stretch;background:#d6d8cb;margin:4px 2px}
 @media(max-width:860px){.nav-sep{display:none}}
+
+/* Static "Latest updates" strip under hero */
+.update-strip{background:#f4f1e4;border-bottom:1px solid #e3dfca}
+.update-strip .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:0;padding:18px clamp(28px,5vw,80px)}
+.update-strip-label{font-weight:700;color:#1d2a1b;font-size:17px;letter-spacing:.01em;margin-right:28px}
+.update-strip-items{display:flex;flex-wrap:wrap;align-items:center;gap:0;margin:0;padding:0;list-style:none}
+.update-strip-items li{display:flex;align-items:center}
+.update-strip-items li+li::before{content:"";display:inline-block;width:1px;height:16px;background:#c9c6b2;margin:0 22px}
+.update-strip-items a{color:#2a3a2e;font-size:16px;text-decoration:none;font-weight:500;transition:color .15s}
+.update-strip-items a:hover{color:#8c6d1f}
+@media(max-width:720px){
+  .update-strip .wrap{padding:14px 20px;gap:10px 14px}
+  .update-strip-label{margin-right:0;width:100%}
+  .update-strip-items li+li::before{margin:0 14px}
+}
