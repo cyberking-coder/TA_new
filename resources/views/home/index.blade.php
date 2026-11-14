@@ -2,7 +2,6 @@
 
 @section('content')
     <section class="hero has-image">
-        <img class="landscape" src="/assets/hero.webp" alt="Soldiers on a Himalayan ridge at dawn">
         @if (!empty($heroSlides) && count($heroSlides) > 0)
             <div class="hero-slider" aria-roledescription="carousel" aria-label="Homepage hero">
                 @foreach ($heroSlides as $i => $s)
@@ -15,6 +14,8 @@
                         width="1536" height="820">
                 @endforeach
             </div>
+        @else
+            <img class="landscape" src="/assets/hero.webp" alt="Soldiers on a Himalayan ridge at dawn">
         @endif
         <div class="frame hero-inner">
             <p class="eyebrow">Independent Territorial Army guide</p>
