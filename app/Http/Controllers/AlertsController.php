@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Exam;
 use App\Models\ResultRegistration;
+use App\Services\Sms\OtpService;
 use App\Services\Subscriptions\SubscriptionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +12,41 @@ use Illuminate\Support\Facades\Validator;
 
 class AlertsController extends Controller
 {
-    public function __construct(private readonly SubscriptionService $svc) {}
+    public function __construct(
+        private readonly SubscriptionService $svc,
+        private readonly OtpService $otp,
+    ) {}
+
+    public function sendOtp(Request $request)
+    {
+        $data = $request->validate([
+            'audience' => 'required|in:officer,soldier',
+            'mobile'   => 'required|string|min:10|max:20',
+        ]);
+        $r = $this->otp->send($data['audience'], $data['mobile'], $request->ip());
+        return redirect()->route('alerts.'.$data['audience'])
+            ->with($r['status'] === 'sent' ? 'flash_ok' : 'flash_warn',
+                $r['status'] === 'sent'
+                    ? 'We sent a 6-digit OTP to your mobile. It expires in 10 minutes.'
+                    : ($r['message'] ?? 'Could not send OTP right now.'));
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $data = $request->validate([
+            'audience' => 'required|in:officer,soldier',
+            'mobile'   => 'required|string|min:10|max:20',
+            'code'     => 'required|digits:6',
+        ]);
+        $r = $this->otp->verify($data['audience'], $data['mobile'], $data['code']);
+        $msg = match ($r['status']) {
+            'verified'          => ['flash_ok',   'Mobile verified. You will start receiving SMS alerts once admin approves the list for sending.'],
+            'expired'           => ['flash_warn', 'That code expired. Request a new one.'],
+            'too_many_attempts' => ['flash_warn', 'Too many wrong attempts on this code. Request a new one.'],
+            default             => ['flash_warn', 'That code is not correct. Try again.'],
+        };
+        return redirect()->route('alerts.'.$data['audience'])->with($msg[0], $msg[1]);
+    }
 
     public function form(string $audience)
     {

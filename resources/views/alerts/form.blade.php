@@ -77,6 +77,37 @@
                 <p id="feedback" hidden>Saved. You can resubmit any time with a different exam or roll number.</p>
             </form>
 
+            <div class="formbox" style="border-left:4px solid var(--gold)">
+                <div class="kicker"><i></i>MOBILE VERIFY</div>
+                <h2>Verify your mobile for SMS alerts</h2>
+                <p class="fine">Enter your mobile number and request a 6-digit OTP. The code expires in 10 minutes.</p>
+
+                <form method="post" action="{{ route('alerts.otp.send') }}" style="display:flex;flex-wrap:wrap;gap:10px;align-items:end">
+                    @csrf
+                    <input type="hidden" name="audience" value="{{ $audience }}">
+                    <label style="flex:1;min-width:220px">
+                        <span>Mobile (10 digits, Indian)</span>
+                        <input required type="tel" name="mobile" maxlength="20" pattern="[0-9+\s-]{10,20}" inputmode="tel" autocomplete="tel">
+                    </label>
+                    <button type="submit" class="btn">Send OTP</button>
+                </form>
+
+                <form method="post" action="{{ route('alerts.otp.verify') }}" style="display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin-top:14px">
+                    @csrf
+                    <input type="hidden" name="audience" value="{{ $audience }}">
+                    <label style="flex:1;min-width:220px">
+                        <span>Same mobile</span>
+                        <input required type="tel" name="mobile" maxlength="20" inputmode="tel" autocomplete="tel">
+                    </label>
+                    <label style="min-width:140px">
+                        <span>6-digit OTP</span>
+                        <input required type="text" name="code" maxlength="6" pattern="\d{6}" inputmode="numeric" autocomplete="one-time-code" style="max-width:140px;letter-spacing:.3em">
+                    </label>
+                    <button type="submit" class="btn" style="background:var(--green);color:#fff">Verify</button>
+                </form>
+                <p class="fine" style="margin-top:8px">Max 3 OTPs per mobile per hour. Codes are stored hashed and auto-expire.</p>
+            </div>
+
             <form class="formbox" method="post" action="{{ route('alerts.unsubscribe') }}">
                 @csrf
                 <div class="kicker"><i></i>MANAGE</div>

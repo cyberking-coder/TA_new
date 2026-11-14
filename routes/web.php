@@ -60,6 +60,8 @@ Route::get('/alerts/soldier', fn () => app(AlertsController::class)->form('soldi
 Route::post('/alerts/subscribe', [AlertsController::class, 'subscribe'])->name('alerts.subscribe');
 Route::get('/alerts/verify/{token}', [AlertsController::class, 'verify'])->name('alerts.verify');
 Route::post('/alerts/unsubscribe', [AlertsController::class, 'unsubscribe'])->name('alerts.unsubscribe');
+Route::post('/alerts/otp/send',   [AlertsController::class, 'sendOtp'])->middleware('throttle:3,60')->name('alerts.otp.send');
+Route::post('/alerts/otp/verify', [AlertsController::class, 'verifyOtp'])->middleware('throttle:10,60')->name('alerts.otp.verify');
 Route::post('/result/register', [AlertsController::class, 'registerResult'])->name('result.register');
 
 // Study / buyer (Phase 4)
