@@ -32,6 +32,8 @@
         </div>
     </section>
 
+    @include('partials.newsline-ticker', ['items' => $tickerItems ?? []])
+
     <section class="route-band" aria-label="Choose your entry route">
         <div class="frame route-inner">
             <h2>Entry routes</h2>

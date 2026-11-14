@@ -161,3 +161,18 @@ footer{background:#1a3229;color:#ececdd}.foot{gap:25px;flex-wrap:wrap;padding-bl
 .checkout .summary{position:sticky;top:20px;background:var(--white);border:1px solid var(--edge);border-radius:4px;padding:20px}
 .checkout .trust{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;font-size:12px;color:var(--muted)}
 @media(max-width:860px){.checkout{grid-template-columns:1fr}.checkout .summary{position:static}}
+
+/* "Latest" scrolling ticker (above the entry-routes band on the homepage). */
+.newsline{background:var(--ink);color:#f0efe3;border-bottom:1px solid #0e1f17;overflow:hidden}
+.newsline-wrap{display:flex;align-items:center;gap:18px;padding:10px 0;min-height:40px}
+.newsline-label{flex:0 0 auto;background:var(--brass);color:#2a1d04;font:700 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:6px 10px;border-radius:2px}
+.newsline-track{position:relative;flex:1 1 auto;overflow:hidden;mask-image:linear-gradient(90deg,transparent 0,#000 24px,#000 calc(100% - 24px),transparent 100%)}
+.newsline-track{display:flex;white-space:nowrap;width:100%;animation:newsline-scroll 55s linear infinite}
+.newsline-row{display:inline-flex;align-items:center;list-style:none;margin:0;padding:0;gap:48px;white-space:nowrap}
+.newsline-row li{display:inline-flex;align-items:center;gap:10px}
+.newsline-row a{color:#f0efe3;font-size:14px;letter-spacing:.01em}
+.newsline-row a:hover{color:var(--brass);text-decoration:none}
+.newsline-row li+li::before,.newsline-row+.newsline-row::before{content:"•";color:#6a8574;margin-right:28px}
+@keyframes newsline-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.newsline:hover .newsline-track{animation-play-state:paused}
+@media(max-width:640px){.newsline-wrap{gap:10px}.newsline-label{font-size:9px;padding:5px 7px}.newsline-row a{font-size:13px}}
