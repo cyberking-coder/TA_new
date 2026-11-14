@@ -30,3 +30,21 @@ if (query) {
   query.addEventListener('input', filter);
   kind.addEventListener('change', filter);
 }
+
+// Hero slider: crossfade between .hero-slide images using each slide's data-duration (ms).
+(function(){
+  const slides = document.querySelectorAll('.hero-slider .hero-slide');
+  if (slides.length < 2) return;
+  let i = 0;
+  function next(){
+    const current = slides[i];
+    i = (i + 1) % slides.length;
+    const incoming = slides[i];
+    current.classList.remove('is-active');
+    incoming.classList.add('is-active');
+    const dur = parseInt(incoming.dataset.duration, 10) || 5000;
+    setTimeout(next, dur);
+  }
+  const first = parseInt(slides[0].dataset.duration, 10) || 5000;
+  setTimeout(next, first);
+})();
