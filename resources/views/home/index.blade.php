@@ -70,11 +70,15 @@
                     <h2 id="book-heading">{{ $featuredBook?->title ?? 'TAC Examination Book' }}</h2>
                     <p class="book-edition">{{ $featuredBook?->defaultEdition()?->edition_name ? 'Edition '.$featuredBook->defaultEdition()->edition_name : 'Edition 2026' }}</p>
                 </div>
-                <span class="book-jacket" aria-hidden="true">
-                    <small>Territorial Army</small>
-                    <b>TAC</b>
-                    <em>Examination<br>Book</em>
-                </span>
+                @if ($featuredBook?->cover_path)
+                    <img class="book-image" src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($featuredBook->cover_path) }}" alt="{{ $featuredBook->title }} cover">
+                @else
+                    <span class="book-jacket" aria-hidden="true">
+                        <small>Territorial Army</small>
+                        <b>TAC</b>
+                        <em>Examination<br>Book</em>
+                    </span>
+                @endif
             </div>
             <a class="book-link" href="{{ route('books.show', 'tac-examination-book') }}">Explore the book <span aria-hidden="true">→</span></a>
         </aside>
