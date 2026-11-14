@@ -116,7 +116,23 @@ class OtpService
         return ['status' => 'verified'];
     }
 
-    private function normalise(string $mobile): string
+    /**
+     * Did this mobile successfully verify an OTP for the given audience
+     * within the last $minutes window? Used by the result-registration
+     * controller to confirm the mobile is proven before saving.
+     */
+    public function wasVerifiedRecently(string $audience, string $mobile, int $minutes = 30): bool
+    {
+        $mobile = $this->normalise($mobile);
+        return MobileOtp::query()
+            ->where('audience', $audience)
+            ->where('mobile', $mobile)
+            ->whereNotNull('verified_at')
+            ->where('verified_at', '>=', now()->subMinutes($minutes))
+            ->exists();
+    }
+
+    public function normalise(string $mobile): string
     {
         $m = preg_replace('/\D+/', '', $mobile);
         if (str_starts_with($m, '91') && strlen($m) === 12) $m = substr($m, 2);

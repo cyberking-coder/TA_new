@@ -62,6 +62,8 @@ Route::get('/alerts/verify/{token}', [AlertsController::class, 'verify'])->name(
 Route::post('/alerts/unsubscribe', [AlertsController::class, 'unsubscribe'])->name('alerts.unsubscribe');
 Route::post('/alerts/otp/send',   [AlertsController::class, 'sendOtp'])->middleware('throttle:3,60')->name('alerts.otp.send');
 Route::post('/alerts/otp/verify', [AlertsController::class, 'verifyOtp'])->middleware('throttle:10,60')->name('alerts.otp.verify');
+Route::post('/result/otp/send',   [AlertsController::class, 'sendResultOtp'])->middleware('throttle:3,60')->name('result.otp.send');
+Route::post('/result/otp/verify', [AlertsController::class, 'verifyResultOtp'])->middleware('throttle:10,60')->name('result.otp.verify');
 Route::post('/result/register', [AlertsController::class, 'registerResult'])->name('result.register');
 
 // Study / buyer (Phase 4)
