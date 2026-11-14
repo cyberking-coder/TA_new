@@ -183,3 +183,31 @@
     .nav-social{margin:8px 0 0}
     .menu{display:inline-grid;place-items:center}
 }
+
+/* === Target home hero: full-bleed photo + serif "Territorial Army / Exam Guide." === */
+.hero-fullbleed{position:relative;isolation:isolate;overflow:hidden;background:#172a1f;color:#faf7e9;min-height:clamp(430px,56vw,620px)}
+.hero-fullbleed>picture,.hero-fullbleed>picture img,.hero-fullbleed .hero-slider{position:absolute;inset:0;width:100%;height:100%}
+.hero-fullbleed>picture{z-index:-2}
+.hero-fullbleed>picture img{object-fit:cover;object-position:center 40%}
+.hero-fullbleed .hero-slider{z-index:-2}
+.hero-fullbleed::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#132618f2 0%,#17291cb0 32%,#1b2d1d6b 55%,#1b2d1d1a 85%,transparent 100%),linear-gradient(0deg,#0d1c110f,transparent 50%)}
+.hero-fullbleed .hero-inner{padding:clamp(60px,7.5vw,120px) 0 clamp(60px,7.5vw,118px);max-width:none}
+.editorial-title{font-family:Georgia,'Playfair Display','Times New Roman',serif;font-weight:400;font-style:normal;color:#f4ecd8;letter-spacing:-.025em;line-height:.96;font-size:clamp(60px,8.5vw,138px);margin:17px 0 23px}
+.editorial-title em{display:inline-block;font-style:italic;color:#e3b964;font-weight:400}
+.hero-fullbleed p{font-size:clamp(17px,1.4vw,22px);color:#efeadc;line-height:1.45;max-width:46ch;margin:0}
+.hero-fullbleed .actions{gap:26px;margin-top:30px;align-items:center;flex-wrap:wrap}
+.hero-fullbleed .btn{background:#e3b964;color:#1d2a1b;border-radius:3px;font-size:16px;padding:0 24px;min-height:52px;border:0}
+.hero-fullbleed .btn:hover{background:#eccb80}
+.hero-fullbleed .herolink{color:#f4ecd8;font-weight:600;font-size:15px}
+.hero-fullbleed .herolink:hover{color:#e3b964}
+@media(max-width:720px){
+  .hero-fullbleed{min-height:auto}
+  .hero-fullbleed .hero-inner{padding:52px 0 56px}
+  .editorial-title{font-size:clamp(56px,13vw,86px);margin:14px 0 18px}
+  .hero-fullbleed p{font-size:17px;max-width:90%}
+  .hero-fullbleed p br.desktop{display:none}
+}
+
+/* Nav separators between bottom-row items */
+.nav-sep{width:1px;align-self:stretch;background:#d6d8cb;margin:4px 2px}
+@media(max-width:860px){.nav-sep{display:none}}

@@ -1,7 +1,7 @@
 @extends('layouts.public', ['nav' => 'home'])
 
 @section('content')
-    <section class="hero">
+    <section class="hero hero-fullbleed">
         @if (count($heroSlides ?? []) > 0)
             <div class="hero-slider" aria-roledescription="carousel" aria-label="Homepage hero">
                 @foreach ($heroSlides as $i => $s)
@@ -22,7 +22,7 @@
         @endif
         <div class="wrap hero-inner">
             <div class="kicker"><i></i>INDEPENDENT EXAM RESOURCE</div>
-            <h1>Territorial Army<br><span>Exam Guide.</span></h1>
+            <h1 class="editorial-title">Territorial&nbsp;Army<br><em>Exam Guide.</em></h1>
             <p>Find exam notices, results and preparation resources<br class="desktop"> for your Territorial Army journey.</p>
             <div class="actions">
                 <a class="btn" href="{{ route('notices.index') }}">
@@ -79,9 +79,7 @@
                 </a>
             </div>
             @forelse($latestNotices as $n)
-                @php
-                    $date = \Carbon\Carbon::parse($n['date']);
-                @endphp
+                @php $date = \Carbon\Carbon::parse($n['date']); @endphp
                 <a class="notice-row" href="{{ route('notices.show', $n['slug']) }}">
                     <span class="date"><b>{{ $date->format('d') }}</b><small>{{ strtoupper($date->format('M')) }}</small></span>
                     <span class="notice-text">
