@@ -2,13 +2,8 @@
 
 @section('content')
     <section class="hero has-image">
-        @php
-            $firstSlide = $heroSlides[0] ?? null;
-            $heroImg = $firstSlide['url'] ?? '/assets/hero.webp';
-            $heroAlt = $firstSlide['alt'] ?? 'Soldiers on a Himalayan ridge at dawn';
-        @endphp
-        <img class="landscape" src="{{ $heroImg }}" alt="{{ $heroAlt }}" onerror="this.src='/assets/hero.webp'">
-        @if (!empty($heroSlides) && count($heroSlides) > 1)
+        <img class="landscape" src="/assets/hero.webp" alt="Soldiers on a Himalayan ridge at dawn">
+        @if (!empty($heroSlides) && count($heroSlides) > 0)
             <div class="hero-slider" aria-roledescription="carousel" aria-label="Homepage hero">
                 @foreach ($heroSlides as $i => $s)
                     <img
