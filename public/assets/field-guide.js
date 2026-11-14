@@ -1,96 +1,32 @@
 const menu = document.querySelector('.menu');
 const nav = document.querySelector('#mainnav');
-function toggleMenu(open) {
+function setMenu(open) {
   menu.setAttribute('aria-expanded', String(open));
   menu.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-  nav.classList.toggle('open',open);
+  menu.textContent = open ? 'Close' : 'Menu';
+  nav.classList.toggle('open', open);
 }
-menu.addEventListener('click',()=>toggleMenu(menu.getAttribute('aria-expanded')!=='true'));
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('open')){toggleMenu(false);menu.focus();}});
-const query=document.querySelector('#query');
-if(query) {
-  const kind=document.querySelector('#kind'), exam=document.querySelector('#exam');
-  const rows=[...document.querySelectorAll('.entries .notice-row')];
-  function applyFilters() {
-    const term=query.value.trim().toLowerCase();
-    let count=0;
-    for(const row of rows){
-      const matches=(!term||row.textContent.toLowerCase().includes(term))&&(kind.value==='All types'||row.dataset.kind===kind.value)&&(exam.value==='All exams'||row.dataset.exam===exam.value);
-      row.hidden=!matches;
-      if(matches) count++;
-    }
-    document.querySelector('#count').textContent=count+' notice'+(count===1?'':'s');
-    document.querySelector('#empty').hidden=Boolean(count);
+menu.addEventListener('click', () => setMenu(menu.getAttribute('aria-expanded') !== 'true'));
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && nav.classList.contains('open')) {
+    setMenu(false);
+    menu.focus();
   }
-  query.addEventListener('input',applyFilters);kind.addEventListener('change',applyFilters);exam.addEventListener('change',applyFilters);
-  document.querySelector('#reset').addEventListener('click',()=>{query.value='';kind.selectedIndex=0;exam.selectedIndex=0;applyFilters();query.focus();});
-}
-const form=document.querySelector('#demoform');
-if(form) form.addEventListener('submit',e=>{e.preventDefault();form.reset();document.querySelector('#feedback').hidden=false;});
-
-// Hero slider: smooth cross-fade + Ken-Burns zoom between .hero-slide images.
-// Each slide displays for its own data-duration (ms); the fade itself is 1600ms
-// (CSS-driven), and the outgoing slide keeps is-active during the fade so both
-// are rendered mid-transition (true crossfade, no flash of background).
-(function initHeroSlider(){
-    const slides = Array.from(document.querySelectorAll('.hero-slider .hero-slide'));
-    if (slides.length < 2) return;
-
-    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const FADE_MS = reduced ? 400 : 1600;
-    let i = 0;
-
-    function prefetch(img){ if (img && 'decode' in img) img.decode().catch(() => {}); }
-
-    function step(){
-        const prev = slides[i];
-        i = (i + 1) % slides.length;
-        const cur = slides[i];
-        prefetch(cur);
-        cur.classList.add('is-active');
-        setTimeout(() => prev.classList.remove('is-active'), FADE_MS);
-        const d = Number(cur.dataset.duration) || 5000;
-        setTimeout(step, Math.max(FADE_MS + 200, d));
+});
+const query = document.querySelector('#query');
+if (query) {
+  const kind = document.querySelector('#kind');
+  const rows = [...document.querySelectorAll('.notice')];
+  function filter() {
+    const term = query.value.trim().toLowerCase();
+    let count = 0;
+    for (const row of rows) {
+      row.hidden = !row.textContent.toLowerCase().includes(term) || Boolean(kind.value && kind.value !== row.dataset.kind);
+      if (!row.hidden) count++;
     }
-
-    prefetch(slides[1]);
-    const firstDuration = Number(slides[0].dataset.duration) || 5000;
-    setTimeout(step, Math.max(FADE_MS + 200, firstDuration));
-})();
-
-// Dropdowns on the primary nav. Click to toggle, outside-click to close, Esc to close.
-(function initPrimaryDropdowns() {
-    const triggers = document.querySelectorAll('.has-dropdown .nav-trigger');
-    if (!triggers.length) return;
-    triggers.forEach(t => {
-        t.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const parent = t.closest('.has-dropdown');
-            const wasOpen = parent.classList.contains('is-open');
-            document.querySelectorAll('.has-dropdown.is-open').forEach(el => {
-                el.classList.remove('is-open');
-                el.querySelector('.nav-trigger')?.setAttribute('aria-expanded', 'false');
-            });
-            if (!wasOpen) {
-                parent.classList.add('is-open');
-                t.setAttribute('aria-expanded', 'true');
-            }
-        });
-    });
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.has-dropdown')) {
-            document.querySelectorAll('.has-dropdown.is-open').forEach(el => {
-                el.classList.remove('is-open');
-                el.querySelector('.nav-trigger')?.setAttribute('aria-expanded', 'false');
-            });
-        }
-    });
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            document.querySelectorAll('.has-dropdown.is-open').forEach(el => {
-                el.classList.remove('is-open');
-                el.querySelector('.nav-trigger')?.setAttribute('aria-expanded', 'false');
-            });
-        }
-    });
-})();
+    document.querySelector('#count').textContent = count + (count === 1 ? ' notice' : ' notices');
+    document.querySelector('#empty').hidden = count > 0;
+  }
+  query.addEventListener('input', filter);
+  kind.addEventListener('change', filter);
+}
