@@ -2,7 +2,10 @@
 
 This project ships two supported paths. Pick the one your target host uses.
 
-- **Vercel** — zero-ops preview deploys while we iterate before client handover.
+- **Railway** — zero-ops preview deploys while we iterate before client handover.
+  (Vercel's community PHP runtime `vercel-php` is unreliable on current Vercel
+  — see `vercel.json`/`.vercelignore` if you want to retry it later, but Railway
+  is the recommended staging target.)
 - **Hetzner (or any Linux VPS)** — the production home after handover.
 
 Both paths read the same code; only the runtime and `.env` differ.
@@ -29,7 +32,66 @@ Generate `APP_KEY` with `php artisan key:generate --show` and paste the result.
 
 ---
 
-## Path A — Vercel (preview / staging)
+## Path A — Railway (preview / staging)
+
+Railway runs the app as a long-lived container (not serverless), so Laravel
+behaves normally — queue workers, filesystem sessions, scheduled tasks all
+work out of the box.
+
+### Steps
+
+1. Sign up at railway.com (GitHub login is fine). The $5/mo free trial
+   covers a staging deployment indefinitely for a single container + DB.
+2. **New Project → Deploy from GitHub repo** → pick `cyberking-coder/TA_new`.
+3. On the project canvas click **+ New → Database → Add PostgreSQL**.
+   Railway spins up a managed Postgres instance beside the app.
+4. Click your app service → **Variables** → paste every value from
+   `.env.production.example`. For DB, use the `${{Postgres.DATABASE_URL}}`
+   reference that Railway shows (set it as `DB_URL`) OR map individual
+   fields:
+   ```
+   DB_CONNECTION=pgsql
+   DB_HOST=${{Postgres.PGHOST}}
+   DB_PORT=${{Postgres.PGPORT}}
+   DB_DATABASE=${{Postgres.PGDATABASE}}
+   DB_USERNAME=${{Postgres.PGUSER}}
+   DB_PASSWORD=${{Postgres.PGPASSWORD}}
+   DB_SSLMODE=require
+   ```
+   Railway's `${{...}}` syntax auto-wires the two services.
+5. Set the app's **Public Domain** under **Settings → Networking → Generate
+   Domain**. Copy the generated URL into `APP_URL`.
+6. The first deploy runs automatically on push. Nixpacks reads
+   `nixpacks.toml` from the repo: installs PHP 8.3 + extensions + composer
+   deps (`--no-dev`), caches config/routes/events, links storage.
+7. The start command (also in `nixpacks.toml`) runs
+   `php artisan migrate --force` on every container boot, then
+   `artisan serve`. First boot creates all tables.
+8. Open the generated URL in a browser. Admin seeding:
+   ```sh
+   railway run php artisan tinker --execute="App\Models\User::create(['name'=>'Admin','email'=>'you@domain','password'=>bcrypt('<pick>'),'role'=>'administrator','email_verified_at'=>now()]);"
+   ```
+   (Install the Railway CLI with `npm i -g @railway/cli` first; `railway link`
+   the project.)
+9. Hit `https://<domain>/health` — must return `{"status":"ok", ...}`.
+
+### Supabase vs Railway Postgres
+
+Railway's managed Postgres is simpler for staging (auto-wired env vars,
+no pooler to remember). Supabase gives you the dashboard, Auth, Storage
+and realtime that we don't need here. Either works — pick one, don't run
+both. If you already set up Supabase, keep using it and skip step 3; use
+the Supabase pooler env vars as covered in Path B's notes.
+
+### Legacy: Vercel (why we moved off it)
+
+A Vercel config (`vercel.json`, `api/index.php`, `.vercelignore`) is still
+in the repo in case Vercel ever re-adds supported PHP runtime. Current
+status (Nov 2026): the community `vercel-php@0.7.3` builder consistently
+fails with `ERR_MODULE_NOT_FOUND: launcher.launcher`. Don't use Vercel
+for this project until that's fixed upstream.
+
+## Path A1 — original Vercel notes (kept for reference)
 
 Vercel runs each request as a short-lived serverless function. That means:
 

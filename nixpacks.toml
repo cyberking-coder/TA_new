@@ -1,0 +1,22 @@
+# Railway / Nixpacks build spec for Territorial Army Field Guide.
+# Railway uses Nixpacks to turn this repo into a container image; this file
+# makes the build deterministic (PHP 8.3, Composer, no npm step).
+
+providers = ["php"]
+
+[phases.setup]
+nixPkgs = ["php83", "php83Packages.composer", "php83Extensions.pdo_pgsql", "php83Extensions.pdo_mysql", "php83Extensions.mbstring", "php83Extensions.xml", "php83Extensions.curl", "php83Extensions.zip", "php83Extensions.gd", "php83Extensions.intl", "php83Extensions.bcmath", "php83Extensions.redis", "nginx"]
+
+[phases.install]
+cmds = ["composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction"]
+
+[phases.build]
+cmds = [
+  "php artisan config:cache",
+  "php artisan route:cache",
+  "php artisan event:cache",
+  "php artisan storage:link || true",
+]
+
+[start]
+cmd = "php artisan migrate --force && php -d variables_order=EGPCS artisan serve --host 0.0.0.0 --port $PORT"
