@@ -3,7 +3,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
+        "build": "echo 'Public assets are static in /public/assets; no Vite build required.'",
+        "build:vite": "vite build",
         "dev": "vite"
     },
     "devDependencies": {
