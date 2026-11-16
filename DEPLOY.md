@@ -42,18 +42,32 @@ Vercel runs each request as a short-lived serverless function. That means:
 
 ### Steps
 
-1. Create a MySQL database Vercel can reach (PlanetScale, Neon with MySQL,
-   or Aiven). Put the DSN in `DB_*`.
+1. Create a **Supabase** project (free tier is fine for staging). Pick the
+   region closest to your Vercel region (e.g. `ap-south-1` for India users
+   on Vercel Singapore). Grab the connection details from
+   *Project Settings → Database → Connection pooling*:
+   - Use the **Transaction pooler** on port **6543**, not the direct `5432`.
+     Vercel's short-lived PHP functions must not hold persistent connections,
+     and the direct port runs out of slots fast.
+   - Set `DB_SSLMODE=require`.
+   - The username is `postgres.<project-ref>`, the database is `postgres`.
+   (Alternatives that also work: PlanetScale / Neon / Aiven.)
 2. In the Vercel dashboard, set every variable from `.env.production.example`
    as a Project Environment Variable.
 3. Import the repo in Vercel. Use the included `vercel.json`. No framework
    preset — it's custom.
 4. First deploy: Vercel runs `composer install --no-dev` and caches config
    via the `buildCommand` in `vercel.json`.
-5. Run migrations once from your laptop against the Vercel-reachable DB:
+5. Run migrations once from your laptop against the Vercel-reachable DB.
+   Supabase example:
    ```sh
-   APP_URL=https://<preview>.vercel.app \
-   DB_HOST=... DB_DATABASE=... DB_USERNAME=... DB_PASSWORD=... \
+   DB_CONNECTION=pgsql \
+   DB_HOST=aws-0-ap-south-1.pooler.supabase.com \
+   DB_PORT=6543 \
+   DB_DATABASE=postgres \
+   DB_USERNAME=postgres.<project-ref> \
+   DB_PASSWORD=<supabase-db-password> \
+   DB_SSLMODE=require \
    php artisan migrate --force
    ```
 6. Seed the first admin:
