@@ -1,29 +1,19 @@
 {
-  "version": 2,
-  "framework": null,
-  "installCommand": "composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction",
-  "buildCommand": "php artisan config:cache && php artisan route:cache && php artisan event:cache",
-  "builds": [
-    { "src": "api/index.php", "use": "vercel-php@0.7.3" },
-    { "src": "public/**", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "/health", "dest": "/api/index.php" },
-    { "src": "/up", "dest": "/api/index.php" },
-    { "src": "/assets/(.*)", "dest": "/public/assets/$1" },
-    { "src": "/storage/(.*)", "dest": "/public/storage/$1" },
-    { "src": "/favicon.ico", "dest": "/public/favicon.ico" },
-    { "src": "/robots.txt", "dest": "/api/index.php" },
-    { "src": "/sitemap.xml", "dest": "/api/index.php" },
-    { "src": "/(.*)", "dest": "/api/index.php" }
-  ],
-  "env": {
-    "APP_ENV": "production",
-    "APP_DEBUG": "false",
-    "LOG_CHANNEL": "stderr",
-    "SESSION_DRIVER": "database",
-    "CACHE_STORE": "database",
-    "QUEUE_CONNECTION": "sync",
-    "FILESYSTEM_DISK": "r2"
-  }
+    "version": 2,
+    "functions": {
+        "api/index.php": {
+            "runtime": "vercel-php@0.7.3",
+            "maxDuration": 30
+        }
+    },
+    "routes": [
+        { "src": "/assets/(.*)",  "dest": "/public/assets/$1" },
+        { "src": "/storage/(.*)", "dest": "/public/storage/$1" },
+        { "src": "/favicon.ico",  "dest": "/public/favicon.ico" },
+        { "src": "/robots.txt",   "dest": "/api/index.php" },
+        { "src": "/sitemap.xml",  "dest": "/api/index.php" },
+        { "src": "/health",       "dest": "/api/index.php" },
+        { "src": "/up",           "dest": "/api/index.php" },
+        { "src": "/(.*)",         "dest": "/api/index.php" }
+    ]
 }
