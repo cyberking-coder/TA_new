@@ -1,0 +1,30 @@
+# Hide Node/JS signals so Vercel stops auto-detecting this as a Node project.
+# The real runtime lives under builds[] in vercel.json (vercel-php@0.7.3).
+package.json
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+node_modules
+vite.config.*
+tailwind.config.*
+
+# Dev-only, never needed in the serverless bundle.
+tests
+phpunit.xml
+phpunit.xml.dist
+.phpunit.cache
+.phpunit.result.cache
+docker-compose*.yml
+Dockerfile*
+.github
+.editorconfig
+.env
+.env.*
+!.env.production.example
+storage/logs
+storage/framework
+storage/app/public
+
+# Development design-kit source archives
+Territorial_Army_Frontend_Source*.zip
+data-import
