@@ -8,11 +8,14 @@
         }
     },
     "routes": [
+        { "src": "/",                   "dest": "/api/index.php" },
+        { "src": "/index\\.php(/.*)?$", "dest": "/api/index.php" },
+        { "src": "/.*\\.php(/.*)?$",    "dest": "/api/index.php" },
+        { "src": "/robots\\.txt$",      "dest": "/api/index.php" },
+        { "src": "/sitemap\\.xml$",     "dest": "/api/index.php" },
+        { "src": "/health$",            "dest": "/api/index.php" },
+        { "src": "/up$",                "dest": "/api/index.php" },
         { "handle": "filesystem" },
-        { "src": "/robots.txt",  "dest": "/api/index.php" },
-        { "src": "/sitemap.xml", "dest": "/api/index.php" },
-        { "src": "/health",      "dest": "/api/index.php" },
-        { "src": "/up",          "dest": "/api/index.php" },
-        { "src": "/(.*)",        "dest": "/api/index.php" }
+        { "src": "/(.*)",               "dest": "/api/index.php" }
     ]
 }
