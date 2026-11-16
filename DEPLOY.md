@@ -1,0 +1,224 @@
+# Deployment guide
+
+This project ships two supported paths. Pick the one your target host uses.
+
+- **Vercel** — zero-ops preview deploys while we iterate before client handover.
+- **Hetzner (or any Linux VPS)** — the production home after handover.
+
+Both paths read the same code; only the runtime and `.env` differ.
+
+---
+
+## Prerequisites
+
+| Area        | What you need                                                                |
+|-------------|------------------------------------------------------------------------------|
+| PHP         | 8.3 or 8.4                                                                   |
+| Composer    | 2.x                                                                          |
+| Database    | MySQL 8 (production) — SQLite is dev-only                                    |
+| Cache / queue | Redis 7 on Hetzner; `database` driver on Vercel                            |
+| File storage  | Cloudflare R2 bucket (`territorial-army`) with an API token (R/W)          |
+| Mail        | Resend account + verified sender domain                                      |
+| SMS         | Fast2SMS account (transactional route)                                       |
+| Captcha     | Google reCAPTCHA v2 site + secret keys                                       |
+| Payments    | CCAvenue live merchant ID / access code / working key                        |
+| DNS         | A/AAAA (Hetzner) **or** CNAME to `cname.vercel-dns.com` (Vercel)             |
+
+Copy `.env.production.example` → `.env` on the server and fill every blank.
+Generate `APP_KEY` with `php artisan key:generate --show` and paste the result.
+
+---
+
+## Path A — Vercel (preview / staging)
+
+Vercel runs each request as a short-lived serverless function. That means:
+
+- **No persistent filesystem.** All user uploads must go to R2 (`FILESYSTEM_DISK=r2`).
+- **No long-running worker.** `QUEUE_CONNECTION=sync` or external queue (Upstash).
+- **No `php artisan serve`.** Vercel calls `api/index.php`, which forwards into
+  `public/index.php`. `vercel.json` already wires this up.
+- **Scheduled tasks.** Use Vercel Cron Jobs or an external cron (hit
+  `/up` or a `/cron/*` route).
+
+### Steps
+
+1. Create a MySQL database Vercel can reach (PlanetScale, Neon with MySQL,
+   or Aiven). Put the DSN in `DB_*`.
+2. In the Vercel dashboard, set every variable from `.env.production.example`
+   as a Project Environment Variable.
+3. Import the repo in Vercel. Use the included `vercel.json`. No framework
+   preset — it's custom.
+4. First deploy: Vercel runs `composer install --no-dev` and caches config
+   via the `buildCommand` in `vercel.json`.
+5. Run migrations once from your laptop against the Vercel-reachable DB:
+   ```sh
+   APP_URL=https://<preview>.vercel.app \
+   DB_HOST=... DB_DATABASE=... DB_USERNAME=... DB_PASSWORD=... \
+   php artisan migrate --force
+   ```
+6. Seed the first admin:
+   ```sh
+   php artisan tinker --execute="App\Models\User::create(['name'=>'Admin','email'=>'you@domain','password'=>bcrypt('<pick>'),'role'=>'administrator','email_verified_at'=>now()]);"
+   ```
+7. Hit `https://<domain>/health` — must return `{"status":"ok", ...}`.
+
+### Vercel limits to know
+
+- 10 s Hobby / 60 s Pro function timeout — large legacy-order imports should
+  run from your laptop against prod DB, not from a web request.
+- Function cold start ≈ 200–400 ms for Laravel. Expect it on low traffic.
+- 4.5 MB request body cap — admin PDF uploads route through R2 directly
+  (Livewire temp-upload disk stays `local` only in dev).
+
+---
+
+## Path B — Hetzner / VPS (handover target)
+
+### One-time server setup
+
+Ubuntu 24.04 LTS.
+
+```sh
+# PHP 8.4, nginx, redis, mysql
+sudo apt update
+sudo apt install -y nginx redis-server mysql-server certbot python3-certbot-nginx \
+    php8.4-fpm php8.4-cli php8.4-mysql php8.4-redis php8.4-mbstring \
+    php8.4-xml php8.4-curl php8.4-zip php8.4-gd php8.4-intl php8.4-bcmath
+curl -sS https://getcomposer.org/installer | php && sudo mv composer.phar /usr/local/bin/composer
+
+# App user
+sudo adduser --disabled-password --gecos "" deploy
+sudo usermod -aG www-data deploy
+```
+
+Create database:
+
+```sql
+CREATE DATABASE tafieldguide CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'tafieldguide'@'localhost' IDENTIFIED BY '<pick>';
+GRANT ALL ON tafieldguide.* TO 'tafieldguide'@'localhost';
+```
+
+Clone the repo:
+
+```sh
+sudo -iu deploy
+git clone https://github.com/<owner>/TA_new.git ~/ta-field-guide
+cd ~/ta-field-guide
+cp .env.production.example .env  # then edit
+php artisan key:generate
+```
+
+### Nginx server block
+
+`/etc/nginx/sites-available/jointerritorialarmy.com`:
+
+```nginx
+server {
+    listen 80;
+    server_name jointerritorialarmy.com www.jointerritorialarmy.com;
+    return 301 https://$host$request_uri;
+}
+server {
+    listen 443 ssl http2;
+    server_name jointerritorialarmy.com www.jointerritorialarmy.com;
+    root /home/deploy/ta-field-guide/public;
+    index index.php;
+
+    client_max_body_size 20M;
+
+    ssl_certificate     /etc/letsencrypt/live/jointerritorialarmy.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/jointerritorialarmy.com/privkey.pem;
+
+    location / { try_files $uri $uri/ /index.php?$query_string; }
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php8.4-fpm.sock;
+    }
+    location ~ /\.(?!well-known).* { deny all; }
+    location ~* \.(?:css|js|woff2?|svg|webp|jpg|png)$ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+}
+```
+
+```sh
+sudo ln -s /etc/nginx/sites-available/jointerritorialarmy.com /etc/nginx/sites-enabled/
+sudo certbot --nginx -d jointerritorialarmy.com -d www.jointerritorialarmy.com
+sudo systemctl reload nginx
+```
+
+### Queue worker (systemd)
+
+`/etc/systemd/system/ta-queue.service`:
+
+```ini
+[Unit]
+Description=TA Field Guide queue worker
+After=network.target
+
+[Service]
+User=deploy
+Group=www-data
+WorkingDirectory=/home/deploy/ta-field-guide
+ExecStart=/usr/bin/php artisan queue:work redis --tries=3 --backoff=30 --max-time=3600 --sleep=2
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```sh
+sudo systemctl daemon-reload
+sudo systemctl enable --now ta-queue
+```
+
+### Scheduler (cron)
+
+```cron
+* * * * * cd /home/deploy/ta-field-guide && /usr/bin/php artisan schedule:run >> /dev/null 2>&1
+```
+
+### Every release
+
+From your laptop, push to `main`, then on the server:
+
+```sh
+sudo -iu deploy
+cd ~/ta-field-guide
+./deploy.sh
+```
+
+`deploy.sh` pulls `main`, installs `--no-dev`, migrates, re-caches, restarts
+the worker, and brings maintenance mode down.
+
+---
+
+## Post-deploy checklist
+
+- [ ] `curl https://<domain>/health` → `{"status":"ok","db":"ok","cache":"ok"}`
+- [ ] `curl -I https://<domain>/` → `strict-transport-security`, `x-frame-options`, `x-content-type-options`, `referrer-policy` headers present
+- [ ] `/robots.txt` lists the sitemap; `/sitemap.xml` returns XML
+- [ ] Admin can log in at `/admin`; first login's password is already the one
+      you set in step 6/`tinker`
+- [ ] Hero slides upload → appear with crossfade
+- [ ] Alerts OTP sends real SMS (test from your own number)
+- [ ] CCAvenue test transaction succeeds end-to-end
+- [ ] Mail: Resend dashboard shows the test welcome email was delivered
+- [ ] Sentry (if enabled) receives a deliberate test exception
+
+## Rollback
+
+```sh
+sudo -iu deploy
+cd ~/ta-field-guide
+git log --oneline -5
+git reset --hard <previous-sha>
+./deploy.sh
+```
+
+If the regression was a migration, add a `down()` or a follow-up migration;
+`migrate:rollback` in production is only safe when you understand the exact
+blast radius.

@@ -8,6 +8,24 @@
     <link rel="canonical" href="{{ $canonical ?? url()->current() }}">
     @isset($robots)<meta name="robots" content="{{ $robots }}">@endisset
     <link rel="icon" href="/assets/mark.svg">
+
+    @php
+        $ogTitle = $title ?? 'Territorial Army Field Guide';
+        $ogDesc  = $description ?? 'Independent exam information and preparation guide for the Territorial Army.';
+        $ogUrl   = $canonical ?? url()->current();
+        $ogImage = $ogImage ?? (config('app.url').'/assets/hero.webp');
+    @endphp
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Territorial Army Field Guide">
+    <meta property="og:title" content="{{ $ogTitle }}">
+    <meta property="og:description" content="{{ $ogDesc }}">
+    <meta property="og:url" content="{{ $ogUrl }}">
+    <meta property="og:image" content="{{ $ogImage }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $ogTitle }}">
+    <meta name="twitter:description" content="{{ $ogDesc }}">
+    <meta name="twitter:image" content="{{ $ogImage }}">
+    <meta name="theme-color" content="#172e25">
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/display.woff2">
     <link rel="stylesheet" href="/assets/field-guide.css">
     @isset($jsonLd)

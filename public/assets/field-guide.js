@@ -2,16 +2,9 @@
 (function(){
   function startSlider(){
     const slides = Array.from(document.querySelectorAll('.hero-slider .hero-slide'));
-    console.log('[hero-slider] found ' + slides.length + ' slide(s)');
     if (slides.length === 0) return;
-    slides.forEach((s, idx) => {
-      s.classList.toggle('is-active', idx === 0);
-      s.addEventListener('error', () => console.warn('[hero-slider] slide ' + idx + ' failed to load: ' + s.src));
-    });
-    if (slides.length < 2) {
-      console.log('[hero-slider] only one slide, nothing to rotate');
-      return;
-    }
+    slides.forEach((s, idx) => s.classList.toggle('is-active', idx === 0));
+    if (slides.length < 2) return;
     let i = 0;
     function next(){
       const current = slides[i];
@@ -20,11 +13,9 @@
       current.classList.remove('is-active');
       incoming.classList.add('is-active');
       const dur = parseInt(incoming.dataset.duration, 10) || 5000;
-      console.log('[hero-slider] showing slide ' + i + ' for ' + dur + 'ms');
       setTimeout(next, dur);
     }
     const first = parseInt(slides[0].dataset.duration, 10) || 5000;
-    console.log('[hero-slider] first rotation in ' + first + 'ms');
     setTimeout(next, first);
   }
   if (document.readyState === 'loading') {

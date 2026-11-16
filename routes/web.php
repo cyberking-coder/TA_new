@@ -4,6 +4,7 @@ use App\Http\Controllers\AlertsController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DownloadsController;
+use App\Http\Controllers\HealthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PagesController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\StudyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/health', HealthController::class)->name('health');
 
 Route::get('/notices-and-downloads', [NoticeController::class, 'index'])->name('notices.index');
 Route::get('/notices/{slug}', [NoticeController::class, 'show'])->name('notices.show');
