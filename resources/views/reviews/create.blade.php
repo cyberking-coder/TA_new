@@ -60,12 +60,14 @@
                 <input type="text" name="website" value="" autocomplete="off" tabindex="-1">
             </label>
 
-            <label>
-                <span>Human check</span>
-                <input required type="number" name="challenge_answer" min="0" max="99" inputmode="numeric" style="max-width:120px"
-                       placeholder="?">
-                <span class="fine" style="margin-top:4px">{{ $challenge['question'] }}</span>
-            </label>
+            @if ($challenge)
+                <label>
+                    <span>Human check</span>
+                    <input required type="number" name="challenge_answer" min="0" max="99" inputmode="numeric" style="max-width:120px"
+                           placeholder="?">
+                    <span class="fine" style="margin-top:4px">{{ $challenge['question'] }}</span>
+                </label>
+            @endif
 
             @if ($recaptchaSiteKey)
                 @if ($recaptchaVersion === 'v3')

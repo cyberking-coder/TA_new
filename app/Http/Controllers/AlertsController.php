@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Exam;
 use App\Models\ResultRegistration;
+use App\Services\Sms\OtpService;
 use App\Services\Subscriptions\SubscriptionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +12,41 @@ use Illuminate\Support\Facades\Validator;
 
 class AlertsController extends Controller
 {
-    public function __construct(private readonly SubscriptionService $svc) {}
+    public function __construct(
+        private readonly SubscriptionService $svc,
+        private readonly OtpService $otp,
+    ) {}
+
+    public function sendOtp(Request $request)
+    {
+        $data = $request->validate([
+            'audience' => 'required|in:officer,soldier',
+            'mobile'   => 'required|string|min:10|max:20',
+        ]);
+        $r = $this->otp->send($data['audience'], $data['mobile'], $request->ip());
+        return redirect()->route('alerts.'.$data['audience'])
+            ->with($r['status'] === 'sent' ? 'flash_ok' : 'flash_warn',
+                $r['status'] === 'sent'
+                    ? 'We sent a 6-digit OTP to your mobile. It expires in 10 minutes.'
+                    : ($r['message'] ?? 'Could not send OTP right now.'));
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $data = $request->validate([
+            'audience' => 'required|in:officer,soldier',
+            'mobile'   => 'required|string|min:10|max:20',
+            'code'     => 'required|digits:6',
+        ]);
+        $r = $this->otp->verify($data['audience'], $data['mobile'], $data['code']);
+        $msg = match ($r['status']) {
+            'verified'          => ['flash_ok',   'Mobile verified. You will start receiving SMS alerts once admin approves the list for sending.'],
+            'expired'           => ['flash_warn', 'That code expired. Request a new one.'],
+            'too_many_attempts' => ['flash_warn', 'Too many wrong attempts on this code. Request a new one.'],
+            default             => ['flash_warn', 'That code is not correct. Try again.'],
+        };
+        return redirect()->route('alerts.'.$data['audience'])->with($msg[0], $msg[1]);
+    }
 
     public function form(string $audience)
     {
@@ -88,6 +123,14 @@ class AlertsController extends Controller
             'rr_roll'   => ['required', 'string', 'max:64'],
         ]);
 
+        // Mobile must have a verified OTP for the 'result' audience within
+        // the last 30 minutes. Keeps bogus mobiles out of the registration list.
+        if (!$this->otp->wasVerifiedRecently('result', $data['rr_mobile'], 30)) {
+            return back()->withInput()->withErrors([
+                'rr_mobile' => 'Please verify your mobile with an OTP before submitting the registration. Use the "Verify mobile for registration" box above.',
+            ]);
+        }
+
         DB::transaction(function () use ($data) {
             // Dedupe on (exam_id, roll_number): a repeat submission with the same
             // roll under the same exam updates contact details without exposing
@@ -98,11 +141,45 @@ class AlertsController extends Controller
                     'name'   => $data['rr_name'],
                     'mobile' => $data['rr_mobile'],
                     'email'  => strtolower(trim($data['rr_email'])),
+                    'mobile_verified_at' => now(),
                 ],
             );
         });
 
         return redirect()->route('alerts.'.$data['audience'])
             ->with('flash_ok', 'Result registration saved. You can resubmit with a different exam or roll at any time.');
+    }
+
+    // Separate send/verify endpoints for the result-registration OTP audience
+    // so it doesn't share rate buckets with alert subscription OTPs.
+    public function sendResultOtp(Request $request)
+    {
+        $data = $request->validate([
+            'audience' => 'required|in:officer,soldier',
+            'mobile'   => 'required|string|min:10|max:20',
+        ]);
+        $r = $this->otp->send('result', $data['mobile'], $request->ip());
+        return redirect()->route('alerts.'.$data['audience'])
+            ->with($r['status'] === 'sent' ? 'flash_ok' : 'flash_warn',
+                $r['status'] === 'sent'
+                    ? 'OTP sent. Enter it below to unlock the result registration form.'
+                    : ($r['message'] ?? 'Could not send OTP right now.'));
+    }
+
+    public function verifyResultOtp(Request $request)
+    {
+        $data = $request->validate([
+            'audience' => 'required|in:officer,soldier',
+            'mobile'   => 'required|string|min:10|max:20',
+            'code'     => 'required|digits:6',
+        ]);
+        $r = $this->otp->verify('result', $data['mobile'], $data['code']);
+        $msg = match ($r['status']) {
+            'verified'          => ['flash_ok',   'Mobile verified for result registration. You have 30 minutes to submit the registration form.'],
+            'expired'           => ['flash_warn', 'That OTP expired. Request a new one.'],
+            'too_many_attempts' => ['flash_warn', 'Too many wrong attempts on this OTP. Request a new one.'],
+            default             => ['flash_warn', 'That OTP is not correct. Try again.'],
+        };
+        return redirect()->route('alerts.'.$data['audience'])->with($msg[0], $msg[1]);
     }
 }

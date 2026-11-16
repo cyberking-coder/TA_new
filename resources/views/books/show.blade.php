@@ -2,69 +2,139 @@
 
 @section('content')
     <div class="pagehead">
-        <div class="wrap">
-            <div class="crumb"><a href="{{ route('home') }}">Home</a> / Bookshop</div>
-            <h1>Bookshop</h1>
-            <p>Preparation resources for the Territorial Army Commission examination.</p>
+        <div class="frame">
+            <div class="crumb"><a href="{{ route('home') }}">Home</a> / <a href="{{ url('/') }}">Bookshop</a> / {{ $book['title'] }}</div>
+            <h1>{{ $book['title'] }}</h1>
+            <p>Edition {{ $book['edition'] ?: '—' }} · by {{ $book['author'] }}</p>
         </div>
     </div>
 
-    <section class="wrap panel">
-        <div class="product">
-            <div class="showcase">
-                <div class="kicker"><i></i>FROM THE BOOKSHOP</div>
-                <div class="bookart" aria-label="Illustrative TAC examination book cover" role="img">
-                    <div class="bookcover">
-                        <small>TERRITORIAL ARMY</small>
-                        <b>TAC</b>
-                        <em>EXAMINATION<br>BOOK</em>
-                        <span>PREPARATION SERIES</span>
+    <section class="frame product-page">
+        <div class="product-grid">
+            <aside class="product-gallery">
+                @if ($book['cover_url'])
+                    <figure class="product-cover">
+                        <img src="{{ $book['cover_url'] }}" alt="{{ $book['title'] }} cover" loading="eager">
+                    </figure>
+                @else
+                    <figure class="product-cover product-cover--placeholder" aria-label="Illustrative TAC examination book cover">
+                        <span class="book-jacket" aria-hidden="true">
+                            <small>Territorial Army</small>
+                            <b>TAC</b>
+                            <em>Examination<br>Book</em>
+                        </span>
+                        <figcaption class="fine">Illustrative cover · upload the real jacket in /admin</figcaption>
+                    </figure>
+                @endif
+
+                <ul class="product-badges" aria-label="Trust badges">
+                    <li><span>&#9679;</span> All-India shipping</li>
+                    <li><span>&#9679;</span> Secure payment via CCAvenue</li>
+                    <li><span>&#9679;</span> Moderated reviews only</li>
+                </ul>
+            </aside>
+
+            <article class="product-detail">
+                <div class="kicker"><i></i>EDITION {{ $book['edition'] ?: '—' }}</div>
+                <h2>{{ $book['title'] }}</h2>
+                <p class="product-author">by {{ $book['author'] }}</p>
+
+                @if (!empty($book['description']))
+                    <p class="product-lede">{{ $book['description'] }}</p>
+                @endif
+
+                <div class="product-pricebox">
+                    <div>
+                        <span class="product-price">&#8377;{{ number_format($book['price_inr'], 0) }}</span>
+                        <span class="product-price-note">INR · shipping extra where applicable</span>
+                    </div>
+                    <div class="product-stock product-stock--{{ $book['stock_state'] }}">
+                        @if ($book['stock_state'] === 'in_stock')
+                            In stock · ready to dispatch
+                        @elseif ($book['stock_state'] === 'low_stock')
+                            Low stock · order soon
+                        @else
+                            Backorder · dispatch within 2 weeks
+                        @endif
                     </div>
                 </div>
-                <small>Illustrative cover; real artwork before launch.</small>
-            </div>
-            <article>
-                <div class="kicker"><i></i>EDITION {{ $book['edition'] ?? '' }}</div>
-                <h2>{{ $book['title'] }}</h2>
-                <p>by {{ $book['author'] ?? 'Publisher' }}</p>
-                <p class="price">&#8377;{{ number_format($book['price_inr'], 0) }} <span>INR, shipping extra where applicable</span></p>
 
-                <h3 style="font:700 22px var(--display);margin:22px 0 6px">What you receive</h3>
-                <ul>
-                    @foreach ($book['included'] as $item)<li>{{ $item }}</li>@endforeach
-                </ul>
-
-                <h3 style="font:700 22px var(--display);margin:22px 0 6px">Delivery &amp; study access</h3>
-                <p>{{ $book['delivery_blurb'] }}</p>
-
-                <p style="margin-top:22px">
-                    <a href="{{ route('checkout.show', $book['slug']) }}" class="btn">
-                        Buy the book
-                        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>
+                <div class="product-cta">
+                    <a href="{{ route('checkout.show', $book['slug']) }}" class="button">
+                        Buy the book <span aria-hidden="true">→</span>
                     </a>
-                </p>
+                    <a href="{{ route('reviews.form', $book['slug']) }}" class="underlink">Write a review</a>
+                </div>
                 <p class="fine">Single-column mobile checkout. Payment runs through CCAvenue. No coupon code required or accepted.</p>
+
+                <section class="product-block">
+                    <h3>What you receive</h3>
+                    <ul class="product-list">
+                        @foreach ($book['included'] as $item)
+                            <li>{{ $item }}</li>
+                        @endforeach
+                    </ul>
+                </section>
+
+                <section class="product-block">
+                    <h3>Why candidates choose it</h3>
+                    <div class="product-why">
+                        @foreach ($book['why'] as $w)
+                            <div>
+                                <strong>{{ $w['title'] }}</strong>
+                                <p>{{ $w['body'] }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                </section>
+
+                <section class="product-block">
+                    <h3>Specifications</h3>
+                    <dl class="product-specs">
+                        @foreach ($book['specs'] as $k => $v)
+                            <div>
+                                <dt>{{ $k }}</dt>
+                                <dd>{{ $v }}</dd>
+                            </div>
+                        @endforeach
+                    </dl>
+                </section>
+
+                <section class="product-block">
+                    <h3>Delivery &amp; study access</h3>
+                    <p>{{ $book['delivery_blurb'] }}</p>
+                </section>
             </article>
         </div>
 
         @if (!empty($book['sample_reviews']))
-            <section style="margin-top:48px">
+            <section class="product-reviews">
                 <div class="section-head">
-                    <div><div class="kicker"><i></i>MODERATED</div><h2>Verified reviews</h2></div>
-                    <a class="textlink" href="{{ route('reviews.form', $book['slug']) }}">
-                        Write a review
-                        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>
-                    </a>
+                    <h2>Verified reviews</h2>
+                    <a href="{{ route('reviews.form', $book['slug']) }}">Write a review →</a>
                 </div>
-                <div class="resource-grid" style="margin-top:20px">
+                <div class="product-reviews-grid">
                     @foreach ($book['sample_reviews'] as $r)
-                        <div class="quick" style="cursor:default;align-items:flex-start">
-                            <strong>{{ $r['name'] }}</strong>
-                            <span>Rating: {{ $r['rating'] }} / 5 · moderated</span>
-                            <p style="font-size:15px;color:var(--mute);margin:8px 0 0">{{ $r['body'] }}</p>
-                        </div>
+                        <article class="review-card">
+                            <header>
+                                <strong>{{ $r['name'] }}</strong>
+                                <span class="review-rating" aria-label="{{ $r['rating'] }} out of 5">
+                                    @for ($s = 1; $s <= 5; $s++){{ $s <= $r['rating'] ? '★' : '☆' }}@endfor
+                                </span>
+                            </header>
+                            <p>{{ $r['body'] }}</p>
+                            <small>Moderated · published after review</small>
+                        </article>
                     @endforeach
                 </div>
+            </section>
+        @else
+            <section class="product-reviews">
+                <div class="section-head">
+                    <h2>Verified reviews</h2>
+                    <a href="{{ route('reviews.form', $book['slug']) }}">Write the first review →</a>
+                </div>
+                <p class="fine" style="padding:16px 0">No published reviews yet. Reviews are moderated before they appear.</p>
             </section>
         @endif
     </section>

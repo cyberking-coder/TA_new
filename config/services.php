@@ -35,6 +35,26 @@ return [
         ],
     ],
 
+    // SMS -- selects which provider sends mobile OTPs. 'log' writes the SMS
+    // to storage/logs/laravel.log so you can read it without spending credits
+    // during dev. Set to 'fast2sms' for live sends.
+    'sms' => [
+        'provider' => env('SMS_PROVIDER', 'log'),
+    ],
+
+    // Fast2SMS transactional SMS. Sign up at https://www.fast2sms.com,
+    // fund the wallet, then copy the API key below.
+    //
+    // Routes:
+    //   q    -> Quick Transactional (no DLT needed, pricier, ok for OTP)
+    //   dlt  -> DLT-registered sender; set DLT message_id + sender_id
+    'fast2sms' => [
+        'api_key'    => env('FAST2SMS_API_KEY'),
+        'route'      => env('FAST2SMS_ROUTE', 'q'),
+        'sender_id'  => env('FAST2SMS_SENDER_ID'),
+        'message_id' => env('FAST2SMS_MESSAGE_ID'),
+    ],
+
     // Google reCAPTCHA -- optional bot shield on the public review form.
     // Leaving these blank keeps the form protected by the built-in
     // honeypot + math challenge only. To enable:

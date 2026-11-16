@@ -4,6 +4,7 @@ use App\Http\Controllers\AlertsController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DownloadsController;
+use App\Http\Controllers\HealthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PagesController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\StudyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/health', HealthController::class)->name('health');
 
 Route::get('/notices-and-downloads', [NoticeController::class, 'index'])->name('notices.index');
 Route::get('/notices/{slug}', [NoticeController::class, 'show'])->name('notices.show');
@@ -60,6 +62,10 @@ Route::get('/alerts/soldier', fn () => app(AlertsController::class)->form('soldi
 Route::post('/alerts/subscribe', [AlertsController::class, 'subscribe'])->name('alerts.subscribe');
 Route::get('/alerts/verify/{token}', [AlertsController::class, 'verify'])->name('alerts.verify');
 Route::post('/alerts/unsubscribe', [AlertsController::class, 'unsubscribe'])->name('alerts.unsubscribe');
+Route::post('/alerts/otp/send',   [AlertsController::class, 'sendOtp'])->middleware('throttle:3,60')->name('alerts.otp.send');
+Route::post('/alerts/otp/verify', [AlertsController::class, 'verifyOtp'])->middleware('throttle:10,60')->name('alerts.otp.verify');
+Route::post('/result/otp/send',   [AlertsController::class, 'sendResultOtp'])->middleware('throttle:3,60')->name('result.otp.send');
+Route::post('/result/otp/verify', [AlertsController::class, 'verifyResultOtp'])->middleware('throttle:10,60')->name('result.otp.verify');
 Route::post('/result/register', [AlertsController::class, 'registerResult'])->name('result.register');
 
 // Study / buyer (Phase 4)

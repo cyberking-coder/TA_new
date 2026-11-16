@@ -39,18 +39,38 @@ class BookController extends Controller
                 'body' => $r->body,
             ])->all();
 
+        $cover = $book->cover_path
+            ? \Illuminate\Support\Facades\Storage::disk('public')->url($book->cover_path)
+            : null;
+
         $viewBook = [
             'slug' => $book->slug,
             'title' => $book->title,
             'author' => $book->author ?? 'Publisher',
+            'description' => $book->description,
             'edition' => $edition?->edition_name ?? '',
             'price_inr' => $priceInr,
+            'cover_url' => $cover,
+            'stock_state' => $edition?->stock_state ?? 'in_stock',
             'included' => [
                 'Printed copy shipped across India',
                 'Access to buyer-only study PDFs after entitlement',
                 'Previous-paper walkthroughs with keyed answers',
+                'Latest syllabus coverage and model answers',
+            ],
+            'why' => [
+                ['title' => 'Written for serving candidates', 'body' => 'Explanations calibrated to the exam, not generic competitive prep.'],
+                ['title' => 'Keyed to the official syllabus', 'body' => 'Each section maps to the Territorial Army Commission paper structure.'],
+                ['title' => 'Verified by moderators', 'body' => 'Errata tracked across editions and fixed before reprint.'],
             ],
             'delivery_blurb' => $edition?->delivery_blurb ?? 'Delivery and study-access details land on the final purchase confirmation.',
+            'specs' => [
+                'Edition' => $edition?->edition_name ?? '—',
+                'Format' => 'Paperback, print quality mono interior',
+                'Language' => 'English',
+                'Shipping' => 'All-India dispatch 2–4 working days',
+                'Study access' => 'Unlocks buyer-only PDFs after entitlement',
+            ],
             'sample_reviews' => $reviews,
         ];
 
