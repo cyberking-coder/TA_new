@@ -7,6 +7,20 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
+        // buyers comes first — orders and entitlements reference it via FK, and
+        // Postgres enforces FK target existence at CREATE time (MySQL / SQLite
+        // happen to allow forward references, which hid this ordering bug).
+        Schema::create('buyers', function (Blueprint $t) {
+            $t->id();
+            // Login id = order_ref string. PRD: "seven-digit book order ID" is legacy.
+            $t->string('order_ref', 64)->unique();
+            $t->string('email');
+            $t->string('password_hash');
+            $t->timestamp('last_login_at')->nullable();
+            $t->timestamps();
+            $t->index('email');
+        });
+
         Schema::create('orders', function (Blueprint $t) {
             $t->id();
             // Order reference is a STRING to preserve legacy prefixes (e.g. "TA-00123").
@@ -63,17 +77,6 @@ return new class extends Migration {
             $t->unique(['provider', 'gateway_event_ref']);
         });
 
-        Schema::create('buyers', function (Blueprint $t) {
-            $t->id();
-            // Login id = order_ref string. PRD: "seven-digit book order ID" is legacy.
-            $t->string('order_ref', 64)->unique();
-            $t->string('email');
-            $t->string('password_hash');
-            $t->timestamp('last_login_at')->nullable();
-            $t->timestamps();
-            $t->index('email');
-        });
-
         Schema::create('buyer_password_resets', function (Blueprint $t) {
             $t->id();
             $t->foreignId('buyer_id')->constrained()->cascadeOnDelete();
@@ -100,9 +103,9 @@ return new class extends Migration {
     {
         Schema::dropIfExists('entitlements');
         Schema::dropIfExists('buyer_password_resets');
-        Schema::dropIfExists('buyers');
         Schema::dropIfExists('payment_attempts');
         Schema::dropIfExists('order_items');
         Schema::dropIfExists('orders');
+        Schema::dropIfExists('buyers');
     }
 };
