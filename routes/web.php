@@ -6,6 +6,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DownloadsController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OpsController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PaymentCallbackController;
@@ -20,6 +21,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/health', HealthController::class)->name('health');
+
+// One-time maintenance for hosts without CLI access (InfinityFree). Gated on
+// OPS_TOKEN env var; blank the var in production to disable.
+Route::get('/ops/status',     [OpsController::class, 'status']);
+Route::get('/ops/migrate',    [OpsController::class, 'migrate']);
+Route::get('/ops/seed-admin', [OpsController::class, 'seedAdmin']);
 
 Route::get('/notices-and-downloads', [NoticeController::class, 'index'])->name('notices.index');
 Route::get('/notices/{slug}', [NoticeController::class, 'show'])->name('notices.show');
