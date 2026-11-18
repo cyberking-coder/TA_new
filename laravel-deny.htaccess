@@ -1,0 +1,12 @@
+# Protect the Laravel application code from direct URL access.
+# Place this file at htdocs/laravel/.htaccess on the server.
+# The only entry point is htdocs/index.php, which loads this app via PHP;
+# no browser request should ever read from inside this directory.
+
+Require all denied
+
+# Fallback for older Apache that doesn't understand Require.
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

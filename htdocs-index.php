@@ -2,15 +2,17 @@
 /*
  * Shared-hosting shim for InfinityFree / most cPanel hosts.
  *
- * USAGE (copy to the server's htdocs/ as index.php):
- *   /home/user/htdocs/index.php      ← this file, renamed to index.php
- *   /home/user/laravel/              ← everything from this repo goes here
- *
- * The constant below must point to the Laravel app root (one level up
- * from htdocs by default).
+ * Server-side layout (everything lives inside htdocs because InfinityFree
+ * disallows writing outside it):
+ *   /htdocs/
+ *     index.php      ← this file, renamed to index.php
+ *     .htaccess      ← main rewrite rules (htdocs.htaccess)
+ *     laravel/       ← the Laravel app
+ *       .htaccess    ← deny-all so no URL can reach the code
+ *       app/ bootstrap/ config/ vendor/ .env ...
  */
 
-define('LARAVEL_BASE', __DIR__.'/../laravel');
+define('LARAVEL_BASE', __DIR__.'/laravel');
 
 use Illuminate\Http\Request;
 
