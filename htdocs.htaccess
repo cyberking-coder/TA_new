@@ -1,0 +1,32 @@
+# Shared-hosting .htaccess for InfinityFree / cPanel.
+# Rename to .htaccess and drop next to htdocs-index.php (renamed to index.php).
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Hand matching real files + directories back to Apache first.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Everything else goes through Laravel.
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# Prevent path-info quirks that trip Laravel on shared hosting.
+<IfModule mod_php.c>
+    php_value cgi.fix_pathinfo 0
+</IfModule>
+
+# InfinityFree limits request bodies; let admin PDF uploads through.
+<IfModule mod_php.c>
+    php_value upload_max_filesize 16M
+    php_value post_max_size 20M
+    php_value memory_limit 256M
+    php_value max_execution_time 90
+</IfModule>
+
+# Deny access to sensitive files that might leak if uploaded.
+<FilesMatch "^\.|composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|README\.md|DEPLOY\.md|artisan|server\.php">
+    Require all denied
+</FilesMatch>
