@@ -1,0 +1,79 @@
+# Render blueprint for Territorial Army Field Guide.
+# Push this to GitHub, then on https://render.com:
+#   New + → Blueprint → pick this repo. Render reads render.yaml and
+#   provisions the services below. Free tier service sleeps after
+#   15 min of no traffic; wakes on first request (~10 s cold start).
+
+services:
+  - type: web
+    name: ta-field-guide
+    runtime: php
+    plan: free
+    region: singapore          # closest to Supabase ap-south-1 for low DB latency
+    branch: main               # change if you deploy a different branch
+    buildCommand: |
+      composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
+      php artisan config:cache
+      php artisan route:cache
+      php artisan event:cache
+      php artisan storage:link || true
+    startCommand: |
+      php artisan migrate --force
+      heroku-php-apache2 public/
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "true"           # flip to "false" once the site renders cleanly
+      - key: APP_TIMEZONE
+        value: Asia/Kolkata
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: SESSION_DRIVER
+        value: cookie
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: FILESYSTEM_DISK
+        value: public
+      - key: APP_KEY
+        sync: false            # set in Render dashboard once (php artisan key:generate --show)
+      - key: APP_URL
+        sync: false            # set to https://<service>.onrender.com after first deploy
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        sync: false            # from Supabase pooler
+      - key: DB_PORT
+        value: "6543"
+      - key: DB_DATABASE
+        value: postgres
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_SSLMODE
+        value: require
+      - key: DB_CHARSET
+        value: utf8
+      # Optional services — fill in Render dashboard, leave blank to disable.
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_BUCKET
+        value: territorial-army
+      - key: AWS_ENDPOINT
+        sync: false
+      - key: AWS_DEFAULT_REGION
+        value: auto
+      - key: RESEND_KEY
+        sync: false
+      - key: FAST2SMS_API_KEY
+        sync: false
+      - key: RECAPTCHA_SITE_KEY
+        sync: false
+      - key: RECAPTCHA_SECRET_KEY
+        sync: false
