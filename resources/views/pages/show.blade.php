@@ -12,8 +12,18 @@
     </div>
 
     <section class="wrap panel">
-        <article class="reading">
-            {!! $page->body !!}
+        <article class="reading page-body">
+            @php
+                // Pages authored as Markdown get parsed; anything that looks like
+                // raw HTML (starts with "<") is passed through unchanged.
+                $body = (string) $page->body;
+                $looksLikeHtml = str_starts_with(trim($body), '<');
+            @endphp
+            @if ($looksLikeHtml)
+                {!! $body !!}
+            @else
+                {!! \Illuminate\Support\Str::markdown($body, ['html_input' => 'allow']) !!}
+            @endif
         </article>
     </section>
 @endsection
