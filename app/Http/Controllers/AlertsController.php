@@ -123,25 +123,18 @@ class AlertsController extends Controller
             'rr_roll'   => ['required', 'string', 'max:64'],
         ]);
 
-        // Mobile must have a verified OTP for the 'result' audience within
-        // the last 30 minutes. Keeps bogus mobiles out of the registration list.
-        if (!$this->otp->wasVerifiedRecently('result', $data['rr_mobile'], 30)) {
-            return back()->withInput()->withErrors([
-                'rr_mobile' => 'Please verify your mobile with an OTP before submitting the registration. Use the "Verify mobile for registration" box above.',
-            ]);
-        }
-
+        // OTP gate removed per product decision: the registration page now
+        // accepts submissions without a verified-mobile step. mobile_verified_at
+        // stays NULL so the admin UI can still distinguish verified rows later
+        // if OTP is reintroduced.
         DB::transaction(function () use ($data) {
-            // Dedupe on (exam_id, roll_number): a repeat submission with the same
-            // roll under the same exam updates contact details without exposing
-            // someone else's registration (unique constraint prevents conflicts).
             ResultRegistration::updateOrCreate(
                 ['exam_id' => (int) $data['rr_exam_id'], 'roll_number' => $data['rr_roll']],
                 [
                     'name'   => $data['rr_name'],
                     'mobile' => $data['rr_mobile'],
                     'email'  => strtolower(trim($data['rr_email'])),
-                    'mobile_verified_at' => now(),
+                    'mobile_verified_at' => null,
                 ],
             );
         });
