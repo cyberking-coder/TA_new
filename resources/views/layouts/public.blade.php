@@ -33,10 +33,10 @@
     @endisset
     <script defer src="/assets/field-guide.js"></script>
 </head>
-<body>
+<body class="page-shell">
     <a class="skip" href="#main">Skip to content</a>
     @include('partials.header', ['current' => $nav ?? null])
-    <main id="main">
+    <main id="main" class="page-main">
         @yield('content')
         {{ $slot ?? '' }}
     </main>

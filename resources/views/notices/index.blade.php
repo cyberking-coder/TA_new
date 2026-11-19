@@ -40,27 +40,29 @@
                     @endforeach
                 </select>
             </label>
-            <button type="submit">Apply</button>
-            <a href="{{ route('notices.index') }}" id="reset" style="min-height:43px;display:inline-flex;align-items:center;padding:0 15px;">Reset</a>
+            <div class="filter-actions">
+                <button type="submit" class="button">Apply</button>
+                <a href="{{ route('notices.index') }}" id="reset" class="underlink">Reset</a>
+            </div>
         </form>
 
         <p class="count" style="margin-top:18px"><span id="count">{{ count($notices) }} {{ count($notices) === 1 ? 'notice' : 'notices' }}</span></p>
 
-        <div class="entries">
+        <div class="notice-list">
             @forelse($notices as $n)
                 @php $date = \Carbon\Carbon::parse($n['date']); @endphp
-                <a class="notice-row" data-kind="{{ ucfirst($n['type']) }}" data-exam="{{ strtoupper($n['type']) }}" href="{{ route('notices.show', $n['slug']) }}">
-                    <span class="date"><b>{{ $date->format('d') }}</b><small>{{ strtoupper($date->format('M')) }}</small></span>
-                    <span class="notice-text">
-                        <span class="meta">{{ ucfirst($n['type']) }} <i></i> {{ $date->format('Y') }}</span>
-                        <strong>{{ $n['title'] }} <x-new-badge :until="$n['new_until'] ?? null" /></strong>
-                    </span>
-                    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg>
+                <a class="notice" data-kind="{{ ucfirst($n['type']) }}" href="{{ route('notices.show', $n['slug']) }}">
+                    <time datetime="{{ $date->toDateString() }}">
+                        <b>{{ $date->format('d') }}</b>
+                        <i>{{ $date->format('M Y') }}</i>
+                    </time>
+                    <strong>{{ $n['title'] }} <x-new-badge :until="$n['new_until'] ?? null" /></strong>
+                    <small>{{ ucfirst($n['type']) }}</small>
+                    <span aria-hidden="true">&rarr;</span>
                 </a>
             @empty
-                <p id="empty">No notices match your filters. <a href="{{ route('notices.index') }}">Reset filters</a>.</p>
+                <p id="empty" class="empty-state">No notices match your filters. <a href="{{ route('notices.index') }}">Reset filters</a>.</p>
             @endforelse
-            <p id="empty" {{ count($notices) > 0 ? 'hidden' : '' }}>No notices match your filters.</p>
         </div>
     </section>
 @endsection
