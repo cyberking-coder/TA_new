@@ -21,9 +21,12 @@ class StaticPagesSeeder extends Seeder
         foreach ($this->pages() as $slug => $data) {
             $page = Page::firstOrNew(['slug' => $slug]);
 
-            // Only write values the admin hasn't filled in; preserves edits.
             foreach ($data as $field => $value) {
-                if (blank($page->{$field})) {
+                $current = (string) $page->{$field};
+                // Overwrite when the slot is blank OR when it still holds the
+                // placeholder text from an earlier seeder. Real admin edits
+                // (anything else non-blank) are preserved.
+                if (blank($current) || $this->isPlaceholder($current)) {
                     $page->{$field} = $value;
                 }
             }
@@ -33,6 +36,19 @@ class StaticPagesSeeder extends Seeder
 
             $page->save();
         }
+    }
+
+    private function isPlaceholder(string $value): bool
+    {
+        $needles = [
+            'This page is a placeholder',
+            'Real content is maintained by staff in the admin panel',
+            'For the authoritative version, check the official Territorial Army website',
+        ];
+        foreach ($needles as $n) {
+            if (stripos($value, $n) !== false) return true;
+        }
+        return false;
     }
 
     /** @return array<string, array<string, string>> */
