@@ -48,8 +48,12 @@ class Notice extends Model
 
     public function scopePublished(Builder $q): Builder
     {
+        // status is the single source of truth for "is this public?"; if
+        // published_at is set (e.g. future-dated schedule), honour it as a
+        // not-before gate.
         return $q->where('status', self::STATUS_PUBLISHED)
-            ->whereNotNull('published_at')
-            ->where('published_at', '<=', now());
+            ->where(function (Builder $q) {
+                $q->whereNull('published_at')->orWhere('published_at', '<=', now());
+            });
     }
 }
