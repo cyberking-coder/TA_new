@@ -7,6 +7,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class PageForm
 {
@@ -14,13 +15,19 @@ class PageForm
     {
         return $schema
             ->components([
+                TextInput::make('title')
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn ($state, $get, $set) =>
+                        blank($get('slug')) ? $set('slug', Str::slug((string) $state)) : null
+                    ),
                 TextInput::make('slug')
-                    ->required(),
+                    ->required()
+                    ->unique(table: 'pages', column: 'slug', ignoreRecord: true)
+                    ->helperText('URL part. Auto-filled from title; keep lowercase letters, numbers, hyphens.'),
                 Select::make('parent_id')
                     ->relationship('parent', 'title'),
                 TextInput::make('menu_label'),
-                TextInput::make('title')
-                    ->required(),
                 Textarea::make('body')
                     ->columnSpanFull(),
                 TextInput::make('seo_title'),

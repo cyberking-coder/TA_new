@@ -7,6 +7,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class BookForm
 {
@@ -14,10 +15,16 @@ class BookForm
     {
         return $schema
             ->components([
-                TextInput::make('slug')
-                    ->required(),
                 TextInput::make('title')
-                    ->required(),
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn ($state, $get, $set) =>
+                        blank($get('slug')) ? $set('slug', Str::slug((string) $state)) : null
+                    ),
+                TextInput::make('slug')
+                    ->required()
+                    ->unique(table: 'books', column: 'slug', ignoreRecord: true)
+                    ->helperText('URL part. Auto-filled from title; keep lowercase letters, numbers, hyphens.'),
                 TextInput::make('author'),
                 Textarea::make('description')
                     ->columnSpanFull(),
