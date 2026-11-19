@@ -65,12 +65,9 @@
                                         Service Selection Board <span class="caret" aria-hidden="true">▸</span>
                                     </button>
                                     <ul class="dropdown subdropdown" role="menu">
-                                        <li><a href="{{ url('/pages/ssb-overview') }}">Overview</a></li>
-                                        <li><a href="{{ url('/pages/ssb-screening') }}">Screening test</a></li>
-                                        <li><a href="{{ url('/pages/ssb-psychology') }}">Psychology tests</a></li>
-                                        <li><a href="{{ url('/pages/ssb-gto') }}">Group testing (GTO)</a></li>
-                                        <li><a href="{{ url('/pages/ssb-interview') }}">Personal interview</a></li>
-                                        <li><a href="{{ url('/pages/ssb-conference') }}">Conference &amp; results</a></li>
+                                        <li><a href="{{ url('/pages/ssb-selection-center-information') }}">Selection Center Information</a></li>
+                                        <li><a href="{{ url('/pages/ssb-interview-instructions') }}">Instruction For SSB Interview</a></li>
+                                        <li><a href="{{ url('/pages/ssb-5-days-video') }}">SSB 5 Days Video</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="{{ url('/pages/medical-examination') }}">Medical Examination</a></li>
