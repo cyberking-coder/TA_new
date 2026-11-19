@@ -84,6 +84,8 @@
         </aside>
     </div>
 
+    @include('partials.history')
+
     <aside class="frame study-panel">
         <h2>Study library</h2>
         <p>Build your preparation around past papers, practice sets and the examination guide.</p>
