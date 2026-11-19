@@ -15,13 +15,6 @@
             <a href="{{ url('/pages/refund-and-cancellation') }}">Refund &amp; Cancellation Policy</a>
         </nav>
 
-        <nav class="footer-col" aria-label="Explore">
-            <h3>Explore</h3>
-            <a href="{{ url('/pages/entry-routes') }}">Entry routes</a>
-            <a href="{{ route('notices.index') }}">Notices &amp; results</a>
-            <a href="{{ route('prep.previous') }}">Study library</a>
-            <a href="{{ route('alerts.officer') }}">Alerts</a>
-        </nav>
     </div>
 
     <div class="frame footer-bottom">
