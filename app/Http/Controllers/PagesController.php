@@ -11,7 +11,13 @@ class PagesController extends Controller
         $page = Page::query()->published()->where('slug', $slug)->first();
         abort_unless($page, 404);
 
-        return view('pages.show', [
+        // Use a bespoke blade when one exists for this slug, otherwise fall
+        // back to the generic Markdown renderer at pages/show.blade.php.
+        $template = view()->exists("pages.custom.$slug")
+            ? "pages.custom.$slug"
+            : 'pages.show';
+
+        return view($template, [
             'title' => ($page->seo_title ?: $page->title).' — Territorial Army exam guide',
             'description' => $page->seo_description ?: \Str::limit(strip_tags($page->body ?? ''), 160),
             'canonical' => url()->current(),
