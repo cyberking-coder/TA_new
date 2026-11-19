@@ -10,12 +10,76 @@
         </a>
 
         <nav id="mainnav" aria-label="Main">
-            <a href="{{ route('home') }}"{!! $cur('home') !!}>Home</a>
-            <a href="{{ url('/pages/life-in-army') }}"{!! $cur('information') !!}>Life &amp; units</a>
-            <a href="{{ route('notices.index') }}"{!! $cur('notices') !!}>Notices</a>
-            <a href="{{ route('prep.previous') }}"{!! $cur('preparation') !!}>Study library</a>
-            <a href="{{ route('alerts.officer') }}"{!! $cur('alerts') !!}>Alerts</a>
-            <a href="{{ route('books.show', 'tac-examination-book') }}"{!! $cur('bookshop') !!}>Bookshop</a>
+            <ul class="nav-root">
+                <li><a href="{{ route('home') }}"{!! $cur('home') !!}>Home</a></li>
+
+                <li class="has-dropdown">
+                    <button type="button" class="nav-trigger" aria-expanded="false" aria-haspopup="true">
+                        Life in Army <span class="caret" aria-hidden="true">▾</span>
+                    </button>
+                    <ul class="dropdown" role="menu">
+                        <li><a href="{{ url('/pages/life-in-army') }}">Overview</a></li>
+                        <li><a href="{{ url('/pages/what-army-offers-you') }}">What the army offers you</a></li>
+                        <li><a href="{{ url('/pages/service-benefits') }}">Service benefits</a></li>
+                        <li><a href="{{ url('/pages/rules-and-regulations') }}">Rules &amp; regulations</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-dropdown">
+                    <button type="button" class="nav-trigger" aria-expanded="false" aria-haspopup="true">
+                        TA Units <span class="caret" aria-hidden="true">▾</span>
+                    </button>
+                    <ul class="dropdown" role="menu">
+                        <li><a href="{{ url('/pages/ta-units') }}">Overview</a></li>
+                        <li><a href="{{ url('/pages/ecological-ta') }}">Ecological TA</a></li>
+                        <li><a href="{{ url('/pages/departmental-ta') }}">Departmental TA</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="{{ url('/pages/ta-policies') }}"{!! $cur('ta-policies') !!}>TA Policies</a></li>
+
+                <li class="has-dropdown">
+                    <button type="button" class="nav-trigger" aria-expanded="false" aria-haspopup="true">
+                        Downloads <span class="caret" aria-hidden="true">▾</span>
+                    </button>
+                    <ul class="dropdown" role="menu">
+                        <li><a href="{{ route('downloads.index') }}">Important Downloads</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-dropdown">
+                    <button type="button" class="nav-trigger" aria-expanded="false" aria-haspopup="true">
+                        Join TA <span class="caret" aria-hidden="true">▾</span>
+                    </button>
+                    <ul class="dropdown" role="menu">
+                        <li><a href="{{ url('/pages/join-as-jawan') }}">Join as Jawan / JCO</a></li>
+                        <li class="has-sub">
+                            <button type="button" class="nav-trigger subnav-trigger" aria-expanded="false" aria-haspopup="true">
+                                Join as an Officer <span class="caret" aria-hidden="true">▸</span>
+                            </button>
+                            <ul class="dropdown subdropdown" role="menu">
+                                <li><a href="{{ url('/pages/join-as-officer') }}">Overview</a></li>
+                                <li><a href="{{ url('/pages/join-as-officer-civilian') }}">Civilian Officer</a></li>
+                                <li><a href="{{ url('/pages/join-as-officer-ex-service') }}">Ex-Service Officer</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="has-dropdown">
+                    <button type="button" class="nav-trigger" aria-expanded="false" aria-haspopup="true">
+                        Resources <span class="caret" aria-hidden="true">▾</span>
+                    </button>
+                    <ul class="dropdown" role="menu">
+                        <li><a href="{{ route('alerts.officer') }}">SMS Alert</a></li>
+                        <li><a href="{{ route('prep.previous') }}">Previous Solved Question Papers</a></li>
+                        <li><a href="{{ route('prep.practice') }}">Practice Papers</a></li>
+                        <li><a href="{{ route('study.login') }}">Study Material</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="{{ url('/pages/ta-command-contacts') }}"{!! $cur('contacts') !!}>TA Command Contacts</a></li>
+            </ul>
         </nav>
 
         <div class="tools">

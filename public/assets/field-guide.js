@@ -65,3 +65,41 @@
     if (kind) kind.addEventListener('change', filter);
   }
 })();
+
+// Dropdown nav: click toggles .is-open on the parent li (for mobile + touch).
+// CSS :hover and :focus-within handle desktop. ESC closes the open dropdown.
+(function(){
+  const triggers = document.querySelectorAll('#mainnav .nav-trigger');
+  if (!triggers.length) return;
+
+  function closeAll(except){
+    document.querySelectorAll('#mainnav .is-open').forEach(li => {
+      if (li === except) return;
+      li.classList.remove('is-open');
+      const t = li.querySelector(':scope > .nav-trigger');
+      if (t) t.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  triggers.forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const li = trigger.parentElement;
+      const willOpen = !li.classList.contains('is-open');
+      closeAll(willOpen ? li : null);
+      li.classList.toggle('is-open', willOpen);
+      trigger.setAttribute('aria-expanded', String(willOpen));
+    });
+  });
+
+  // Outside click → close everything.
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#mainnav')) closeAll(null);
+  });
+
+  // ESC → close everything.
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAll(null);
+  });
+})();

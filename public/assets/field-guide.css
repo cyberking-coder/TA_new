@@ -321,3 +321,66 @@ body.page-shell .site-footer{flex-shrink:0}
   .history-body{grid-template-columns:1fr;gap:0}
   .history-honours .honours-grid b{min-width:30px}
 }
+
+/* ===== Dropdown nav (replaces the flat #mainnav row) ===== */
+#mainnav .nav-root{display:flex;align-items:center;gap:clamp(14px,2vw,34px);list-style:none;margin:0;padding:0}
+#mainnav .nav-root > li{position:relative}
+#mainnav a,
+#mainnav .nav-trigger{display:inline-flex;align-items:center;gap:6px;background:none;border:0;padding:0;color:inherit;font:inherit;font-size:14px;cursor:pointer;white-space:nowrap}
+#mainnav .nav-root > li > a[aria-current]{text-decoration:underline;text-underline-offset:6px;text-decoration-color:#a07945}
+#mainnav .caret{font-size:10px;color:var(--muted);margin-top:1px}
+#mainnav .has-dropdown .dropdown{
+  position:absolute;top:calc(100% + 8px);left:0;min-width:240px;
+  background:var(--white);border:1px solid var(--edge);border-radius:4px;
+  box-shadow:0 10px 28px rgba(12,29,21,.14);
+  list-style:none;margin:0;padding:6px 0;z-index:30;
+  opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .15s ease, transform .15s ease, visibility 0s linear .15s;
+}
+#mainnav .has-dropdown:hover > .dropdown,
+#mainnav .has-dropdown:focus-within > .dropdown,
+#mainnav .has-dropdown.is-open > .dropdown{
+  opacity:1;visibility:visible;transform:translateY(0);transition-delay:0s;
+}
+#mainnav .dropdown li{display:block}
+#mainnav .dropdown a,
+#mainnav .dropdown .nav-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;padding:9px 16px;font-size:14px;color:var(--ink);white-space:nowrap;text-align:left}
+#mainnav .dropdown a:hover,
+#mainnav .dropdown .nav-trigger:hover,
+#mainnav .dropdown a:focus-visible{background:#f3efe2;text-decoration:none;color:var(--ink)}
+
+/* Nested submenu (Join as an Officer) */
+#mainnav .has-sub{position:relative}
+#mainnav .has-sub > .subdropdown{
+  position:absolute;top:-6px;left:calc(100% + 2px);min-width:220px;
+  background:var(--white);border:1px solid var(--edge);border-radius:4px;
+  box-shadow:0 10px 28px rgba(12,29,21,.14);
+  padding:6px 0;list-style:none;margin:0;z-index:31;
+  opacity:0;visibility:hidden;transform:translateX(-4px);transition:opacity .15s ease, transform .15s ease, visibility 0s linear .15s;
+}
+#mainnav .has-sub:hover > .subdropdown,
+#mainnav .has-sub:focus-within > .subdropdown,
+#mainnav .has-sub.is-open > .subdropdown{
+  opacity:1;visibility:visible;transform:translateX(0);transition-delay:0s;
+}
+
+/* Mobile — same markup, but the dropdowns collapse inline */
+@media(max-width:860px){
+  #mainnav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--paper);border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);padding:10px 20px 16px;z-index:40;max-height:80vh;overflow-y:auto}
+  #mainnav.open{display:block}
+  #mainnav .nav-root{flex-direction:column;align-items:stretch;gap:0}
+  #mainnav .nav-root > li{border-bottom:1px solid var(--edge)}
+  #mainnav .nav-root > li:last-child{border-bottom:0}
+  #mainnav a,
+  #mainnav .nav-trigger{padding:12px 0;width:100%;justify-content:space-between}
+  #mainnav .has-dropdown .dropdown,
+  #mainnav .has-sub .subdropdown{
+    position:static;opacity:1;visibility:visible;transform:none;
+    box-shadow:none;border:0;border-left:2px solid var(--brass);
+    border-radius:0;margin:0 0 8px 8px;padding:4px 0 4px 10px;
+    display:none;background:transparent;
+  }
+  #mainnav .has-dropdown.is-open > .dropdown,
+  #mainnav .has-sub.is-open > .subdropdown{display:block}
+  #mainnav .dropdown a,
+  #mainnav .dropdown .nav-trigger{padding:8px 0}
+}
