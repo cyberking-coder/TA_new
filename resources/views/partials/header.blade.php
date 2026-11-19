@@ -35,17 +35,6 @@
                     </ul>
                 </li>
 
-                <li><a href="{{ url('/pages/ta-policies') }}"{!! $cur('ta-policies') !!}>TA Policies</a></li>
-
-                <li class="has-dropdown">
-                    <button type="button" class="nav-trigger" aria-expanded="false" aria-haspopup="true">
-                        Downloads <span class="caret" aria-hidden="true">▾</span>
-                    </button>
-                    <ul class="dropdown" role="menu">
-                        <li><a href="{{ route('downloads.index') }}">Important Downloads</a></li>
-                    </ul>
-                </li>
-
                 <li class="has-dropdown">
                     <button type="button" class="nav-trigger" aria-expanded="false" aria-haspopup="true">
                         Join TA <span class="caret" aria-hidden="true">▾</span>
@@ -76,6 +65,17 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="has-dropdown">
+                    <button type="button" class="nav-trigger" aria-expanded="false" aria-haspopup="true">
+                        Downloads <span class="caret" aria-hidden="true">▾</span>
+                    </button>
+                    <ul class="dropdown" role="menu">
+                        <li><a href="{{ route('downloads.index') }}">Important Downloads</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="{{ url('/pages/ta-policies') }}"{!! $cur('ta-policies') !!}>TA Policies</a></li>
 
                 <li class="has-dropdown">
                     <button type="button" class="nav-trigger" aria-expanded="false" aria-haspopup="true">
