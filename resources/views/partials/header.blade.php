@@ -10,7 +10,7 @@
         </a>
 
         <nav id="mainnav" aria-label="Main">
-            <a href="{{ url('/pages/entry-routes') }}"{!! $cur('entry-routes') !!}>Entry routes</a>
+            <a href="{{ route('home') }}"{!! $cur('home') !!}>Home</a>
             <a href="{{ url('/pages/life-in-army') }}"{!! $cur('information') !!}>Life &amp; units</a>
             <a href="{{ route('notices.index') }}"{!! $cur('notices') !!}>Notices</a>
             <a href="{{ route('prep.previous') }}"{!! $cur('preparation') !!}>Study library</a>

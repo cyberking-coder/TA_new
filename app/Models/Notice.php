@@ -27,6 +27,21 @@ class Notice extends Model
     public const STATUS_PUBLISHED = 'published';
     public const STATUS_WITHDRAWN = 'withdrawn';
 
+    protected static function booted(): void
+    {
+        // Auto-stamp published_at the moment status becomes "published", so
+        // admins only have to flip one dropdown. Cleared again if they move
+        // the record back to draft/withdrawn.
+        static::saving(function (Notice $n) {
+            if ($n->status === self::STATUS_PUBLISHED && blank($n->published_at)) {
+                $n->published_at = now();
+            }
+            if ($n->status !== self::STATUS_PUBLISHED) {
+                $n->published_at = null;
+            }
+        });
+    }
+
     public function exam(): BelongsTo { return $this->belongsTo(Exam::class); }
     public function pdf(): BelongsTo { return $this->belongsTo(Pdf::class); }
     public function author(): BelongsTo { return $this->belongsTo(User::class, 'author_id'); }
