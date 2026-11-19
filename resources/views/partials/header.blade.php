@@ -18,10 +18,9 @@
                         Life in Army <span class="caret" aria-hidden="true">▾</span>
                     </button>
                     <ul class="dropdown" role="menu">
-                        <li><a href="{{ url('/pages/life-in-army') }}">Overview</a></li>
-                        <li><a href="{{ url('/pages/what-army-offers-you') }}">What the army offers you</a></li>
+                        <li><a href="{{ url('/pages/what-army-offers-you') }}">What army offers you</a></li>
                         <li><a href="{{ url('/pages/service-benefits') }}">Service benefits</a></li>
-                        <li><a href="{{ url('/pages/rules-and-regulations') }}">Rules &amp; regulations</a></li>
+                        <li><a href="{{ url('/pages/rules-and-regulations') }}">Rules and regulations</a></li>
                     </ul>
                 </li>
 
@@ -58,9 +57,24 @@
                                 Join as an Officer <span class="caret" aria-hidden="true">▸</span>
                             </button>
                             <ul class="dropdown subdropdown" role="menu">
-                                <li><a href="{{ url('/pages/join-as-officer') }}">Overview</a></li>
-                                <li><a href="{{ url('/pages/join-as-officer-civilian') }}">Civilian Officer</a></li>
-                                <li><a href="{{ url('/pages/join-as-officer-ex-service') }}">Ex-Service Officer</a></li>
+                                <li><a href="{{ url('/pages/officer-civilian-candidates') }}">For Civilian Candidates</a></li>
+                                <li><a href="{{ url('/pages/officer-ex-service') }}">For Ex-Service Officer</a></li>
+                                <li><a href="{{ url('/pages/officer-syllabus') }}">Syllabus</a></li>
+                                <li class="has-sub">
+                                    <button type="button" class="nav-trigger subnav-trigger" aria-expanded="false" aria-haspopup="true">
+                                        Service Selection Board <span class="caret" aria-hidden="true">▸</span>
+                                    </button>
+                                    <ul class="dropdown subdropdown" role="menu">
+                                        <li><a href="{{ url('/pages/ssb-overview') }}">Overview</a></li>
+                                        <li><a href="{{ url('/pages/ssb-screening') }}">Screening test</a></li>
+                                        <li><a href="{{ url('/pages/ssb-psychology') }}">Psychology tests</a></li>
+                                        <li><a href="{{ url('/pages/ssb-gto') }}">Group testing (GTO)</a></li>
+                                        <li><a href="{{ url('/pages/ssb-interview') }}">Personal interview</a></li>
+                                        <li><a href="{{ url('/pages/ssb-conference') }}">Conference &amp; results</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="{{ url('/pages/medical-examination') }}">Medical Examination</a></li>
+                                <li><a href="{{ url('/pages/officer-training') }}">Training</a></li>
                             </ul>
                         </li>
                     </ul>
