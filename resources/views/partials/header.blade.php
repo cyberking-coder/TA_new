@@ -82,7 +82,9 @@
                         Resources <span class="caret" aria-hidden="true">▾</span>
                     </button>
                     <ul class="dropdown" role="menu">
-                        <li><a href="{{ route('alerts.officer') }}">SMS Alert</a></li>
+                        <li><a href="{{ route('alerts.gd') }}">GD / Soldier SMS Alerts</a></li>
+                        <li><a href="{{ route('alerts.officer') }}">Officer SMS Alerts</a></li>
+                        <li><a href="{{ route('result.form') }}">Result Notification Registration</a></li>
                         <li><a href="{{ route('prep.previous') }}">Previous Solved Question Papers</a></li>
                         <li><a href="{{ route('prep.practice') }}">Practice Papers</a></li>
                         <li><a href="{{ route('study.login') }}">Study Material</a></li>

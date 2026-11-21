@@ -64,16 +64,23 @@ Route::match(['get', 'post'], '/payment/simulator', [PaymentSimulatorController:
 Route::post('/payment/simulator/confirm', [PaymentSimulatorController::class, 'decide'])->name('payment.simulator.decide');
 
 // Alerts & result registration (Phase 3)
-Route::get('/alerts/officer', fn () => app(AlertsController::class)->form('officer'))->name('alerts.officer');
-Route::get('/alerts/soldier', fn () => app(AlertsController::class)->form('soldier'))->name('alerts.soldier');
-Route::post('/alerts/subscribe', [AlertsController::class, 'subscribe'])->name('alerts.subscribe');
-Route::get('/alerts/verify/{token}', [AlertsController::class, 'verify'])->name('alerts.verify');
-Route::post('/alerts/unsubscribe', [AlertsController::class, 'unsubscribe'])->name('alerts.unsubscribe');
+// v2: separate GD + Officer audience pages, mobile-based subscribe/unsubscribe.
+Route::get('/alerts/gd',       fn () => app(AlertsController::class)->audienceForm('gd'))->name('alerts.gd');
+Route::get('/alerts/officer',  fn () => app(AlertsController::class)->audienceForm('officer'))->name('alerts.officer');
+Route::get('/alerts/soldier',  fn () => redirect()->route('alerts.gd'))->name('alerts.soldier'); // legacy alias
+Route::post('/alerts/subscribe',   [AlertsController::class, 'subscribeAudience'])->middleware('throttle:10,60')->name('alerts.subscribe');
+Route::post('/alerts/unsubscribe', [AlertsController::class, 'unsubscribeAudience'])->middleware('throttle:10,60')->name('alerts.unsubscribe');
+
+// Result-notification registration (visibility controlled by app_settings.result_notification_enabled).
+Route::get('/result/register',  [AlertsController::class, 'resultForm'])->name('result.form');
+Route::post('/result/register', [AlertsController::class, 'registerResult'])->middleware('throttle:10,60')->name('result.register');
+
+// Shared OTP endpoints (gated by app_settings.otp_enabled).
 Route::post('/alerts/otp/send',   [AlertsController::class, 'sendOtp'])->middleware('throttle:3,60')->name('alerts.otp.send');
 Route::post('/alerts/otp/verify', [AlertsController::class, 'verifyOtp'])->middleware('throttle:10,60')->name('alerts.otp.verify');
-Route::post('/result/otp/send',   [AlertsController::class, 'sendResultOtp'])->middleware('throttle:3,60')->name('result.otp.send');
-Route::post('/result/otp/verify', [AlertsController::class, 'verifyResultOtp'])->middleware('throttle:10,60')->name('result.otp.verify');
-Route::post('/result/register', [AlertsController::class, 'registerResult'])->name('result.register');
+
+// Legacy email-token verify kept so old inbox links still work.
+Route::get('/alerts/verify/{token}', [AlertsController::class, 'verify'])->name('alerts.verify');
 
 // Study / buyer (Phase 4)
 Route::get('/study/login', [StudyController::class, 'loginForm'])->name('study.login');
