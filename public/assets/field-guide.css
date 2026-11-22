@@ -725,3 +725,30 @@ body.page-shell .site-footer{flex-shrink:0}
 .occ-cta p{font-size:14px;color:#d4d8cc;margin:0;max-width:60ch}
 .occ-cta .button{background:#efd3a0;color:var(--ink);padding:12px 18px;font-size:14px}
 .occ-cta .button:hover{filter:brightness(1.06);text-decoration:none}
+
+/* ===== Officer · Syllabus bespoke additions on top of .occ-* ===== */
+.syl .occ-pay td[rowspan]{background:#f4f1e4;font-weight:600;color:var(--ink);vertical-align:middle;text-align:center}
+
+/* Syllabus subject cards */
+.syl-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.syl-card{background:var(--white);border:1px solid var(--edge);border-radius:4px;padding:18px 20px;border-top:3px solid var(--brass);position:relative}
+.syl-card .syl-num{position:absolute;top:-14px;left:16px;background:var(--ink);color:#f0d7a9;font:700 12px/1 var(--sans);letter-spacing:.06em;padding:6px 9px;border-radius:3px}
+.syl-card strong{display:block;font:500 18px/1.2 var(--serif);color:var(--ink);margin:6px 0 8px}
+.syl-card > p{font-size:14.5px;color:#3a4a3f;line-height:1.55;margin:0 0 10px}
+.syl-bul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.syl-bul li{position:relative;padding:3px 0 3px 18px;font-size:13.5px;color:#243128}
+.syl-bul li::before{content:"";position:absolute;left:0;top:11px;width:10px;height:1px;background:var(--brass)}
+
+/* Exam-day conduct rules */
+.syl-rules{display:grid;gap:12px}
+.syl-rule{background:var(--white);border:1px solid var(--edge);border-left:4px solid var(--brass);border-radius:4px;padding:16px 20px}
+.syl-rule h3{font:500 17px/1.2 var(--serif);margin:0 0 8px;color:var(--ink)}
+.syl-rule p{font-size:14.5px;color:#3a4a3f;line-height:1.6;margin:0}
+.syl-rule--warn{border-left-color:#ba7619;background:#fef7e8}
+.syl-rule--warn h3{color:#7a5a12}
+.syl-rule--danger{border-left-color:#b32020;background:#fce2d6}
+.syl-rule--danger h3{color:#7a3312}
+
+/* Compact facts dl for syllabus */
+.syl-facts dl > div{padding:10px 0}
+.syl-facts dd{font:500 14px/1.4 var(--serif)}
