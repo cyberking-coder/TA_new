@@ -649,3 +649,79 @@ body.page-shell .site-footer{flex-shrink:0}
 .glance-list a{color:var(--ink);text-decoration:none;font:500 15px/1.35 var(--serif);flex:1;min-width:0}
 .glance-list a:hover{color:#8c6d1f;text-decoration:none}
 .page-doc-glance .fine{margin:6px 0 0;font-size:11px;color:var(--muted);letter-spacing:.04em}
+
+/* ===== Officer · For Civilian Candidates bespoke layout ===== */
+.occ{padding-block:clamp(28px,4vw,56px);display:grid;gap:clamp(32px,4vw,56px)}
+.occ .eyebrow{color:#a07945;letter-spacing:.22em;font:600 11px/1 var(--sans);text-transform:uppercase;display:flex;align-items:center;gap:10px;margin:0 0 10px}
+.occ .eyebrow::before{content:"";width:22px;height:1px;background:var(--brass)}
+.occ h2{font:400 clamp(26px,3vw,38px)/1.1 var(--serif);letter-spacing:-.03em;margin:0 0 14px;color:var(--ink)}
+
+/* ----- Hero ----- */
+.occ-hero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);gap:clamp(24px,4vw,56px);align-items:start}
+@media(max-width:860px){.occ-hero{grid-template-columns:1fr}}
+.occ-hero-text p{font:400 17px/1.7 var(--sans);color:#2a3a2e;margin:0 0 14px;max-width:68ch}
+.occ-warn{background:#fef7e8;border:1px solid #ecd8a3;border-left:4px solid #ba7619;border-radius:4px;padding:14px 18px;font-size:15px;color:#3a2f12}
+
+.occ-dates{background:#f4f1e4;border:1px solid #d7d7c9;border-radius:6px;padding:22px 24px}
+.occ-dates h3{font:500 20px/1.2 var(--serif);margin:0 0 14px;color:var(--ink)}
+.occ-dates dl{margin:0 0 14px}
+.occ-dates dl > div{padding:12px 0;border-bottom:1px dashed #d7d7c9}
+.occ-dates dl > div:last-child{border-bottom:0}
+.occ-dates dt{font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#8c6d1f;margin:0 0 6px}
+.occ-dates dd{margin:0;font:500 15px/1.4 var(--serif);color:var(--ink)}
+.occ-dates .button{background:var(--ink);color:#fff;padding:12px 16px;width:100%;justify-content:space-between;text-align:left;font-size:14px}
+.occ-dates .button:hover{background:#0f1f14;text-decoration:none}
+
+/* ----- Shared block ----- */
+.occ-block{}
+
+/* ----- Eligibility cards ----- */
+.occ-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.occ-cards article{background:var(--white);border:1px solid var(--edge);border-radius:4px;padding:16px 18px;border-top:3px solid var(--brass)}
+.occ-cards strong{display:block;font:500 15px/1.2 var(--serif);margin-bottom:6px;color:var(--ink)}
+.occ-cards p{font-size:14px;color:#3a4a3f;line-height:1.55;margin:0}
+.occ-cards .occ-cards-exclude{border-top-color:#b32020}
+.occ-cards .occ-cards-exclude strong{color:#b32020}
+
+/* ----- Selection pipeline ----- */
+.occ-pipeline{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:pipe}
+.occ-pipeline li{display:grid;grid-template-columns:48px minmax(0,1fr);column-gap:16px;row-gap:4px;background:var(--white);border:1px solid var(--edge);border-radius:4px;padding:16px 18px;border-left:3px solid var(--brass)}
+.occ-pipeline-num{grid-row:1 / span 2;display:inline-grid;place-items:center;height:36px;width:36px;background:var(--ink);color:#f0d7a9;border-radius:50%;font:700 13px/1 var(--sans);letter-spacing:.06em;align-self:start}
+.occ-pipeline strong{font:500 17px/1.2 var(--serif);color:var(--ink)}
+.occ-pipeline p{grid-column:2;margin:0;font-size:14.5px;color:#3a4a3f;line-height:1.55}
+
+/* ----- HQ grid ----- */
+.occ-hq-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.occ-hq-grid article{background:var(--white);border:1px solid var(--edge);border-radius:4px;padding:14px 16px}
+.occ-hq-zone{display:block;font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#8c6d1f;margin-bottom:8px}
+.occ-hq-grid p{font:500 14px/1.4 var(--serif);color:var(--ink);margin:0 0 6px}
+.occ-hq-grid small{font-size:12px;color:var(--muted)}
+
+/* ----- Documents checklist ----- */
+.occ-docs{list-style:none;counter-reset:doc;margin:0;padding:0;display:grid;gap:8px;max-width:72ch}
+.occ-docs li{counter-increment:doc;position:relative;padding:12px 14px 12px 50px;background:var(--white);border:1px solid var(--edge);border-radius:4px;font-size:14.5px;line-height:1.55;color:#243128}
+.occ-docs li::before{content:counter(doc, decimal-leading-zero);position:absolute;left:14px;top:12px;font:600 12px/1 var(--sans);letter-spacing:.06em;color:#8c6d1f;background:#f4f1e4;padding:5px 7px;border-radius:3px}
+.occ-docs li strong{color:var(--ink)}
+
+/* ----- Pay table ----- */
+.occ-table-wrap{overflow-x:auto;background:var(--white);border:1px solid var(--edge);border-radius:4px}
+.occ-pay{width:100%;border-collapse:collapse;margin:0}
+.occ-pay th,.occ-pay td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--edge);font-size:14.5px}
+.occ-pay th{background:#f4f1e4;font-weight:600;color:var(--ink);text-transform:uppercase;font-size:11px;letter-spacing:.14em;border-bottom:2px solid #a7af9e}
+.occ-pay tbody tr:last-child td{border-bottom:0}
+.occ-pay tbody tr:nth-child(even) td{background:#fafaf0}
+.occ-pay tbody td:first-child{font:500 15px/1.2 var(--serif);color:var(--ink)}
+
+/* ----- Terms ----- */
+.occ-terms{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-width:72ch}
+.occ-terms li{position:relative;padding:4px 0 4px 24px;font-size:15px;line-height:1.6;color:#243128}
+.occ-terms li::before{content:"";position:absolute;left:0;top:11px;width:12px;height:2px;background:var(--brass)}
+
+/* ----- Bottom CTA ----- */
+.occ-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;background:#1a3229;color:#e8ead8;border-radius:6px;padding:22px 26px}
+.occ-cta .eyebrow{color:#f0d7a9;margin-bottom:8px}
+.occ-cta .eyebrow::before{background:#f0d7a9}
+.occ-cta h3{font:500 20px/1.2 var(--serif);margin:0 0 4px;color:#fff}
+.occ-cta p{font-size:14px;color:#d4d8cc;margin:0;max-width:60ch}
+.occ-cta .button{background:#efd3a0;color:var(--ink);padding:12px 18px;font-size:14px}
+.occ-cta .button:hover{filter:brightness(1.06);text-decoration:none}
