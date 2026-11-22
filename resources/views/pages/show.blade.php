@@ -1,16 +1,13 @@
 @extends('layouts.public')
 
 @php
-    // Render the body: Markdown unless it already looks like HTML. Then add
-    // stable anchor IDs to every h2 / h3 so the sidebar ToC can jump into
-    // them.
     $raw = (string) $page->body;
     $looksLikeHtml = str_starts_with(trim($raw), '<');
     $html = $looksLikeHtml
         ? $raw
         : (string) \Illuminate\Support\Str::markdown($raw, ['html_input' => 'allow']);
 
-    // Inject slug IDs on h2 / h3 (preserve any that are already there).
+    // Slug-id every h2 / h3 + collect h2 titles for the glance sidebar.
     $html = preg_replace_callback(
         '#<(h[23])(\b[^>]*)>(.*?)</\1>#is',
         function ($m) {
@@ -23,7 +20,25 @@
         $html
     );
 
-    // Pull the h2 list out for the sidebar ToC.
+    // Editorial decoration: wrap each h2 section in a .doc-section with an
+    // auto-generated eyebrow (first word of the heading, uppercase). A
+    // horizontal rule is injected between sections by CSS via :not(:first-child).
+    $html = preg_replace_callback(
+        '#<h2(\b[^>]*)>(.*?)</h2>#is',
+        function ($m) {
+            $heading = trim(strip_tags($m[2]));
+            // Eyebrow = first 1-2 words if the title is long; otherwise use
+            // the whole heading uppercased for shorter titles.
+            $words = preg_split('/\s+/', $heading);
+            $eyebrow = count($words) > 3
+                ? strtoupper(implode(' ', array_slice($words, 0, 1)))
+                : strtoupper($heading);
+            return '<p class="doc-eyebrow" aria-hidden="true">'.htmlspecialchars($eyebrow).'</p>'
+                 .'<h2'.$m[1].'>'.$m[2].'</h2>';
+        },
+        $html
+    );
+
     $toc = [];
     if (preg_match_all('#<h2\b[^>]*\bid=\"([^\"]+)\"[^>]*>(.*?)</h2>#is', $html, $mm, PREG_SET_ORDER)) {
         foreach ($mm as $row) {
@@ -65,11 +80,14 @@
         </article>
 
         @if (count($toc) >= 2)
-            <aside class="page-doc-toc" aria-label="On this page">
-                <p class="eyebrow">ON THIS PAGE</p>
-                <ul>
-                    @foreach ($toc as $i)
-                        <li><a href="#{{ $i['id'] }}">{{ $i['title'] }}</a></li>
+            <aside class="page-doc-glance" aria-label="At a glance">
+                <h3>At a glance</h3>
+                <ul class="glance-list">
+                    @foreach ($toc as $i => $item)
+                        <li>
+                            <span class="glance-num">{{ str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) }}</span>
+                            <a href="#{{ $item['id'] }}">{{ $item['title'] }}</a>
+                        </li>
                     @endforeach
                 </ul>
                 <p class="fine">Updated {{ $page->updated_at?->format('F Y') }}.</p>
