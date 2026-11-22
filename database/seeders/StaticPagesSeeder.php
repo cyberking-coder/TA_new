@@ -48,6 +48,17 @@ class StaticPagesSeeder extends Seeder
         foreach ($needles as $n) {
             if (stripos($value, $n) !== false) return true;
         }
+
+        // Also treat bodies that got flattened into a single HTML paragraph
+        // as placeholder — admin edits in the WYSIWYG strip the Markdown
+        // headings and lists, which leaves one long <p>…</p> blob.
+        $trim = trim($value);
+        if (str_starts_with($trim, '<p>') && substr_count($trim, '<p>') <= 2
+            && ! preg_match('/<(h2|h3|ul|ol|table)\b/i', $trim)
+            && strlen($trim) > 600) {
+            return true;
+        }
+
         return false;
     }
 
