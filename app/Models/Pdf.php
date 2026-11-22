@@ -37,9 +37,48 @@ class Pdf extends Model
         return $this->disk === self::DISK_PRIVATE;
     }
 
+    protected static function booted(): void
+    {
+        // Back-fill size_bytes from the file on disk whenever it's missing or 0.
+        // The FileUpload component sometimes misses the getSize() callback when
+        // Livewire re-hydrates the form, leaving us at 0 and showing "0 KB" on
+        // the public page. Settle the truth at save-time instead. We only touch
+        // the disk when size_bytes genuinely needs a fill AND this is the first
+        // save (or path changed) — otherwise every markAsNew would re-stat.
+        static::saving(function (Pdf $p) {
+            if ((int) $p->size_bytes > 0) return;
+            if (! $p->path) return;
+            if ($p->exists && ! $p->isDirty('path')) return;
+
+            $disk = $p->disk === self::DISK_PRIVATE ? 'private' : 'public';
+            try {
+                if (Storage::disk($disk)->exists($p->path)) {
+                    $p->size_bytes = (int) Storage::disk($disk)->size($p->path);
+                }
+            } catch (\Throwable $e) {
+                // Any filesystem or disk issue must not block the save.
+            }
+        });
+    }
+
     public function sizeLabel(): string
     {
-        $kb = $this->size_bytes / 1024;
+        $bytes = (int) $this->size_bytes;
+
+        // Fallback: if the row was saved before we had the saving-hook, read
+        // the file off disk right now.
+        if ($bytes <= 0 && $this->path) {
+            $disk = $this->disk === self::DISK_PRIVATE ? 'private' : 'public';
+            try {
+                if (Storage::disk($disk)->exists($this->path)) {
+                    $bytes = (int) Storage::disk($disk)->size($this->path);
+                }
+            } catch (\Throwable $e) {}
+        }
+
+        if ($bytes <= 0) return '—';
+
+        $kb = $bytes / 1024;
         return $kb < 1024
             ? number_format($kb, 0).' KB'
             : number_format($kb / 1024, 1).' MB';

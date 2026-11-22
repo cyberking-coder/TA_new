@@ -54,6 +54,13 @@ class PageForm
                 TextInput::make('seo_description')
                     ->maxLength(160)
                     ->helperText('Auto-filled from the body. Max 160 chars; shown under the title in Google results.'),
+                Select::make('pdf_id')
+                    ->label('Attached PDF (optional)')
+                    ->relationship('pdf', 'title')
+                    ->searchable()
+                    ->preload()
+                    ->nullable()
+                    ->helperText('Shown as a download card at the top of the page body. Upload a PDF in PDFs first.'),
                 TextInput::make('status')
                     ->required()
                     ->default('draft'),

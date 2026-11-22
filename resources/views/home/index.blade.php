@@ -30,16 +30,6 @@
 
     @include('partials.newsline-ticker', ['items' => $tickerItems ?? []])
 
-    <section class="route-band" aria-label="Choose your entry route">
-        <div class="frame route-inner">
-            <h2>Entry routes</h2>
-            <div class="route-options">
-                <a href="{{ url('/pages/join-as-officer') }}"><strong>Civilian officer</strong><span aria-hidden="true">→</span></a>
-                <a href="{{ url('/pages/ex-service-officer') }}"><strong>Ex-service officer</strong><span aria-hidden="true">→</span></a>
-                <a href="{{ url('/pages/join-as-jawan') }}"><strong>Jawan / JCO</strong><span aria-hidden="true">→</span></a>
-            </div>
-        </div>
-    </section>
 
     <div class="frame overview">
         <section>

@@ -893,6 +893,121 @@ Candidates are advised to be honest in the Personal Information Questionnaire an
 MD,
             ],
 
+            'ecological-ta' => [
+                'title' => 'Ecological Territorial Army',
+                'menu_label' => 'Ecological TA',
+                'seo_title' => 'Ecological Territorial Army — Afforestation and ecology units',
+                'seo_description' => 'Ten TA battalions sponsored by state governments, using State Forest Department expertise for afforestation, soil conservation and ecological restoration.',
+                'body' => <<<'MD'
+## Ecological TA
+
+There are ten ecological TA battalions which are sponsored by various state governments. TA Battalions use technical expertise of the respective State Forest Department (SFD), for afforestation related activities, Soil Conservation to promote the environment.
+
+### BACKGROUND
+
+The early eighties were a trying and testing time for the fragile ecology of the Shivalik Ranges. The Queen of Hills — Mussoorie — was on the brink of losing its pristine splendour, due to the unscientific and illegal mining of limestone. The unorganised mining activity in the area, intensified the rate of deforestation in an unprecedented manner.
+
+Alarmed at the ecological degradation in the Shivaliks, Dr Norman Borlough, from Wheat and Maize Centre, Mexico suggested to the former Prime Minister of India, Late Mrs. Indira Gandhi to involve the Indian Army to restore the ecological balance on a war footing. As the regular Army could not be utilised for the purpose, it was decided that a Territorial Army Unit be raised for the purpose, enrolling ex-servicemen from the region.
+
+This was with the dual aim of re-settlement of Ex-Servicemen and regeneration of ecology. As an unique experiment **127 Infantry Battalion (Territorial Army) GARHWAL RIFLES** was raised on **01 Dec 1982**.
+
+### CONCEPT
+
+Ecological Task Force (ETF) Battalions (TA) have been raised to execute specific ecology related projects, with military like work culture and commitment, by enrolling Ex-Servicemen. ETF Battalions (TA) use technical expertise of the respective State Forest Department (SFD), for afforestation related activities and promote environment.
+
+### PRESENT STATUS
+
+Presently nine such Infantry Battalions (TA) Ecological, comprising **22 operational companies**, are carrying out afforestation in difficult and degraded areas in States of Uttarakhand, Rajasthan, J&K, Himachal Pradesh, Delhi, Assam and Maharashtra. The Ecological Bn for Maharashtra has been raised in 2017 for drought-hit Marathwada region of the state. Also, a Composite Ecological Task Force for National Mission for Clean Ganga is under raising at Allahabad. On completion of raising, one company each will be deployed at Kanpur, Varanasi and Allahabad for the said mission. ETF Bns are either funded by Ministry of Environment, Forest and Climate Change (MoEF&CC) or by respective State Governments. These ETF Battalions have been raised with the twin objectives of restoration of fragile ecosystem and affording excellent opportunity for Army Veterans to contribute in Nation building.
+
+### ACHIEVEMENTS
+
+Till date ETF Battalions have planted approximately **6.88 crore saplings** and covered an area of **72,741 Hectares** of land, with **75 to 80 percent survival rate**. ETF Battalions have been given due recognition for their exemplary contribution in the field of ecology and have been bestowed with various National and State level awards.
+
+### Initiative to Check Economic Migration along Border Areas
+
+A unique initiative and vision of Indian Army has entailed plantation of high quality **Walnut and Chilgoza saplings in Malari region of Uttarakhand** to prevent migration of villagers. Malari region is strategically located in Niti Valley, on an axis leading to the China Border and is remotely located and cut off from Joshimath due to heavy snowfall between December – April. The locals migrate to lower regions during this period. There are no avenues of employment and even the cultivable land is inadequate for a sustainable livelihood. The project has been initiated on the directions of **General Bipin Rawat, UYSM, AVSM, YSM, SM, VSM, ADC, Chief of the Army Staff**, who conceived the idea and is the driving force behind the initiative.
+
+The uniqueness of the initiative is that it involves all resident families in planting saplings of Walnut and Chilgoza, which will belong to them, and they would be sole beneficiaries of the fruits borne by the saplings planted by them.
+
+The first phase of this pilot project was inaugurated at **Malari on 19 May 2017**. A large number of enthusiastic villagers attended the event and **4,000 saplings** of Walnut and Chilgoza were planted. In Phase II approximate **1,00,000 saplings** will be planted over the next three years.
+
+**127 Inf Bn (TA) Eco, GARH RIF** and **130 Inf Bn (TA) Eco, KUMAON** have been earmarked for this project. The units have already prepared nurseries and sowed more than one lakh seedlings of Walnut specially procured from Central Institute for Temperate Horticulture, Srinagar, J&K. These saplings thereafter will be transplanted in designated areas of Garhwal and Kumaon region.
+
+### CONCLUSION
+
+By virtue of their task and role, the Ecological Territorial Army units are contributing immensely by ecological activities towards disaster mitigation and also be part of Nation building efforts of the Indian Army.
+MD,
+            ],
+
+            'departmental-ta' => [
+                'title' => 'Departmental Territorial Army',
+                'menu_label' => 'Departmental TA',
+                'seo_title' => 'Departmental Territorial Army — Oil, Railways and ONGC units',
+                'seo_description' => 'Oil Sector (TA), Railway Engineer Regiments (TA) and ONGC (TA) units — how they are raised, eligibility, application process.',
+                'body' => <<<'MD'
+Departmental Territorial Army units are embodied during national emergency and natural calamities, and perform the same task they do in their parent department (IOC / Indian Railways / ONGC).
+
+- Oil and Natural Gas Corporation (ONGC)
+- Indian Railways
+- Indian Oil Corporation (IOC)
+
+## OIL SECTOR (TA) UNITS
+
+The Assam agitation of 1980 resulted in colossal loss of oil production estimated at over **₹5,000 crores**. Combat Engineer Regiments were deployed to take over the Oil and Gas installations to maintain production. Raising of the Oil Sector (TA) units was the result of the lessons learnt during this Oil Operation. Accordingly, a proposal was initiated by the then Ministry of Chemical & Fertilizer (now Ministry of Petroleum and Natural Gas) for raising of Territorial Army Battalions, separately for all the three fields of Oil industry — Exploration, Refining and Marketing. The proposal was accepted and the raising of the following three Oil Sector (TA) units were approved by the Ministry of Defence:
+
+- **801 Engineer Regt (TA)** — Refinery & Pipeline
+- **811 Engineer Regiment Oil Natural Gas Corporation (TA)**
+- **414 ASC Battalion Marketing (TA)**
+
+These units have Territorial Army personnel enrolled from various fields of Oil Sector PSUs. During national emergency / crises these Territorial Army personnel are embodied, in which they are liable to perform the assigned duties. The task of Oil Sector (TA) units is more of technical in nature than of combat. The TA personnel of these units perform the same task which they do in their parent department i.e. in Oil Companies.
+
+Women employees of Oil Sector PSUs are also allowed to be commissioned / enrolled as Officer, Junior Commissioned Officer and Other Ranks in Oil Sector (TA) units as commensurate to civil ranks. **Lt Shilpy Gargmukh**, an employee of ONGC, is the first lady officer of Oil Sector (PSU) who has been commissioned in 811 Engineer Regiment (TA) ONGC.
+
+## RAILWAY ENGINEER REGIMENTS (TA)
+
+There are six Railway Engineer Regiments (TA):
+
+- 969 Railway Engineer Regiment (TA)
+- 970 Railway Engineer Regiment (TA)
+- 1031 Railway Engineer Regiment (TA)
+- 1032 Railway Engineer Regiment (TA)
+- 1101 Railway Engineer Regiment (TA)
+- 1105 Railway Engineer Regiment (TA)
+
+These units have Territorial Army personnel enrolled from various Railway Zones. During national emergency / crises these Territorial Army personnel are embodied, in which they are liable to perform the assigned duties. The TA personnel of these units perform the same task which they do in their parent department i.e. in Railways.
+
+Women employees of Railways are also allowed to be commissioned / enrolled as Officer, Junior Commissioned Officer and Other Ranks in Railway Engineer Regiments (TA). Presently there are **five women sappers** enrolled with Railway Engineer Regiments (TA).
+
+---
+
+## How to Join Departmental Territorial Army
+
+### 1. Conditions of Eligibility
+
+- **Age Limits:** 18 to 42 years other than medical officer. 18 to 45 years of age for medical officer.
+- **Educational Qualifications:** Graduation and appropriate technical qualification.
+- **Employment:** Employment in Indian Railway / IOCL / HPCL / BPCL / ONGC.
+
+### 2. Process
+
+- Applicants to submit application through their HoD to TA Group HQs.
+- If found suitable by a Board of Officers, will further undergo Medical Board at nearest Military Hospital.
+- Process through TA Directorate and Ministry of Defence for final selection.
+MD,
+            ],
+
+            'ta-policies' => [
+                'title' => 'TA Policies',
+                'menu_label' => 'TA Policies',
+                'seo_title' => 'TA Policies — Territorial Army',
+                'seo_description' => 'Official Territorial Army policy documents issued by Ministry of Defence.',
+                'body' => <<<'MD'
+The official **TA Policy** document issued by the Ministry of Defence is available below. Open or download for the full text.
+
+> The PDF link is attached to this page from the Admin Panel → Pages → TA Policies → "Attached PDF". Admins can swap it when a newer policy is published.
+MD,
+            ],
+
             'ssb-5-days-video' => [
                 'title' => 'SSB 5 Days Video',
                 'menu_label' => 'SSB 5 Days Video',

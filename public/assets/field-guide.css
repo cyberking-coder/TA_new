@@ -576,3 +576,14 @@ body.page-shell .site-footer{flex-shrink:0}
 .alerts-result-cta p{font-size:14px;color:#d4d8cc;margin:0;max-width:60ch}
 .alerts-result-cta .button{background:#efd3a0;color:var(--ink);padding:12px 18px;font-size:14px}
 .alerts-result-cta .button:hover{filter:brightness(1.05);text-decoration:none}
+
+/* ===== Attached PDF card on a Page body ===== */
+.page-pdf-card{display:flex;align-items:center;gap:14px;background:var(--white);border:1px solid var(--edge);border-left:4px solid var(--brass);border-radius:4px;padding:14px 18px;margin:22px 0}
+.page-pdf-ico{display:inline-grid;place-items:center;width:40px;height:40px;background:var(--olive);border-radius:3px;color:var(--ink);flex:0 0 auto}
+.page-pdf-ico svg{width:20px;height:20px}
+.page-pdf-meta{flex:1;min-width:0}
+.page-pdf-meta strong{display:block;font:500 15px/1.3 var(--serif);color:var(--ink)}
+.page-pdf-meta small{display:block;color:var(--muted);font-size:12px;letter-spacing:.04em;margin-top:2px}
+.page-pdf-cta{background:var(--ink);color:#fff;padding:8px 14px;border-radius:3px;font:600 13px/1 var(--sans);text-decoration:none;flex:0 0 auto}
+.page-pdf-cta:hover{filter:brightness(1.1);text-decoration:none}
+@media(max-width:560px){.page-pdf-card{flex-wrap:wrap}.page-pdf-cta{width:100%;text-align:center;margin-top:4px}}

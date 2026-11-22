@@ -13,7 +13,7 @@ class Page extends Model
 
     protected $fillable = [
         'legacy_id', 'slug', 'parent_id', 'menu_label', 'title', 'body',
-        'seo_title', 'seo_description', 'status', 'published_at', 'author_id', 'new_until',
+        'seo_title', 'seo_description', 'pdf_id', 'status', 'published_at', 'author_id', 'new_until',
     ];
 
     protected $casts = ['published_at' => 'datetime', 'new_until' => 'datetime'];
@@ -24,6 +24,7 @@ class Page extends Model
 
     public function parent(): BelongsTo { return $this->belongsTo(self::class, 'parent_id'); }
     public function author(): BelongsTo { return $this->belongsTo(User::class, 'author_id'); }
+    public function pdf(): BelongsTo    { return $this->belongsTo(Pdf::class); }
 
     public function scopePublished(Builder $q): Builder
     {

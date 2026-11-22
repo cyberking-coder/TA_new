@@ -29,7 +29,6 @@
                         TA Units <span class="caret" aria-hidden="true">▾</span>
                     </button>
                     <ul class="dropdown" role="menu">
-                        <li><a href="{{ url('/pages/ta-units') }}">Overview</a></li>
                         <li><a href="{{ url('/pages/ecological-ta') }}">Ecological TA</a></li>
                         <li><a href="{{ url('/pages/departmental-ta') }}">Departmental TA</a></li>
                     </ul>
