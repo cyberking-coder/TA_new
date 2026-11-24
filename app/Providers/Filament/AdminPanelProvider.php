@@ -36,7 +36,12 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('2.2rem')
             ->favicon(asset('assets/mark.svg'))
             ->defaultThemeMode(ThemeMode::Light)
-            ->renderHook('panels::head.end', fn () => '<link rel="stylesheet" href="'.asset('assets/filament-admin.css').'">')
+            ->renderHook(
+                'panels::head.end',
+                fn () => new \Illuminate\Support\HtmlString(
+                    '<link rel="stylesheet" href="'.asset('assets/filament-admin.css').'?v='.filemtime(public_path('assets/filament-admin.css')).'">'
+                ),
+            )
             ->colors([
                 'primary' => Color::hex('#172e25'),
                 'gray'    => Color::Stone,
