@@ -232,6 +232,54 @@
     padding: 2px 8px !important;
 }
 
+/* ─── Form labels (restore visibility) ──────────────────── */
+.fi-fo-field-wrp-label,
+.fi-fo-label,
+label.fi-fo-field-wrp-label > span,
+.fi-simple-main label,
+.fi-form label {
+    color: var(--ta-ink) !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    letter-spacing: 0.01em;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 4px;
+}
+.fi-fo-field-wrp-label-required-mark,
+.fi-fo-label-required-mark {
+    color: #b32020 !important;
+    font-weight: 600;
+    margin-left: 2px;
+}
+.fi-fo-field-wrp-hint,
+.fi-fo-field-wrp-helper-text {
+    color: var(--ta-muted) !important;
+    font-size: 12px !important;
+}
+
+/* Inputs: brighter focus ring using brass */
+.fi-input,
+.fi-input-wrp,
+.fi-select-input,
+.fi-textarea {
+    border-radius: 4px !important;
+}
+.fi-input:focus,
+.fi-input-wrp:focus-within,
+.fi-select-input:focus,
+.fi-textarea:focus {
+    border-color: var(--ta-brass-dark) !important;
+    box-shadow: 0 0 0 2px rgba(140, 109, 31, 0.18) !important;
+}
+
+/* Checkboxes & "Remember me" row text */
+.fi-checkbox-input-ctn ~ .fi-checkbox-input-label,
+.fi-checkbox-ctn label {
+    color: var(--ta-ink) !important;
+    font-size: 13px !important;
+}
+
 /* ─── Login screen ───────────────────────────────────────── */
 .fi-simple-layout {
     background:
