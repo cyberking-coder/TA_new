@@ -25,11 +25,11 @@ class SubscriberTableBuilder
                 TextColumn::make('name')->searchable()->toggleable(),
                 TextColumn::make('mobile')->toggleable()->toggleable(isToggledHiddenByDefault: true),
                 IconColumn::make('verified_at')->label('Verified')->boolean()
-                    ->getStateUsing(fn ($r) => (bool) $r->verified_at),
+                    ->getStateUsing(fn ($record) => (bool) ($record?->verified_at)),
                 IconColumn::make('unsubscribed_at')->label('Unsubscribed')->boolean()
-                    ->getStateUsing(fn ($r) => (bool) $r->unsubscribed_at),
+                    ->getStateUsing(fn ($record) => (bool) ($record?->unsubscribed_at)),
                 IconColumn::make('suppressed_at')->label('Suppressed')->boolean()
-                    ->getStateUsing(fn ($r) => (bool) $r->suppressed_at),
+                    ->getStateUsing(fn ($record) => (bool) ($record?->suppressed_at)),
                 TextColumn::make('consent_at')->dateTime('d M Y')->toggleable(),
                 TextColumn::make('created_at')->dateTime('d M Y')->sortable()->toggleable(),
             ])
