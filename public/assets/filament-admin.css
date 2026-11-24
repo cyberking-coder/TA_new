@@ -1,308 +1,39 @@
 /* ──────────────────────────────────────────────────────────────────
-   Territorial Army admin console — polish layer.
-   Loaded via AdminPanelProvider::renderHook('panels::head.end').
-   Scoped as tightly as possible to the Filament panel so public-site
-   styles are untouched.
+   Territorial Army admin — minimal brand accent layer.
+   Keep this file deliberately small — Filament's stock chrome is
+   already well-designed; we only add the brass accent on a handful
+   of elements so the console feels on-brand without fighting the
+   framework.
    ────────────────────────────────────────────────────────────────── */
 
 :root {
-    --ta-ink:          #172e25;
-    --ta-ink-2:        #1a3229;
-    --ta-paper:        #f9f7ef;
-    --ta-paper-2:      #f4f1e4;
-    --ta-edge:         #d7d7c9;
-    --ta-brass:        #ebc787;
-    --ta-brass-dark:   #8c6d1f;
-    --ta-muted:        #6a7a6c;
+    --ta-ink:        #172e25;
+    --ta-brass:      #ebc787;
+    --ta-brass-dark: #8c6d1f;
+    --ta-paper:      #faf8ef;
 }
 
-/* Lift the overall type aesthetic. */
-.fi-body {
-    font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
-    background: linear-gradient(180deg, #faf8ef 0%, var(--ta-paper) 160px, var(--ta-paper) 100%);
-}
-
-/* ─── Sidebar ───────────────────────────────────────────────── */
-.fi-sidebar {
-    background: #142823 !important;
-    border-right: 1px solid #1f3b31;
-}
-.fi-sidebar-nav,
-.fi-sidebar-header {
-    background: transparent !important;
-}
-.fi-sidebar-header {
-    border-bottom: 1px solid #22463a;
-    padding: 1.1rem 1.25rem;
-}
-.fi-sidebar-nav-groups > .fi-sidebar-group + .fi-sidebar-group {
-    margin-top: 1rem;
-}
-.fi-sidebar-group-label {
-    color: var(--ta-brass) !important;
-    font-weight: 600 !important;
-    font-size: 10px !important;
-    letter-spacing: 0.22em !important;
-    text-transform: uppercase !important;
-    padding: 0.5rem 1.25rem 0.4rem !important;
-    display: flex; align-items: center; gap: 8px;
-}
-.fi-sidebar-group-label-icon {
-    color: var(--ta-brass) !important;
-    width: 14px; height: 14px;
-}
-.fi-sidebar-item a {
-    color: #d4d8cc !important;
-    font-size: 13.5px !important;
-    padding: 0.55rem 1.25rem !important;
-    border-radius: 0 !important;
-    position: relative;
-    transition: color .12s, background .12s;
-}
-.fi-sidebar-item a:hover {
-    color: #fff !important;
-    background: rgba(235, 199, 135, 0.08) !important;
-}
-.fi-sidebar-item-active a,
-.fi-sidebar-item a[aria-current="page"] {
-    color: #fff !important;
-    background: rgba(235, 199, 135, 0.14) !important;
-}
-.fi-sidebar-item-active a::before,
-.fi-sidebar-item a[aria-current="page"]::before {
-    content: "";
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: var(--ta-brass);
-}
-.fi-sidebar-item-icon {
-    width: 16px !important; height: 16px !important;
-    color: #f0d7a9 !important;
-    opacity: .9;
-}
-.fi-sidebar-item-active .fi-sidebar-item-icon {
-    color: var(--ta-brass) !important; opacity: 1;
-}
-
-/* Collapse / expand arrow */
-.fi-sidebar-collapse-btn, .fi-sidebar-expand-btn {
-    color: var(--ta-brass) !important;
-}
-
-/* ─── Topbar ───────────────────────────────────────────────── */
-.fi-topbar {
-    background: #fff !important;
-    border-bottom: 1px solid var(--ta-edge);
-    box-shadow: 0 1px 0 rgba(23, 46, 37, 0.04);
-}
-.fi-breadcrumbs-item a {
-    color: var(--ta-muted);
-}
-.fi-breadcrumbs-item--current {
-    color: var(--ta-ink) !important;
-    font-weight: 500;
-}
-
-/* ─── Page header ─────────────────────────────────────────── */
-.fi-header {
-    padding: 1.25rem 0 0.75rem !important;
-}
-.fi-header-heading {
-    font-family: Georgia, 'Playfair Display', 'Times New Roman', serif !important;
-    font-weight: 400 !important;
-    letter-spacing: -0.02em !important;
-    color: var(--ta-ink) !important;
-    font-size: 1.85rem !important;
-}
-.fi-header-subheading {
-    color: var(--ta-muted) !important;
-}
-
-/* ─── Section & form cards ───────────────────────────────── */
-.fi-section,
-.fi-ac-grid,
-.fi-wi-stats-overview-stat,
-.fi-ta-ctn,
-.fi-fo-section-content-ctn,
-.fi-section-content-ctn {
-    border-radius: 6px !important;
-    border-color: var(--ta-edge) !important;
-    box-shadow: 0 1px 2px rgba(23, 46, 37, 0.03) !important;
-}
-.fi-section-header {
-    border-bottom: 1px solid var(--ta-edge) !important;
-    background: linear-gradient(180deg, #ffffff 0%, #faf8ef 100%);
-    border-radius: 6px 6px 0 0;
-    padding: 1rem 1.25rem !important;
-}
-.fi-section-header-heading {
-    font-family: Georgia, serif !important;
-    font-weight: 500 !important;
-    color: var(--ta-ink) !important;
-    font-size: 1.05rem !important;
-    letter-spacing: -0.01em !important;
-}
-.fi-section-header-description {
-    color: var(--ta-muted) !important;
-    font-size: 0.8rem !important;
-}
-
-/* ─── Buttons ────────────────────────────────────────────── */
-.fi-btn {
-    font-weight: 500 !important;
-    letter-spacing: 0.01em;
-    border-radius: 4px !important;
-    transition: filter .1s, transform .05s;
-}
-.fi-btn:active { transform: translateY(1px); }
-.fi-btn.fi-color-primary,
-.fi-btn-color-primary {
-    background: var(--ta-ink) !important;
-    border-color: var(--ta-ink) !important;
-    color: #fff !important;
-    box-shadow: 0 1px 2px rgba(23, 46, 37, 0.12);
-}
-.fi-btn.fi-color-primary:hover,
-.fi-btn-color-primary:hover {
-    background: #0e1f17 !important;
-    border-color: #0e1f17 !important;
-}
-
-/* ─── Stats overview widget ──────────────────────────────── */
+/* Stats widget — brass top rule + serif value, nothing else. */
 .fi-wi-stats-overview-stat {
-    background: #fff;
-    border-radius: 6px;
-    padding: 1rem 1.15rem !important;
-    border: 1px solid var(--ta-edge) !important;
-    border-top: 3px solid var(--ta-brass) !important;
-    position: relative;
-    transition: transform .1s, box-shadow .1s;
-}
-.fi-wi-stats-overview-stat:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(23, 46, 37, 0.08) !important;
-}
-.fi-wi-stats-overview-stat-label {
-    font-size: 11px !important;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ta-muted) !important;
-    font-weight: 600;
+    border-top: 3px solid var(--ta-brass);
 }
 .fi-wi-stats-overview-stat-value {
-    font-family: Georgia, serif;
-    font-size: 1.95rem !important;
-    letter-spacing: -0.02em;
-    color: var(--ta-ink) !important;
-    font-weight: 400 !important;
-    margin-top: 2px !important;
-}
-.fi-wi-stats-overview-stat-description {
-    color: var(--ta-muted) !important;
-    font-size: 12px !important;
+    font-family: Georgia, 'Times New Roman', serif;
+    letter-spacing: -0.015em;
 }
 
-/* ─── Tables ─────────────────────────────────────────────── */
-.fi-ta-header {
-    border-bottom: 1px solid var(--ta-edge) !important;
-    background: #faf8ef;
-}
+/* Table header caps — brass text, standard layout. */
 .fi-ta-header-cell {
-    font-size: 10.5px !important;
-    letter-spacing: 0.14em !important;
-    color: var(--ta-brass-dark) !important;
-    font-weight: 600 !important;
-    text-transform: uppercase;
-}
-.fi-ta-row {
-    transition: background .1s;
-}
-.fi-ta-row:hover {
-    background: #fafaf0 !important;
-}
-
-/* ─── Badges ─────────────────────────────────────────────── */
-.fi-badge {
-    border-radius: 3px !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    font-size: 10.5px !important;
-    padding: 2px 8px !important;
-}
-
-/* ─── Form labels (restore visibility) ──────────────────── */
-.fi-fo-field-wrp-label,
-.fi-fo-label,
-label.fi-fo-field-wrp-label > span,
-.fi-simple-main label,
-.fi-form label {
-    color: var(--ta-ink) !important;
-    font-weight: 500 !important;
-    font-size: 13px !important;
-    letter-spacing: 0.01em;
-    display: inline-flex !important;
-    align-items: center;
-    gap: 4px;
-}
-.fi-fo-field-wrp-label-required-mark,
-.fi-fo-label-required-mark {
-    color: #b32020 !important;
+    letter-spacing: 0.12em;
+    color: var(--ta-brass-dark);
     font-weight: 600;
-    margin-left: 2px;
-}
-.fi-fo-field-wrp-hint,
-.fi-fo-field-wrp-helper-text {
-    color: var(--ta-muted) !important;
-    font-size: 12px !important;
+    text-transform: uppercase;
+    font-size: 10.5px;
 }
 
-/* Inputs: brighter focus ring using brass */
-.fi-input,
-.fi-input-wrp,
-.fi-select-input,
-.fi-textarea {
-    border-radius: 4px !important;
-}
-.fi-input:focus,
-.fi-input-wrp:focus-within,
-.fi-select-input:focus,
-.fi-textarea:focus {
-    border-color: var(--ta-brass-dark) !important;
-    box-shadow: 0 0 0 2px rgba(140, 109, 31, 0.18) !important;
-}
-
-/* Checkboxes & "Remember me" row text */
-.fi-checkbox-input-ctn ~ .fi-checkbox-input-label,
-.fi-checkbox-ctn label {
-    color: var(--ta-ink) !important;
-    font-size: 13px !important;
-}
-
-/* ─── Login screen ───────────────────────────────────────── */
+/* Login card — soft brass glow behind the standard Filament card. */
 .fi-simple-layout {
     background:
-        radial-gradient(1200px 500px at 50% -10%, rgba(235,199,135,0.22), transparent 60%),
-        linear-gradient(180deg, #faf8ef 0%, var(--ta-paper) 100%);
+        radial-gradient(900px 400px at 50% -8%, rgba(235, 199, 135, 0.18), transparent 60%),
+        var(--ta-paper);
 }
-.fi-simple-main {
-    background: #fff !important;
-    border-radius: 8px !important;
-    border: 1px solid var(--ta-edge) !important;
-    box-shadow: 0 20px 40px -20px rgba(23, 46, 37, 0.15) !important;
-    padding: 2rem 2rem 1.5rem !important;
-}
-.fi-simple-header .fi-logo {
-    justify-content: center;
-}
-.fi-simple-header-heading {
-    font-family: Georgia, serif !important;
-    font-size: 1.5rem !important;
-    color: var(--ta-ink) !important;
-}
-
-/* ─── Dark mode: honour the kit but keep brass accents ──── */
-.dark .fi-wi-stats-overview-stat { border-top-color: var(--ta-brass) !important; }
-.dark .fi-ta-header-cell { color: var(--ta-brass) !important; }
-.dark .fi-sidebar { background: #0f1f17 !important; }
