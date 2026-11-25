@@ -46,23 +46,25 @@
     padding: 0 !important;
 }
 
-/* Right-hand panel — sage gradient + subtle grain, placed via ::after. */
+/* Right-hand panel — Balidan crest hero image, placed via ::after. */
 .fi-simple-layout::after {
     content: "";
     grid-column: 2;
     grid-row: 1 / -1;
-    background:
-        radial-gradient(900px 500px at 70% 30%, rgba(156, 175, 136, 0.55), transparent 60%),
-        radial-gradient(1200px 700px at 25% 75%, rgba(204, 85, 0, 0.14), transparent 55%),
-        linear-gradient(135deg, #9CAF88 0%, #7f936a 100%);
+    background-image: url('/assets/login-hero.webp');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     position: relative;
 }
+/* Soft vignette so the image blends into the dark form pane edge. */
 .fi-simple-layout::before {
     content: "";
     grid-column: 2;
     grid-row: 1 / -1;
     background:
-        radial-gradient(200px 200px at 70% 30%, rgba(255,255,255,0.08), transparent 60%);
+        linear-gradient(90deg, rgba(11, 14, 10, 0.55) 0%, rgba(11, 14, 10, 0.12) 18%, transparent 40%),
+        radial-gradient(1200px 800px at 50% 50%, transparent 40%, rgba(11, 14, 10, 0.25) 100%);
     pointer-events: none;
     z-index: 2;
 }
