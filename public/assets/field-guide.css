@@ -752,3 +752,268 @@ body.page-shell .site-footer{flex-shrink:0}
 /* Compact facts dl for syllabus */
 .syl-facts dl > div{padding:10px 0}
 .syl-facts dd{font:500 14px/1.4 var(--serif)}
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  POLISH LAYER                                                ║
+   ║  Hand-set details on top of the kit. Nothing structural      ║
+   ║  changes — margins and widths stay as before. The point is   ║
+   ║  to stop the design reading as a Bootstrap-ish template.     ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+
+/* ── 1. Typography: ligatures, kerning, oldstyle figures. ───── */
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-feature-settings: "kern", "liga", "clig", "calt", "onum";
+    font-variant-numeric: oldstyle-nums proportional-nums;
+    text-rendering: optimizeLegibility;
+}
+h1, h2, h3, h4, .editorial-title, .page-doc-body h2, .page-body h2,
+.occ h2, .syl-card strong, .alerts-card h2, .info-tile h3,
+.about-hero h2, .refund-card h2 {
+    font-feature-settings: "kern", "liga", "clig", "calt", "lnum";
+    font-variant-numeric: lining-nums proportional-nums;
+}
+
+/* Ink gets a hair darker; muted olive warms up. */
+:root {
+    --ink: #0f1f17;
+    --muted: #596860;
+}
+
+/* ── 2. Editorial eyebrows — tighter tracking + small-cap feel. ─ */
+.eyebrow,
+.occ .eyebrow,
+.info-page .eyebrow,
+.update-strip-label,
+.footer-col h3,
+.site-footer .footer-bottom small,
+.contact-head .eyebrow,
+.page-doc-body .doc-eyebrow {
+    letter-spacing: 0.14em !important;
+    font-weight: 600 !important;
+    font-size: 10.5px !important;
+}
+.occ .eyebrow::before,
+.info-page .eyebrow::before,
+.contact-head .eyebrow::before,
+.history-head .eyebrow::before {
+    width: 14px !important;
+    background: linear-gradient(90deg, var(--brass), transparent) !important;
+    height: 1px !important;
+}
+
+/* ── 3. Softer corner radii — editorial papers don't curl. ───── */
+.alerts-card, .refund-card, .contact-card, .about-notice,
+.info-tile, .info-contact-strip, .occ-dates, .occ-cards article,
+.occ-hq-grid article, .occ-docs li, .occ-pipeline li,
+.syl-card, .syl-rule, .review-card, .product-cover,
+.page-pdf-card, .newsline-label, .quick, .formbox, .reading,
+.history-honours, .history-timeline li, .about-stat,
+.page-doc-glance, .glance-num {
+    border-radius: 2px !important;
+}
+.button, .btn, .filter-actions .button, .fi-btn,
+.contact-tabs, .contact-tabs button,
+.product-stock, .refund-badge,
+.new-badge, .new-flag {
+    border-radius: 2px !important;
+}
+
+/* ── 4. Kill most shadows — keep one subtle inset / hairline. ── */
+.alerts-card, .refund-card, .contact-card, .info-tile,
+.occ-cards article, .occ-hq-grid article, .occ-docs li,
+.occ-pipeline li, .syl-card, .syl-rule, .quick, .formbox,
+.history-honours, .history-timeline li, .about-stat,
+.page-pdf-card, .page-doc-glance, .review-card,
+.product-cover, .book-feature {
+    box-shadow: none !important;
+}
+.contact-card:hover, .product-cover:hover {
+    box-shadow: 0 1px 0 var(--brass) !important;
+}
+
+/* ── 5. Replace the universal brass top-rule with a quiet left. ─ */
+.occ-cards article,
+.occ-pipeline li,
+.syl-card,
+.review-card,
+.history-timeline li,
+.about-pillars article {
+    border-top: 1px solid var(--edge) !important;
+    border-left: 2px solid var(--brass) !important;
+    padding-left: 18px !important;
+}
+.occ-cards article.occ-cards-exclude {
+    border-left-color: #b32020 !important;
+}
+.occ-cards article strong,
+.occ-pipeline strong,
+.syl-card strong,
+.history-timeline strong { font-weight: 600; }
+
+/* ── 6. Hairline section rules — not heavy 1px borders. ──────── */
+.history, .newsline, .update-strip,
+.site-footer, .legal-page {
+    border-top: 1px solid rgba(23, 46, 37, 0.08) !important;
+    border-bottom: 1px solid rgba(23, 46, 37, 0.06) !important;
+}
+.page-doc-body .doc-eyebrow:not(:first-child)::before {
+    width: 42px !important;
+    margin-bottom: 28px !important;
+    border-top: 1px solid var(--brass) !important;
+    opacity: .55;
+}
+
+/* ── 7. Headlines — darker, tighter, more confident. ─────────── */
+.editorial-title,
+.product-detail h2,
+.info-page h2,
+.history-head h2,
+.about-hero h2,
+.page-doc-body h2,
+.occ h2,
+.occ-hero-text h2,
+.contact-head h2 {
+    color: #0b1a12 !important;
+    letter-spacing: -0.028em !important;
+    font-weight: 400 !important;
+}
+.page-doc-body h3,
+.occ-pipeline strong,
+.syl-card strong,
+.about-pillars h3 {
+    letter-spacing: -0.012em !important;
+    font-weight: 500 !important;
+}
+
+/* ── 8. Body copy rhythm — golden ratio-ish, warmer ink. ─────── */
+.page-doc-body p,
+.page-body p,
+.occ-hero-text p,
+.occ-block > p,
+.about-lede,
+.history-body p,
+.product-lede,
+.refund-card p,
+.alerts-card > p {
+    line-height: 1.68 !important;
+    color: #1b2a21 !important;
+}
+
+/* ── 9. Links — brass underline hover, no sudden color flip. ── */
+.page-doc-body a,
+.page-body a,
+.info-block a,
+.occ a:not(.button):not(.occ-hq-grid article a) {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--brass);
+    text-underline-offset: 4px;
+    transition: text-decoration-color .15s;
+}
+.page-doc-body a:hover,
+.page-body a:hover,
+.info-block a:hover,
+.occ a:not(.button):hover {
+    text-decoration-color: #0b1a12;
+}
+
+/* ── 10. Buttons — keep the ink-green, soften the press. ─────── */
+.button, .btn, .fi-btn {
+    letter-spacing: 0.01em;
+    transition: background-color .12s, box-shadow .12s, transform .04s;
+}
+.button:hover, .btn:hover { transform: translateY(-1px); }
+.button:active, .btn:active { transform: translateY(0); }
+
+/* ── 11. Tables — editorial headers instead of brass caps. ───── */
+.page-doc-body table th,
+.occ-pay th {
+    background: transparent !important;
+    color: var(--ink) !important;
+    font-family: Georgia, serif !important;
+    font-weight: 500 !important;
+    font-size: 13.5px !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    border-bottom: 2px solid var(--ink) !important;
+}
+.page-doc-body table td,
+.occ-pay td { border-bottom-color: #d9d9c9 !important; }
+.page-doc-body table tr:nth-child(even) td,
+.occ-pay tbody tr:nth-child(even) td { background: transparent !important; }
+
+/* ── 12. Numbered docs / pipeline chips — ink-filled, oldstyle. */
+.occ-docs li::before {
+    background: transparent !important;
+    color: var(--muted) !important;
+    font-family: Georgia, serif !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+    padding: 0 !important;
+    left: 16px !important;
+    top: 14px !important;
+    font-variant-numeric: lining-nums;
+}
+.occ-docs li {
+    padding-left: 44px !important;
+    border-radius: 2px !important;
+    border-left: 2px solid transparent !important;
+}
+.occ-docs li:hover { border-left-color: var(--brass) !important; }
+
+.occ-pipeline-num {
+    background: transparent !important;
+    color: var(--brass-dark, #8c6d1f) !important;
+    font-family: Georgia, serif !important;
+    font-weight: 500 !important;
+    font-size: 18px !important;
+    border: 1px solid var(--brass) !important;
+    width: 40px !important; height: 40px !important;
+}
+
+/* ── 13. "At a glance" / dates sidebar — paper, not olive. ──── */
+.occ-dates, .page-doc-glance {
+    background: #fdfbf2 !important;
+    border: 1px solid #e4e0cd !important;
+}
+.page-doc-glance h3, .occ-dates h3 {
+    font-weight: 400 !important;
+    letter-spacing: -0.015em !important;
+}
+.glance-num {
+    background: transparent !important;
+    color: var(--muted) !important;
+    font-family: Georgia, serif !important;
+    font-weight: 500 !important;
+    border: 0 !important;
+    min-width: 28px !important;
+    padding: 0 !important;
+    font-variant-numeric: lining-nums;
+}
+.glance-list li { padding: 12px 0 !important; }
+.glance-list a { font-weight: 400 !important; }
+
+/* ── 14. Dark footer — richer ink, brass only on hover. ──────── */
+.site-footer { background: #0e1f15 !important; }
+.footer-col h3 {
+    color: #d9c99a !important;
+    padding-bottom: 12px !important;
+    border-bottom: 1px solid rgba(217, 201, 154, 0.18) !important;
+}
+.footer-col a { color: #c3c9ba !important; }
+.footer-col a:hover { color: #f0d7a9 !important; }
+
+/* ── 15. Hero newsline + tabs — hairline, not colored block. ── */
+.newsline { border-top: 1px solid rgba(0,0,0,0.2); border-bottom: 1px solid rgba(0,0,0,0.3) !important; }
+.newsline-label {
+    background: transparent !important;
+    color: var(--brass) !important;
+    border: 1px solid rgba(235,199,135,0.4) !important;
+    letter-spacing: 0.22em !important;
+    padding: 5px 9px !important;
+}
+
+/* ── 16. Small quality-of-life for the home page hero. ───────── */
+.editorial-title em { font-family: Georgia, serif; font-style: italic; letter-spacing: -0.032em; }
