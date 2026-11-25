@@ -1444,3 +1444,181 @@ body { background: var(--paper); color: var(--ink); }
 
 /* Site header active nav underline (brand nav). */
 #mainnav a[aria-current="page"] { text-decoration-color: var(--amber) !important; }
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  PAPER → SOLID WHITE                                         ║
+   ║  Sage-green washes on hero / pagehead / route-band / update  ║
+   ║  strip stay untouched.                                       ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+:root {
+    --paper: #ffffff;
+    --white: #ffffff;
+}
+body { background: #ffffff !important; }
+.page-doc, .info-page, .frame.panel { background: #ffffff; }
+
+/* Cards sit on white — give them a faint tint so they read as paper. */
+.occ-cards article, .occ-pipeline li, .syl-card, .review-card,
+.history-timeline li, .about-pillars article, .refund-card,
+.contact-card, .info-tile, .alerts-card, .formbox,
+.history-honours, .about-stat, .quick, .info-contact-strip {
+    background: #fafaf7 !important;
+}
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  ANIMATIONS                                                  ║
+   ║  Reveal-on-scroll + hover micro-interactions.                ║
+   ║  prefers-reduced-motion disables motion for sensitive users. ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+
+/* Reveal-on-scroll primitive. JS adds .is-revealed when the element
+   enters the viewport. */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 650ms cubic-bezier(.2,.65,.3,1), transform 650ms cubic-bezier(.2,.65,.3,1);
+    will-change: opacity, transform;
+}
+.reveal-up.is-revealed { opacity: 1; transform: none; }
+
+.reveal-fade {
+    opacity: 0;
+    transition: opacity 650ms ease;
+}
+.reveal-fade.is-revealed { opacity: 1; }
+
+/* Stagger inside a parent: each child picks up a progressive delay. */
+.reveal-stagger > * { transition-delay: 0ms; }
+.reveal-stagger.is-revealed > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger.is-revealed > *:nth-child(2) { transition-delay: 70ms; }
+.reveal-stagger.is-revealed > *:nth-child(3) { transition-delay: 140ms; }
+.reveal-stagger.is-revealed > *:nth-child(4) { transition-delay: 210ms; }
+.reveal-stagger.is-revealed > *:nth-child(5) { transition-delay: 280ms; }
+.reveal-stagger.is-revealed > *:nth-child(6) { transition-delay: 350ms; }
+
+/* Hero content fades in on load. */
+.hero-inner > * {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: hero-in 900ms cubic-bezier(.2,.65,.3,1) forwards;
+}
+.hero-inner > *:nth-child(1) { animation-delay: 120ms; }
+.hero-inner > *:nth-child(2) { animation-delay: 260ms; }
+.hero-inner > *:nth-child(3) { animation-delay: 420ms; }
+.hero-inner > *:nth-child(4) { animation-delay: 560ms; }
+@keyframes hero-in { to { opacity: 1; transform: none; } }
+
+/* Underline sweep for in-content links. */
+.page-body a, .page-doc-body a, .info-block a {
+    background-image: linear-gradient(var(--amber), var(--amber));
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    text-decoration: none !important;
+    transition: background-size 220ms ease;
+}
+.page-body a:hover, .page-doc-body a:hover, .info-block a:hover {
+    background-size: 100% 2px;
+}
+
+/* Cards lift & tilt a hair on hover. */
+.occ-cards article, .occ-pipeline li, .syl-card, .review-card,
+.about-pillars article, .refund-card, .contact-card,
+.info-tile, .quick, .notice-list .notice, .book-feature,
+.product-cover, .page-pdf-card, .glance-list li a {
+    transition: transform 260ms cubic-bezier(.2,.65,.3,1),
+                box-shadow 260ms cubic-bezier(.2,.65,.3,1),
+                border-color 200ms ease;
+}
+.occ-cards article:hover, .occ-pipeline li:hover, .syl-card:hover,
+.review-card:hover, .about-pillars article:hover, .refund-card:hover,
+.contact-card:hover, .info-tile:hover, .quick:hover,
+.notice-list .notice:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px -14px rgba(31, 36, 27, 0.25);
+}
+
+/* Buttons: scale + shadow micro-interaction. */
+.button, .btn, .filter-actions .button {
+    transition: background-color 180ms ease,
+                transform 120ms ease,
+                box-shadow 180ms ease;
+}
+.button:hover, .btn:hover, .filter-actions .button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px -10px rgba(31, 36, 27, 0.4);
+}
+.button:active, .btn:active { transform: translateY(0); }
+
+/* Icons inside buttons slide right on hover. */
+.button span[aria-hidden], .btn span[aria-hidden],
+.herolink span[aria-hidden], .textlink span[aria-hidden] {
+    display: inline-block;
+    transition: transform 220ms cubic-bezier(.2,.65,.3,1);
+}
+.button:hover span[aria-hidden], .btn:hover span[aria-hidden],
+.herolink:hover span[aria-hidden], .textlink:hover span[aria-hidden] {
+    transform: translateX(3px);
+}
+
+/* Nav links: smooth underline draw. */
+#mainnav a {
+    position: relative;
+    transition: color 200ms ease;
+}
+#mainnav .nav-root > li > a::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 100%; bottom: -4px;
+    height: 2px;
+    background: var(--amber);
+    transition: right 260ms cubic-bezier(.2,.65,.3,1);
+}
+#mainnav .nav-root > li > a:hover::after,
+#mainnav .nav-root > li > a[aria-current="page"]::after { right: 0; }
+#mainnav .nav-root > li > a[aria-current="page"] { text-decoration: none !important; }
+
+/* Dropdowns gain a subtle slide. */
+#mainnav .has-dropdown .dropdown,
+#mainnav .has-sub .subdropdown {
+    transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms;
+}
+
+/* Notice-list rows get a left slide instead of a bg tint. */
+.notice-list .notice { position: relative; }
+.notice-list .notice::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--amber);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 260ms cubic-bezier(.2,.65,.3,1);
+}
+.notice-list .notice:hover::before { transform: scaleY(1); }
+
+/* Stats overview counters pulse the amber dot. */
+.contact-card-arrow,
+.page-pdf-cta span { transition: transform 180ms ease; }
+.contact-card:hover .contact-card-arrow,
+.page-pdf-card:hover .page-pdf-cta span { transform: translateX(3px); }
+
+/* Table rows soft tint on hover. */
+.page-doc-body table tbody tr,
+.occ-pay tbody tr { transition: background-color 180ms ease; }
+.page-doc-body table tbody tr:hover,
+.occ-pay tbody tr:hover { background: #faf7ec !important; }
+
+/* Pagehead / pagefoot fade when they enter viewport. */
+.pagehead { animation: head-in 700ms cubic-bezier(.2,.65,.3,1); }
+@keyframes head-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+/* Keyboard & touch focus visibility — not an animation but part of polish. */
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; border-radius: 1px; }
+
+/* Honor user preference — disable all motion. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+    .reveal-up, .reveal-fade { opacity: 1 !important; transform: none !important; }
+}

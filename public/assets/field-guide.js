@@ -103,3 +103,73 @@
     if (e.key === 'Escape') closeAll(null);
   });
 })();
+
+// Reveal-on-scroll: fade/slide elements in as they enter the viewport.
+// Auto-marks sensible defaults (sections, article cards, grids, headings)
+// so individual blades don't need to carry a class.
+(function () {
+    if (typeof window === 'undefined') return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!('IntersectionObserver' in window)) return;
+
+    const AUTO = [
+        '.frame > section',
+        '.frame > aside',
+        '.occ-block',
+        '.occ-hero',
+        '.occ-cards',
+        '.occ-hq-grid',
+        '.occ-pipeline',
+        '.syl-cards',
+        '.syl-rules',
+        '.contact-grid',
+        '.history-body',
+        '.history-honours',
+        '.history-timeline ol',
+        '.about-hero',
+        '.about-pillars',
+        '.alerts-split',
+        '.refund-split',
+        '.update-strip',
+        '.notice-list',
+        '.feature-inner',
+        '.overview > section',
+        '.product-grid',
+        '.quicks',
+        '.page-doc-body',
+        '.page-doc-glance',
+    ];
+
+    const seen = new WeakSet();
+
+    function mark(el, kind) {
+        if (seen.has(el)) return;
+        seen.add(el);
+        el.classList.add(kind);
+    }
+
+    AUTO.forEach((sel) => {
+        document.querySelectorAll(sel).forEach((el) => mark(el, 'reveal-up'));
+    });
+
+    // Stagger grids so items reveal in sequence.
+    [
+        '.occ-cards', '.occ-hq-grid', '.syl-cards',
+        '.contact-grid', '.alerts-split', '.refund-split',
+        '.about-pillars', '.feature-inner', '.history-timeline ol',
+        '.quicks', '.product-why', '.product-reviews-grid',
+    ].forEach((sel) => {
+        document.querySelectorAll(sel).forEach((el) => el.classList.add('reveal-stagger'));
+    });
+
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                io.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+    document.querySelectorAll('.reveal-up, .reveal-fade').forEach((el) => io.observe(el));
+})();
