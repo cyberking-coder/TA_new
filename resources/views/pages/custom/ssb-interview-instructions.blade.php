@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'Instructions For SSB Interview · Territorial Army Field Guide',
+    'description' => 'Reporting, documents to carry, dress code, discipline — a practical checklist for candidates attending the Service Selection Board.',
+])
 
 @section('content')
     <div class="pagehead">

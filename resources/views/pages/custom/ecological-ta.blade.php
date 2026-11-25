@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'Ecological Territorial Army · Territorial Army Field Guide',
+    'description' => 'Ten ecological TA battalions sponsored by state governments — afforestation, soil conservation and ecological restoration across India.',
+])
 
 @section('content')
     <div class="pagehead">

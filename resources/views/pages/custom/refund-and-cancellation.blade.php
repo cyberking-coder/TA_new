@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'Refund & Cancellation Policy · Territorial Army Field Guide',
+    'description' => 'Full refund if you cancel before dispatch. Partial refund (minus delivery charges) if you return after shipment.',
+])
 
 @section('content')
     <div class="pagehead">

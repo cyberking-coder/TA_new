@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'Syllabus & Pattern — Online Entrance Exam · Territorial Army Field Guide',
+    'description' => 'Pattern, duration, qualifying marks, syllabus and venue rules for the Territorial Army Commission (TAC) Computer Based Test.',
+])
 
 @section('content')
     <div class="pagehead">

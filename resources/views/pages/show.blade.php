@@ -1,4 +1,8 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => ($page->seo_title ?: $page->title).' | Territorial Army Field Guide',
+    'description' => $page->seo_description
+        ?: \Illuminate\Support\Str::limit(trim(strip_tags((string) $page->body)), 155),
+])
 
 @php
     $raw = (string) $page->body;

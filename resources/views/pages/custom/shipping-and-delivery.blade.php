@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'Shipping & Delivery · Territorial Army Field Guide',
+    'description' => 'All-India dispatch via Indian Registered Post, a Government of India undertaking.',
+])
 
 @section('content')
     <div class="pagehead">

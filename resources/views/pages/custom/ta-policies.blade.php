@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'TA Policies · Territorial Army Field Guide',
+    'description' => 'Official policy documents issued by the Ministry of Defence and Directorate General Territorial Army.',
+])
 
 @section('content')
     <div class="pagehead">

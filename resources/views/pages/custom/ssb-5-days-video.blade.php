@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'SSB — 5 Days Walkthrough · Territorial Army Field Guide',
+    'description' => 'Day-by-day account of the Service Selection Board process. Each day screens, tests or interviews you against Officer-Like Qualities.',
+])
 
 @section('content')
     <div class="pagehead">

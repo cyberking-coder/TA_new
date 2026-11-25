@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'Join as a Jawan / JCO · Territorial Army Field Guide',
+    'description' => 'Recruitment into Infantry (TA), Ecological (TA) and Home & Hearth battalions — selection is zonal, through recruiting offices and rallies.',
+])
 
 @section('content')
     <div class="pagehead">

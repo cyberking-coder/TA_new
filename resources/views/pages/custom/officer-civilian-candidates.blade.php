@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'For Civilian Candidates · Territorial Army Field Guide',
+    'description' => 'Apply, write the CBT, clear SSB — everything a gainfully employed civilian needs to know to apply for the Territorial Army Commission (TAC).',
+])
 
 @section('content')
     <div class="pagehead">

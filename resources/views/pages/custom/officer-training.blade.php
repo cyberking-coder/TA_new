@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'Officer Training · Territorial Army Field Guide',
+    'description' => 'Six months of Pre-Commission Training per TA Rule 20A, plus the SRO 64 and SRO 65 amendments that govern pay, military training categories and commissio…',
+])
 
 @section('content')
     <div class="pagehead">

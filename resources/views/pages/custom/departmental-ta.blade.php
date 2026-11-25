@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'Departmental Territorial Army · Territorial Army Field Guide',
+    'description' => 'Oil Sector (TA), Railway Engineer Regiments (TA) and ONGC (TA) — part-time soldiers who continue in their parent departments while standing ready for na…',
+])
 
 @section('content')
     <div class="pagehead">

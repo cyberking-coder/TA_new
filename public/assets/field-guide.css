@@ -1622,3 +1622,131 @@ body { background: #ffffff !important; }
     *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
     .reveal-up, .reveal-fade { opacity: 1 !important; transform: none !important; }
 }
+
+/* ──────────────────────────────────────────────────────────────────
+   Polish layer (Nov 2026): 404/500 pages, flash notices, mobile
+   overflow safety, tap-target sizes.
+   ────────────────────────────────────────────────────────────────── */
+
+/* Absolute defence against horizontal page scroll. */
+html, body { overflow-x: hidden; max-width: 100%; }
+img, video, iframe, table { max-width: 100%; height: auto; }
+
+/* Error pages. */
+.error-page {
+    padding: 4rem 1.25rem 5rem;
+    text-align: center;
+    max-width: 920px;
+}
+.error-eyebrow {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(3.5rem, 12vw, 6rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #CC5500;
+    margin: 0 0 0.25rem;
+}
+.error-page h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(1.4rem, 3.5vw, 2rem);
+    margin: 0 0 0.75rem;
+    color: #172e25;
+}
+.error-lead {
+    color: #4a5a52;
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    line-height: 1.55;
+}
+.error-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.error-actions .btn,
+.error-actions .btn-ghost {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    background: #9CAF88;
+    color: #0b0e0a;
+    font-weight: 600;
+    text-decoration: none;
+}
+.error-actions .btn-ghost {
+    background: transparent;
+    color: #172e25;
+    border: 1px solid #c8d1c0;
+}
+.error-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    text-align: left;
+    margin-top: 1.5rem;
+}
+.error-card {
+    display: block;
+    padding: 1.25rem 1.25rem;
+    border: 1px solid #d9dcd1;
+    border-radius: 10px;
+    background: #faf8ef;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s, border-color 0.15s;
+}
+.error-card:hover {
+    transform: translateY(-2px);
+    border-color: #9CAF88;
+}
+.error-card h2 {
+    margin: 0 0 0.4rem;
+    font-size: 1rem;
+    color: #172e25;
+}
+.error-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #566860;
+}
+
+/* Flash notices. */
+.flash-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1rem auto;
+}
+.flash {
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    border-left: 4px solid;
+    background: #fafaf4;
+    font-size: 0.95rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+.flash strong { font-weight: 600; }
+.flash ul { margin: 0.4rem 0 0; padding-left: 1.25rem; width: 100%; }
+.flash--success { border-color: #4b7c52; background: #f0f6e9; color: #22401f; }
+.flash--info    { border-color: #CC5500; background: #fdf3e8; color: #6b3306; }
+.flash--error   { border-color: #b32617; background: #fcefed; color: #6b1a12; }
+
+/* Mobile tap targets — buttons, nav links, and form controls at ≥44px. */
+@media (max-width: 720px) {
+    .nav-root a,
+    .nav-root button,
+    .dropdown a,
+    .tools .login,
+    .tools .menu,
+    button[type="submit"],
+    .btn,
+    .error-card { min-height: 44px; }
+
+    .frame { padding-left: 1rem; padding-right: 1rem; }
+    .pagehead h1 { font-size: clamp(1.4rem, 6vw, 2rem); }
+    .error-page { padding: 2.5rem 1rem 3rem; }
+}

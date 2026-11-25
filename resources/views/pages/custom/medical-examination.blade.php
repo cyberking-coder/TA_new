@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'Medical Examination Procedure · Territorial Army Field Guide',
+    'description' => 'Medical board, appeal medical board (AMB) and review medical board (RMB) — procedure, hospitals and timelines for recommended candidates.',
+])
 
 @section('content')
     <div class="pagehead">

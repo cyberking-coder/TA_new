@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'Privacy · Territorial Army Field Guide',
+    'description' => 'Territorial Army Field Guide — Privacy',
+])
 
 @section('content')
     @include('partials.legal-doc', [

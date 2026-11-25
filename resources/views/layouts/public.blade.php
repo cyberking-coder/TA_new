@@ -7,7 +7,10 @@
     <meta name="description" content="{{ $description ?? 'Independent exam information and preparation guide for the Territorial Army.' }}">
     <link rel="canonical" href="{{ $canonical ?? url()->current() }}">
     @isset($robots)<meta name="robots" content="{{ $robots }}">@endisset
-    <link rel="icon" href="/assets/mark.svg">
+    <link rel="icon" type="image/svg+xml" href="/assets/mark.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/mark.svg">
+    <link rel="apple-touch-icon" href="/assets/mark.svg">
+    <link rel="mask-icon" href="/assets/mark.svg" color="#172e25">
 
     @php
         $ogTitle = $title ?? 'Territorial Army Field Guide';
@@ -39,6 +42,7 @@
     <a class="skip" href="#main">Skip to content</a>
     @include('partials.header', ['current' => $nav ?? null])
     <main id="main" class="page-main">
+        @include('partials.flash')
         @yield('content')
         {{ $slot ?? '' }}
     </main>

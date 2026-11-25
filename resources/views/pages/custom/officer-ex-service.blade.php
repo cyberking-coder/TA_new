@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'For Ex-Service Officer · Territorial Army Field Guide',
+    'description' => 'A route for gainfully employed Ex Armed Forces Commissioned Officers to return to the uniform as Territorial Army Officers.',
+])
 
 @section('content')
     <div class="pagehead">

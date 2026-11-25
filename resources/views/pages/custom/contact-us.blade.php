@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'Contact Us · Territorial Army Field Guide',
+    'description' => 'Reach the right Territorial Army Group Headquarters for recruitment, eligibility, examinations, SSB interviews or service-related queries.',
+])
 
 @php
     $commands = [

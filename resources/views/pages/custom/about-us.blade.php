@@ -1,4 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.public', [
+    'title'       => 'About Us · Territorial Army Field Guide',
+    'description' => 'An independent online store for Territorial Army officer-entry examination books and study material.',
+])
 
 @section('content')
     <div class="pagehead">
