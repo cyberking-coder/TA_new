@@ -1221,3 +1221,226 @@ body, p, li, dd {
 }
 .mobile-input { border-color: var(--edge) !important; }
 .mobile-input .mobile-prefix { background: #f1e8d2 !important; border-right-color: var(--edge) !important; color: var(--ink) !important; }
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  PALETTE v3 — sage / concrete / burnt amber                  ║
+   ║  Anchors: #9CAF88 sage, #A7A7A7 concrete, #CC5500 amber.     ║
+   ║  Overrides the previous warm-ink + sienna theme.             ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+
+:root {
+    /* Three anchor colors (user-specified) */
+    --sage:        #9CAF88;
+    --concrete:    #A7A7A7;
+    --amber:       #CC5500;
+
+    /* Derived dark / light tones */
+    --sage-deep:   #5f7351;   /* buttons, ink accents, heading tint */
+    --sage-wash:   #cfd8c3;   /* soft page-head wash */
+    --amber-dark:  #99410a;   /* hover / stronger accent */
+    --amber-soft:  #f3dcc9;   /* chip background */
+
+    /* Surfaces */
+    --paper:       #f3f2ec;
+    --white:       #fdfdf8;
+    --olive:       var(--sage-wash);
+    --edge:        #c8c8c0;   /* concrete-adjacent hairline */
+
+    /* Text */
+    --ink:         #1f241b;   /* deep near-black with sage undertone */
+    --muted:       #6b6b64;   /* darker, readable concrete */
+
+    /* Brass alias → amber so every historical rule flips through */
+    --brass:       var(--amber);
+    --brass-dark:  var(--amber-dark);
+}
+
+/* Reset body surface + ink to the new palette. */
+body { background: var(--paper); color: var(--ink); }
+
+/* Hero: a deeper sage-charcoal instead of warm ink. */
+.hero-fullbleed { background: #1d231a !important; }
+.hero-fullbleed::after {
+    background:
+        linear-gradient(90deg,
+            rgba(29, 35, 26, 0.96) 0%,
+            rgba(31, 36, 27, 0.86) 24%,
+            rgba(31, 36, 27, 0.56) 48%,
+            rgba(31, 36, 27, 0.10) 82%,
+            transparent 100%),
+        linear-gradient(0deg, rgba(12, 16, 10, 0.1), transparent 55%) !important;
+}
+
+/* Hero title: cream + amber italic emphasis. */
+.editorial-title { color: #f4efdc !important; }
+.editorial-title em { color: var(--amber) !important; }
+
+/* Pagehead washes to the soft sage. */
+.pagehead { background: var(--sage-wash) !important; border-bottom-color: var(--edge) !important; }
+
+/* Buttons: deep sage primary; amber for hero CTA. */
+.button, .btn, .filter-actions .button {
+    background: var(--sage-deep) !important;
+    color: #f8f8f0 !important;
+    border-color: var(--sage-deep) !important;
+}
+.button:hover, .btn:hover { background: #4b5c3f !important; }
+.hero-fullbleed .btn, .hero .button {
+    background: var(--amber) !important;
+    color: #1f241b !important;
+    border-color: var(--amber) !important;
+}
+.hero-fullbleed .btn:hover, .hero .button:hover { background: #b84a00 !important; }
+
+/* Eyebrow strokes + section rules → amber. */
+.eyebrow::before,
+.occ .eyebrow::before,
+.history-head .eyebrow::before,
+.contact-head .eyebrow::before,
+.info-page .eyebrow::before {
+    background: linear-gradient(90deg, var(--amber), transparent) !important;
+}
+
+/* Every card left-rule that used to be brass → amber. */
+.occ-cards article, .occ-pipeline li, .syl-card,
+.review-card, .history-timeline li, .about-pillars article,
+.refund-card--ok, .info-contact-strip, .about-notice,
+.about-stat, .history-honours, .about-pillars article {
+    border-left-color: var(--amber) !important;
+}
+.occ-cards article.occ-cards-exclude { border-left-color: #b32020 !important; }
+.refund-card--returns { border-top-color: var(--amber) !important; }
+.refund-card--ok { border-top-color: var(--sage-deep) !important; }
+
+/* Pipeline chip — amber stroke, serif ink numeral. */
+.occ-pipeline-num {
+    border-color: var(--amber) !important;
+    color: var(--amber-dark) !important;
+    background: transparent !important;
+}
+
+/* HQ zone chip, badges — amber on cream. */
+.occ-hq-zone, .refund-badge {
+    background: var(--amber-soft) !important;
+    color: var(--amber-dark) !important;
+}
+
+/* Product price / kicker / HQ zone — amber dark. */
+.product-detail .kicker, .kicker,
+.contact-card-head, .glance-num {
+    color: var(--amber-dark) !important;
+}
+
+/* Links in article bodies — amber underline, ink on hover. */
+.page-body a, .page-doc-body a, .info-block a {
+    text-decoration-color: var(--amber) !important;
+}
+.page-body a:hover, .page-doc-body a:hover, .info-block a:hover {
+    text-decoration-color: var(--ink) !important;
+}
+
+/* Newsline strip — deep sage ink, amber label. */
+.newsline { background: #1d231a !important; color: #e8e2cc !important; }
+.newsline-label {
+    color: var(--amber) !important;
+    border-color: rgba(204, 85, 0, 0.5) !important;
+    background: transparent !important;
+}
+.newsline-row a { color: #e8e2cc !important; }
+.newsline-row a:hover { color: var(--amber) !important; }
+
+/* Entry / route band — sage wash. */
+.route-band { background: var(--sage-wash) !important; border-bottom-color: var(--edge) !important; }
+
+/* Contact card header: deep sage with amber accent. */
+.contact-card-head {
+    background: #263024 !important;
+    color: #f0d7a9 !important;
+}
+.contact-card-head strong { color: #ecd4ad !important; }
+.contact-card-arrow { color: var(--amber) !important; }
+.contact-aside { border-left-color: var(--amber) !important; }
+
+/* Dark footer: deep sage ink, cream body, amber on hover. */
+.site-footer { background: #1a1f17 !important; color: #e8e2cc !important; border-top-color: var(--edge) !important; }
+.footer-col h3 { color: #d4bb8a !important; border-bottom-color: rgba(212, 187, 138, 0.18) !important; }
+.footer-col a { color: #c6c3b1 !important; }
+.footer-col a:hover { color: var(--amber) !important; }
+
+/* Sidebar / At-a-glance cards — soft sage-tinted paper. */
+.occ-dates, .page-doc-glance {
+    background: #f1ede0 !important;
+    border-color: var(--edge) !important;
+}
+
+/* Form controls — concrete edge, amber focus ring. */
+.alerts-form input, .alerts-form select,
+.filters input, .filters select,
+.formbox input, .formbox select, .formbox textarea {
+    border-color: var(--edge) !important;
+    background: var(--white) !important;
+}
+.alerts-form input:focus, .alerts-form select:focus,
+.filters input:focus, .filters select:focus,
+.formbox input:focus, .formbox select:focus, .formbox textarea:focus {
+    border-color: var(--amber) !important;
+    outline-color: var(--amber) !important;
+    box-shadow: 0 0 0 2px rgba(204, 85, 0, 0.18) !important;
+}
+.mobile-input { border-color: var(--edge) !important; }
+.mobile-input .mobile-prefix {
+    background: var(--amber-soft) !important;
+    border-right-color: var(--edge) !important;
+    color: var(--amber-dark) !important;
+}
+
+/* Tables: sage-ink header underline. */
+.page-doc-body table th, .occ-pay th {
+    border-bottom-color: var(--sage-deep) !important;
+}
+
+/* CTA bars (occ-cta, alerts-result-cta): deep sage with amber button. */
+.occ-cta, .alerts-result-cta, .info-cta {
+    background: #263024 !important;
+    color: #e8e2cc !important;
+}
+.occ-cta h3, .alerts-result-cta h3, .info-cta h3 { color: #fff !important; }
+.occ-cta p, .alerts-result-cta p, .info-cta p { color: #cfcebe !important; }
+.occ-cta .button, .alerts-result-cta .button, .info-cta .button {
+    background: var(--amber) !important;
+    color: #1f241b !important;
+    border-color: var(--amber) !important;
+}
+.occ-cta .button:hover, .alerts-result-cta .button:hover, .info-cta .button:hover {
+    background: #b84a00 !important;
+}
+
+/* About-notice: amber-tinted callout. */
+.about-notice {
+    background: #fdefe2 !important;
+    border-color: #efc7a4 !important;
+    border-left-color: var(--amber) !important;
+}
+.about-notice h2 { color: var(--amber-dark) !important; }
+
+/* Update strip + study panel: subtle sage wash. */
+.update-strip { background: #e8ead8 !important; border-bottom-color: var(--edge) !important; }
+.study-panel { background: #e8ead8 !important; border-top-color: var(--sage-deep) !important; }
+
+/* Refund-badge warn stays amber; danger stays red. */
+.refund-badge.refund-badge--warn { background: #fdefe2 !important; color: var(--amber-dark) !important; }
+.refund-card--returns { border-top-color: var(--amber) !important; }
+.refund-card--ok { border-top-color: var(--sage-deep) !important; }
+.refund-card--ok .refund-badge { background: #e2ebd9 !important; color: #3d5231 !important; }
+
+/* Product stock pills. */
+.product-stock--in_stock { background: #e2ebd9 !important; color: #3d5231 !important; }
+.product-stock--low_stock { background: #fdefe2 !important; color: var(--amber-dark) !important; }
+.product-stock--out_of_stock { background: #fce2d6 !important; color: #7a3312 !important; }
+
+/* Login (tools pill) hero style. */
+.tools .login { background: var(--sage-deep) !important; color: #fdfdf5 !important; border-color: var(--sage-deep) !important; }
+.tools .login:hover { background: #4b5c3f !important; }
+
+/* Site header active nav underline (brand nav). */
+#mainnav a[aria-current="page"] { text-decoration-color: var(--amber) !important; }
