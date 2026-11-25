@@ -31,9 +31,161 @@
     font-size: 10.5px;
 }
 
-/* Login card — soft brass glow behind the standard Filament card. */
+/* ──────────────────────────────────────────────────────────────
+   Login screen — two-pane split (dark form left, sage panel right).
+   ────────────────────────────────────────────────────────────── */
+
 .fi-simple-layout {
+    background: #0b0e0a;
+    min-height: 100vh;
+    width: 100vw;
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(380px, 46%) 1fr;
+    align-items: stretch;
+    padding: 0 !important;
+}
+
+/* Right-hand panel — sage gradient + subtle grain, placed via ::after. */
+.fi-simple-layout::after {
+    content: "";
+    grid-column: 2;
+    grid-row: 1 / -1;
     background:
-        radial-gradient(900px 400px at 50% -8%, rgba(235, 199, 135, 0.18), transparent 60%),
-        var(--ta-paper);
+        radial-gradient(900px 500px at 70% 30%, rgba(156, 175, 136, 0.55), transparent 60%),
+        radial-gradient(1200px 700px at 25% 75%, rgba(204, 85, 0, 0.14), transparent 55%),
+        linear-gradient(135deg, #9CAF88 0%, #7f936a 100%);
+    position: relative;
+}
+.fi-simple-layout::before {
+    content: "";
+    grid-column: 2;
+    grid-row: 1 / -1;
+    background:
+        radial-gradient(200px 200px at 70% 30%, rgba(255,255,255,0.08), transparent 60%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Left-hand card: no shadow, no border, left-aligned content. */
+.fi-simple-main {
+    grid-column: 1;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    max-width: 440px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 2.25rem 3rem 2.5rem !important;
+    align-self: center;
+}
+.fi-simple-main-ctn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Header: brand on top, large welcome line, muted subhead. */
+.fi-simple-header {
+    text-align: left !important;
+    padding: 0 !important;
+    margin-bottom: 1.75rem;
+}
+.fi-simple-header .fi-logo { justify-content: flex-start !important; margin-bottom: 2rem; }
+.fi-simple-header-heading {
+    color: #ffffff !important;
+    font-family: Georgia, 'Playfair Display', serif !important;
+    font-weight: 500 !important;
+    font-size: 2rem !important;
+    letter-spacing: -0.02em !important;
+    text-align: left !important;
+}
+.fi-simple-header-subheading {
+    color: #9a9a92 !important;
+    text-align: left !important;
+    font-size: 0.9rem !important;
+    margin-top: 0.4rem;
+}
+
+/* Replace default "Sign in to your account" copy with our own on the ::before
+   of the main container — we can't edit the view without touching PHP, so
+   we lean on CSS. The default heading stays visible as the primary title. */
+
+/* Inputs — dark surfaces with subtle borders. */
+.fi-simple-main label,
+.fi-simple-main .fi-fo-field-wrp-label {
+    color: #e6e6dc !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em;
+    display: block !important;
+    text-align: left !important;
+}
+.fi-simple-main .fi-input,
+.fi-simple-main .fi-input-wrp {
+    background: #16181a !important;
+    border: 1px solid #272a2d !important;
+    color: #f0f0e8 !important;
+    border-radius: 6px !important;
+    min-height: 46px !important;
+}
+.fi-simple-main .fi-input::placeholder { color: #666; }
+.fi-simple-main .fi-input:focus,
+.fi-simple-main .fi-input-wrp:focus-within {
+    border-color: #CC5500 !important;
+    box-shadow: 0 0 0 2px rgba(204, 85, 0, 0.2) !important;
+}
+
+/* Password reveal icon colour. */
+.fi-simple-main .fi-input-wrp-icon-btn { color: #9a9a92 !important; }
+
+/* "Remember me" row. */
+.fi-simple-main .fi-fo-checkbox {
+    accent-color: #9CAF88;
+}
+.fi-simple-main .fi-fo-checkbox label,
+.fi-simple-main .fi-fo-checkbox span {
+    color: #c0c0b4 !important;
+    font-size: 13px !important;
+}
+
+/* Primary "Sign in" button — sage green. */
+.fi-simple-main .fi-btn.fi-color-primary,
+.fi-simple-main button[type="submit"] {
+    background: #9CAF88 !important;
+    border-color: #9CAF88 !important;
+    color: #0b0e0a !important;
+    border-radius: 6px !important;
+    font-weight: 600 !important;
+    width: 100% !important;
+    min-height: 46px !important;
+    margin-top: 0.5rem !important;
+    transition: filter .12s, transform .08s !important;
+}
+.fi-simple-main .fi-btn.fi-color-primary:hover,
+.fi-simple-main button[type="submit"]:hover {
+    background: #abbf96 !important;
+    border-color: #abbf96 !important;
+    filter: brightness(1.02);
+}
+.fi-simple-main .fi-btn.fi-color-primary:active { transform: translateY(1px); }
+
+/* Required asterisk colour. */
+.fi-simple-main .fi-fo-field-wrp-label-required-mark {
+    color: #CC5500 !important;
+}
+
+/* Error / flash notices remain readable on the dark panel. */
+.fi-simple-main .fi-form-flash { color: #CC5500 !important; }
+
+/* Mobile: collapse to one column, hide the sage pane. */
+@media (max-width: 860px) {
+    .fi-simple-layout {
+        grid-template-columns: 1fr;
+        background: linear-gradient(180deg, #0b0e0a 0%, #0b0e0a 60%, #26302a 100%);
+    }
+    .fi-simple-layout::after,
+    .fi-simple-layout::before { display: none; }
+    .fi-simple-main { padding: 3rem 1.5rem 2rem !important; }
 }
