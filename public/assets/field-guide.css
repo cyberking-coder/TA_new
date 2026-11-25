@@ -1017,3 +1017,207 @@ h1, h2, h3, h4, .editorial-title, .page-doc-body h2, .page-body h2,
 
 /* ── 16. Small quality-of-life for the home page hero. ───────── */
 .editorial-title em { font-family: Georgia, serif; font-style: italic; letter-spacing: -0.032em; }
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  RE-PALETTE & RE-TYPESET                                     ║
+   ║  Warm-ink + burnt-sienna replacing green + brass.            ║
+   ║  Fraunces (editorial serif) + Inter (humanist sans).         ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+
+:root {
+    /* Surfaces */
+    --paper:      #f6efe0;
+    --white:      #fdfaf1;
+    --olive:      #ece4cf;
+    --edge:       #d6ccb3;
+
+    /* Text */
+    --ink:        #1d1813;
+    --muted:      #6a5f4e;
+
+    /* Accent — burnt sienna family replacing brass */
+    --brass:      #b0613a;
+    --brass-dark: #7d3f21;
+
+    /* Semantic retained for compatibility */
+    --serif:      'Fraunces', Georgia, 'Playfair Display', 'Times New Roman', serif;
+    --sans:       'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-feature-settings: "kern", "liga", "clig", "calt", "onum";
+    font-variant-numeric: oldstyle-nums proportional-nums;
+}
+
+/* Every serif heading on the site now routes through Fraunces. */
+.editorial-title, .hero h1, .hero-fullbleed h1,
+.pagehead h1, .pagehead h2,
+.page-body h2, .page-body h3,
+.page-doc-body h2, .page-doc-body h3,
+.info-page h2, .info-tile h3, .info-contact-strip h3,
+.history h2, .history-head h2, .history-honours h3, .history-timeline h3,
+.about-hero h2, .about-pillars h3, .about-stat b,
+.product-detail h2, .product-block h3, .book-feature h2,
+.contact-head h2, .contact-card-head strong,
+.legal-page h2,
+.occ h2, .occ-hero-text h2, .occ-dates h3, .occ-cards strong,
+.occ-pipeline strong, .occ-hq-grid p, .syl-card strong, .syl-rule h3,
+.refund-card h2, .alerts-card h2, .alerts-result-cta h3,
+.site-footer span, .site-footer .footer-grid span,
+.glance-list a, .page-doc-glance h3,
+.occ-cta h3, .occ-hero-text h2 em,
+.occ-pay td:first-child,
+.formbox h2, .quick strong,
+h1, h2, h3, h4,
+.editorial-title em, .hero em {
+    font-family: var(--serif) !important;
+    font-feature-settings: "kern", "liga", "clig", "ss01", "ss02", "lnum";
+    font-variant-numeric: lining-nums proportional-nums;
+    letter-spacing: -0.025em;
+}
+
+/* Fraunces italic — gentler slope, a touch extra tracking. */
+.editorial-title em,
+em, i {
+    font-family: var(--serif);
+    font-style: italic;
+    letter-spacing: -0.02em;
+}
+
+/* Hero title + large display pieces look better with Fraunces at opsz:144. */
+.editorial-title {
+    font-variation-settings: "opsz" 144, "wght" 500;
+    font-weight: 500;
+    color: var(--white);
+}
+.editorial-title em {
+    font-variation-settings: "opsz" 144, "wght" 400;
+    color: var(--brass);
+}
+.pagehead h1 {
+    font-variation-settings: "opsz" 120, "wght" 500;
+}
+
+/* Body copy — Inter for crisp reading. */
+.page-doc-body p, .page-body p,
+.occ-hero-text p, .occ-block > p, .info-block > p,
+.about-lede, .history-body p, .product-lede,
+.refund-card p, .alerts-card > p,
+.contact-head p, .pagehead p,
+body, p, li, dd {
+    font-family: var(--sans) !important;
+    font-feature-settings: "kern", "liga", "onum", "calt";
+    line-height: 1.68;
+}
+
+/* Eyebrows & small-caps labels — Inter medium at 600 tracks nicely. */
+.eyebrow, .occ .eyebrow,
+.update-strip-label, .footer-col h3,
+.occ-hq-zone, .refund-badge, .new-badge, .new-flag,
+.contact-card-head strong,
+.info-page .eyebrow, .product-price-note,
+.doc-eyebrow, .ta-footer small, .site-footer .footer-bottom,
+.filters label, .alerts-form label > span, .formbox label > span {
+    font-family: var(--sans) !important;
+    letter-spacing: 0.14em !important;
+    font-weight: 600 !important;
+}
+
+/* Hero gradient — adjust to the warm surround, drop the green cast. */
+.hero-fullbleed { background: #211a13 !important; }
+.hero-fullbleed::after {
+    background:
+        linear-gradient(90deg,
+            rgba(26, 18, 12, 0.96) 0%,
+            rgba(29, 24, 19, 0.88) 24%,
+            rgba(29, 24, 19, 0.58) 48%,
+            rgba(29, 24, 19, 0.12) 82%,
+            transparent 100%),
+        linear-gradient(0deg, rgba(14, 10, 6, 0.08), transparent 55%) !important;
+}
+
+/* Pagehead washes to the new paper. */
+.pagehead { background: var(--olive) !important; border-bottom: 1px solid var(--edge) !important; }
+
+/* Buttons swap to warm ink. */
+.button, .btn, .filter-actions .button {
+    background: var(--ink) !important;
+    color: #fdfaf1 !important;
+}
+.button:hover, .btn:hover { background: #2d241c !important; }
+.hero-fullbleed .btn, .hero .button {
+    background: var(--brass) !important;
+    color: #211a13 !important;
+}
+.hero-fullbleed .btn:hover, .hero .button:hover { background: #c57047 !important; }
+
+/* Dark footer — retune to warm ink. */
+.site-footer { background: #1a130d !important; color: #e7dcc1 !important; }
+.footer-col h3 { color: #d8a67b !important; border-bottom-color: rgba(216, 166, 123, 0.18) !important; }
+.footer-col a { color: #c6bca8 !important; }
+.footer-col a:hover { color: #e7b991 !important; }
+
+/* Accent replacements where brass was used as a color literal. */
+.hero-fullbleed .herolink:hover,
+.product-detail .kicker, .kicker,
+.contact-card-head { color: var(--brass) !important; }
+.eyebrow::before,
+.occ .eyebrow::before,
+.history-head .eyebrow::before,
+.contact-head .eyebrow::before,
+.info-page .eyebrow::before {
+    background: linear-gradient(90deg, var(--brass), transparent) !important;
+}
+.occ-cards article, .occ-pipeline li,
+.syl-card, .review-card, .history-timeline li,
+.about-pillars article, .refund-card--ok {
+    border-left-color: var(--brass) !important;
+}
+.occ-pipeline-num { color: var(--brass-dark) !important; border-color: var(--brass) !important; }
+.occ-hq-zone, .refund-badge { color: var(--brass-dark) !important; background: #f3e8d7 !important; }
+.product-pricebox .product-price { color: #28201a !important; }
+
+/* Tables — Fraunces header, warm underline. */
+.page-doc-body table th, .occ-pay th {
+    font-family: var(--serif) !important;
+    border-bottom-color: var(--ink) !important;
+}
+
+/* "At a glance" + dates sidebar — warmer paper. */
+.occ-dates, .page-doc-glance { background: #faf2df !important; border-color: var(--edge) !important; }
+
+/* Newsline strip — warm ink, sienna label. */
+.newsline { background: #1a130d !important; color: #e7dcc1 !important; }
+.newsline-label { color: var(--brass) !important; border-color: rgba(176, 97, 58, 0.5) !important; }
+.newsline-row a { color: #e7dcc1 !important; }
+.newsline-row a:hover { color: var(--brass) !important; }
+
+/* Entry / route band — paper warmth. */
+.route-band { background: var(--olive) !important; border-bottom-color: var(--edge) !important; }
+
+/* Links inside article bodies — sienna underline. */
+.page-body a, .page-doc-body a, .info-block a {
+    text-decoration-color: var(--brass) !important;
+}
+.page-body a:hover, .page-doc-body a:hover, .info-block a:hover {
+    text-decoration-color: var(--ink) !important;
+}
+
+/* Form controls — warm edge. */
+.alerts-form input, .alerts-form select,
+.filters input, .filters select,
+.formbox input, .formbox select, .formbox textarea {
+    border-color: var(--edge) !important;
+    background: var(--white) !important;
+}
+.alerts-form input:focus, .alerts-form select:focus,
+.filters input:focus, .filters select:focus,
+.formbox input:focus, .formbox select:focus, .formbox textarea:focus {
+    border-color: var(--brass-dark) !important;
+    outline-color: var(--brass-dark) !important;
+}
+.mobile-input { border-color: var(--edge) !important; }
+.mobile-input .mobile-prefix { background: #f1e8d2 !important; border-right-color: var(--edge) !important; color: var(--ink) !important; }
