@@ -1835,3 +1835,25 @@ img, video, iframe, table { max-width: 100%; height: auto; }
     }
     #mainnav .dropdown .dropdown-sep { display: none; }
 }
+
+/* Contact-page tab panel styling. */
+.contact-topic-panel {
+    margin-top: 0.75rem;
+    padding: 0.85rem 1rem;
+    background: #f6f3e5;
+    border-left: 3px solid #CC5500;
+    border-radius: 0 6px 6px 0;
+    color: #3d4a42;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    transition: background 0.15s ease;
+}
+.contact-tabs [role="tab"]:focus-visible {
+    outline: 2px solid #CC5500;
+    outline-offset: 2px;
+}
+.contact-tabs [aria-selected="true"] {
+    background: #172e25;
+    color: #faf8ef;
+    border-color: #172e25;
+}

@@ -173,3 +173,39 @@
 
     document.querySelectorAll('.reveal-up, .reveal-fade').forEach((el) => io.observe(el));
 })();
+
+// Contact-page topic tabs: WAI-ARIA tablist with arrow-key navigation.
+// Each tab carries data-topic; the single tabpanel reads the matching
+// data-topic-<name> attribute and swaps its text content.
+(function(){
+  const tablist = document.querySelector('.contact-tabs[role="tablist"]');
+  const panel = document.getElementById('contact-topic-panel');
+  if (!tablist || !panel) return;
+
+  const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+
+  function activate(tab) {
+    tabs.forEach(t => {
+      const active = t === tab;
+      t.setAttribute('aria-selected', String(active));
+      t.setAttribute('tabindex', active ? '0' : '-1');
+    });
+    const topic = tab.dataset.topic;
+    const next = panel.getAttribute('data-topic-' + topic);
+    if (next) panel.textContent = next;
+    panel.setAttribute('aria-labelledby', tab.id);
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => { activate(tab); tab.focus(); });
+    tab.addEventListener('keydown', (e) => {
+      const i = tabs.indexOf(tab);
+      let next = null;
+      if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+      else if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+      else if (e.key === 'Home') next = tabs[0];
+      else if (e.key === 'End') next = tabs[tabs.length - 1];
+      if (next) { e.preventDefault(); activate(next); next.focus(); }
+    });
+  });
+})();

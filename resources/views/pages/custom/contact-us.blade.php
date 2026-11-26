@@ -58,10 +58,24 @@
             <h2>TA Group Headquarters</h2>
             <p>For recruitment, eligibility, applications, examinations, SSB interviews and service-related queries, contact the concerned command.</p>
 
-            <div class="contact-tabs" role="tablist" aria-label="Topic">
-                <button type="button" role="tab" aria-selected="true">Recruitment &amp; eligibility</button>
-                <button type="button" role="tab" aria-selected="false">Exams &amp; interviews</button>
-                <button type="button" role="tab" aria-selected="false">Joining &amp; service</button>
+            <div class="contact-tabs" role="tablist" aria-label="Pick a topic to see what to ask">
+                <button type="button" role="tab" id="contact-tab-recruit"
+                        aria-selected="true" aria-controls="contact-topic-panel"
+                        tabindex="0" data-topic="recruit">Recruitment &amp; eligibility</button>
+                <button type="button" role="tab" id="contact-tab-exams"
+                        aria-selected="false" aria-controls="contact-topic-panel"
+                        tabindex="-1" data-topic="exams">Exams &amp; interviews</button>
+                <button type="button" role="tab" id="contact-tab-service"
+                        aria-selected="false" aria-controls="contact-topic-panel"
+                        tabindex="-1" data-topic="service">Joining &amp; service</button>
+            </div>
+
+            <div id="contact-topic-panel" class="contact-topic-panel"
+                 role="tabpanel" aria-labelledby="contact-tab-recruit"
+                 data-topic-recruit="Ask about current vacancies, age and education cut-offs, documents to carry, state-wise notification windows, and whether a particular rally applies to you. Every command below handles recruitment queries for its states."
+                 data-topic-exams="Ask about the TA Officer written exam date, admit-card issues, exam-centre allocation, result status, SSB call-up letters and interview dates. Direct the query to the command whose state you applied from."
+                 data-topic-service="Ask about joining instructions after selection, reporting dates, kit lists, training schedules, pay &amp; allowances, leave rules and release / discharge queries. Serving JCOs/ORs should route through their unit first.">
+                Ask about current vacancies, age and education cut-offs, documents to carry, state-wise notification windows, and whether a particular rally applies to you. Every command below handles recruitment queries for its states.
             </div>
         </div>
 
