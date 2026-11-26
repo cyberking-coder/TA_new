@@ -1750,3 +1750,88 @@ img, video, iframe, table { max-width: 100%; height: auto; }
     .pagehead h1 { font-size: clamp(1.4rem, 6vw, 2rem); }
     .error-page { padding: 2.5rem 1rem 3rem; }
 }
+
+/* ──────────────────────────────────────────────────────────────────
+   Nav v2 (Nov 2026): 5 top-level items, max 1 level deep.
+   Dropdowns use section headings (.dropdown-group) + hair dividers
+   (.dropdown-sep) instead of nested menus, which never worked on
+   mobile and were a keyboard-trap on desktop.
+   ────────────────────────────────────────────────────────────────── */
+
+.dropdown .dropdown-group {
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #8c6d1f;
+    padding: 0.5rem 1rem 0.3rem;
+    margin: 0;
+    pointer-events: none;
+    list-style: none;
+}
+.dropdown .dropdown-group:first-child { padding-top: 0.65rem; }
+
+.dropdown .dropdown-sep {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #d9dcd1 20%, #d9dcd1 80%, transparent);
+    margin: 0.4rem 0.75rem;
+    list-style: none;
+    padding: 0;
+}
+
+/* Two-column dropdown on wider screens for the longer menus — keeps
+   the overall menu card from stretching past the nav bar. */
+@media (min-width: 1100px) {
+    .has-dropdown .dropdown {
+        min-width: 260px;
+    }
+    /* "Join the TA" has many items — go two columns. */
+    .has-dropdown:nth-child(3) .dropdown {
+        min-width: 460px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 0.5rem;
+    }
+    .has-dropdown:nth-child(3) .dropdown .dropdown-group,
+    .has-dropdown:nth-child(3) .dropdown .dropdown-sep {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Mobile menu — flatten to a scrollable drawer with section headings
+   visible, no accordions, no nested dropdowns. */
+@media (max-width: 920px) {
+    #mainnav .nav-root {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    #mainnav .has-dropdown .dropdown {
+        position: static !important;
+        display: block !important;
+        box-shadow: none !important;
+        border: 0 !important;
+        background: transparent !important;
+        padding: 0.25rem 0 0.5rem 0.75rem !important;
+        min-width: 0 !important;
+        grid-template-columns: 1fr !important;
+    }
+    #mainnav .nav-trigger {
+        pointer-events: none;   /* on mobile the whole menu is open; no toggle */
+        font-weight: 600;
+        padding-top: 0.75rem;
+    }
+    #mainnav .nav-trigger .caret { display: none; }
+    #mainnav .dropdown a {
+        display: block;
+        padding: 0.65rem 0.5rem;
+        border-bottom: 1px solid #efede2;
+        min-height: 44px;
+    }
+    #mainnav .dropdown .dropdown-group {
+        font-size: 10px;
+        color: #8c6d1f;
+        padding: 0.75rem 0.5rem 0.25rem;
+    }
+    #mainnav .dropdown .dropdown-sep { display: none; }
+}
