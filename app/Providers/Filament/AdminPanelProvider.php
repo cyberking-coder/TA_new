@@ -38,7 +38,7 @@ class AdminPanelProvider extends PanelProvider
             ->renderHook(
                 'panels::head.end',
                 fn () => new \Illuminate\Support\HtmlString(
-                    '<link rel="stylesheet" href="'.asset('assets/filament-admin.css').'?v='.@filemtime(public_path('assets/filament-admin.css')).'">'
+                    app(\Illuminate\Foundation\Vite::class)(['resources/css/admin.css'])->toHtml()
                 ),
             )
             ->navigationGroups([

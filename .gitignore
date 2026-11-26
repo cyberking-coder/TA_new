@@ -14,7 +14,9 @@
 /.zed
 /auth.json
 /node_modules
-/public/build
+# Vite build artifacts are committed so Railway / Nixpacks does not need Node.
+# Run `npm run build:vite` before pushing any CSS/JS source changes.
+# /public/build
 /public/css/filament
 /public/fonts-manifest.dev.json
 /public/fonts/filament

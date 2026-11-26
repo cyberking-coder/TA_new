@@ -32,11 +32,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="/assets/field-guide.css">
+    @vite(['resources/css/app.css', 'resources/css/public.css', 'resources/js/public.js'])
     @isset($jsonLd)
         <script type="application/ld+json">{!! json_encode($jsonLd, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}</script>
     @endisset
-    <script defer src="/assets/field-guide.js"></script>
 </head>
 <body class="page-shell">
     <a class="skip" href="#main">Skip to content</a>
